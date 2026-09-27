@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#106b54" />
+  <title>FixBondhu — Trusted help, close to home</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="announcement"><span>Launching carefully, area by area.</span><span>Only verified providers can receive jobs.</span><button aria-label="Dismiss announcement">×</button></div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="FixBondhu home"><span class="mark">f</span><span>fix<span>bondhu</span></span></a>
+    <nav aria-label="Main navigation"><a href="#services">Services</a><a href="#how">How it works</a><a href="#trust">Safety</a></nav>
+    <div class="header-actions"><button class="text-button" data-open="provider">For professionals</button><button class="outline-button" data-open="signin">Sign in</button><button class="solid-button" data-open="signup">Get started</button></div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">LOCAL HELP, DONE RIGHT</p>
+        <h1>For every repair, there’s a <em>Bondhu</em> nearby.</h1>
+        <p class="lead">Book verified local professionals for the work that keeps your home and life moving. Transparent requests. Clear updates. Support when you need it.</p>
+        <div class="search-shell">
+          <span class="search-icon">⌕</span>
+          <input id="service-search" aria-label="Search for a service" placeholder="What do you need help with?" autocomplete="off" />
+          <button class="solid-button" id="search-button">Search</button>
+          <div id="search-suggestions" class="search-suggestions" hidden></div>
+        </div>
+        <div class="quick-search"><span>Try:</span><button>AC repair</button><button>বাসার ইলেকট্রিশিয়ান</button><button>plumber দরকার</button></div>
+        <div class="location-line"><span>⌖</span><button id="location-button">Set your service location</button><span>to see availability</span></div>
+      </div>
+      <aside class="request-card" aria-label="Booking process preview">
+        <div class="card-top"><span class="live-dot"></span><span>YOUR REQUEST</span><button>•••</button></div>
+        <div class="request-title"><div class="service-icon mint">⌁</div><div><strong>AC service</strong><small>Home service</small></div><span class="price">From ৳500</span></div>
+        <div class="route"><div class="route-dot start"></div><div><small>Service location</small><strong>Choose an address</strong></div><div class="route-line"></div><div class="route-dot end"></div><div><small>Matched professional</small><strong>After your request</strong></div></div>
+        <div class="request-note"><span>✓</span> You approve any added work before it begins.</div>
+        <button class="wide-button" id="request-button">Start a service request <span>→</span></button>
+      </aside>
+    </section>
+
+    <section class="service-section" id="services">
+      <div class="section-heading"><div><p class="eyebrow">FIND THE RIGHT HELP</p><h2>Services for the work that matters.</h2></div><a href="#all-services">Browse all services <span>→</span></a></div>
+      <div class="category-grid" id="category-grid"></div>
+      <div id="all-services" class="availability-note"><span class="note-icon">i</span><div><strong>Availability is based on real coverage.</strong><p>We’ll only show professionals who are verified and currently able to serve your area.</p></div></div>
+    </section>
+
+    <section class="how-section" id="how">
+      <div class="how-intro"><p class="eyebrow">A CLEARER WAY TO GET HELP</p><h2>From first request to finished work, you stay in the loop.</h2><p>FixBondhu is built around accountable service—not anonymous leads or surprise charges.</p></div>
+      <ol class="steps"><li><span>01</span><h3>Tell us what’s needed</h3><p>Describe the job in Bangla, English, or Banglish and choose your location.</p></li><li><span>02</span><h3>Review the match</h3><p>See only relevant professionals with their real verification and pricing details.</p></li><li><span>03</span><h3>Track the work</h3><p>Get status updates, chat in one place, and approve additional work before it happens.</p></li><li><span>04</span><h3>Pay and rate</h3><p>Keep a complete booking record, secure payment status, and an honest review.</p></li></ol>
+    </section>
+
+    <section class="trust-section" id="trust">
+      <div class="trust-copy"><p class="eyebrow">BUILT FOR TRUST</p><h2>Real people.<br/>Real records.<br/><em>Real accountability.</em></h2><p>Every meaningful action—from provider verification to a final payment—is designed to leave a clear, reviewable record.</p><a href="#safety-details" class="arrow-link">How trust works <span>→</span></a></div>
+      <div class="trust-cards" id="safety-details"><article><div class="trust-num">01</div><h3>Verification means something</h3><p>Phone, identity, business, and certificate badges are shown only after the matching verification is approved.</p></article><article><div class="trust-num">02</div><h3>Prices stay visible</h3><p>Providers request extra charges inside the booking. You choose whether to approve before work continues.</p></article><article><div class="trust-num">03</div><h3>Support has context</h3><p>Messages, booking events, and payment status stay connected if you need help resolving a problem.</p></article></div>
+    </section>
+
+    <section class="professional-callout" id="provider"><div><p class="eyebrow">FOR SERVICE PROFESSIONALS</p><h2>Build a stronger local business.</h2><p>Manage requests, service areas, availability, verification, earnings, and customer communication in one professional workspace.</p></div><button class="light-button" data-open="provider">Join as a professional <span>→</span></button></section>
+    <section class="launch-section"><div><p class="eyebrow">STARTING WITH CARE</p><h2>We’re opening locations as verified supply becomes available.</h2><p>Tell us where you need service, and we’ll notify you when FixBondhu is ready in your area.</p></div><form id="waitlist-form"><label for="waitlist-phone">Mobile number</label><div><span>+880</span><input id="waitlist-phone" inputmode="numeric" placeholder="1XXXXXXXXX" maxlength="10" required /><button class="solid-button">Keep me updated</button></div><small id="waitlist-status">We’ll only use this for launch and service availability updates.</small></form></section>
+  </main>
+  <footer><a class="brand" href="#home"><span class="mark">f</span><span>fix<span>bondhu</span></span></a><p>Trusted local services, built for Bangladesh.</p><div><a href="#terms">Terms</a><a href="#privacy">Privacy</a><a href="#support">Support</a></div><small>© 2026 FixBondhu. All rights reserved.</small></footer>
+  <dialog id="modal"><button class="modal-close" aria-label="Close">×</button><div id="modal-content"></div></dialog>
+  <script src="app.js"></script>
+</body>
+</html>
