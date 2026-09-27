@@ -317,3 +317,140 @@ body {
     50% { opacity: 0.55; }
   }
 }
+
+/*
+ * Motion.
+ *
+ * Deliberately narrow. Every animation below exists to explain a state change
+ * or to confirm an action, never to decorate. Each one animates transform or
+ * opacity only, which the compositor handles without layout or paint, so the
+ * effect stays smooth on a mid-range Android rather than costing frames on a
+ * 3G connection.
+ *
+ * Durations sit between 140ms and 320ms. Slower feels sluggish on the phones
+ * this product is actually used on; faster reads as a flicker, not a transition.
+ */
+@layer utilities {
+  @keyframes fb-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fb-rise {
+    from { opacity: 0; transform: translate3d(0, 8px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+
+  @keyframes fb-slide-in {
+    from { opacity: 0; transform: translate3d(-6px, 0, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+
+  @keyframes fb-pop {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.14); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes fb-shimmer {
+    from { background-position: -400px 0; }
+    to { background-position: 400px 0; }
+  }
+
+  @keyframes fb-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes fb-draw {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  .animate-fade-in { animation: fb-fade-in 200ms ease-out both; }
+  .animate-rise { animation: fb-rise 260ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .animate-slide-in { animation: fb-slide-in 200ms ease-out both; }
+  .animate-pop { animation: fb-pop 280ms cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+  .animate-spin-slow { animation: fb-spin 900ms linear infinite; }
+
+  /*
+   * Staggered list entry. The delay comes from a CSS custom property so a list
+   * of any length uses one class; callers cap the index so a long list does not
+   * feel like it is loading in slow motion.
+   */
+  .stagger > * {
+    animation: fb-rise 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 45ms);
+  }
+
+  /* Booking progress. Scales from the left so the fill direction is unambiguous. */
+  .progress-fill {
+    transform-origin: left center;
+    animation: fb-draw 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /*
+   * Loading placeholder. Background-position is the one exception to the
+   * transform rule, kept because it is the standard skeleton pattern and a flat
+   * gradient does not trigger layout.
+   */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-ink-100) 25%,
+      var(--color-ink-50) 37%,
+      var(--color-ink-100) 63%
+    );
+    background-size: 400px 100%;
+    animation: fb-shimmer 1.4s ease-in-out infinite;
+  }
+
+  /*
+   * Hover affordance. A colour change plus a 1px lift: enough to show a card is
+   * actionable, not enough to make a dense listing feel bouncy.
+   */
+  .interactive {
+    transition:
+      border-color 140ms ease,
+      background-color 140ms ease,
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+
+  .interactive:hover {
+    transform: translate3d(0, -1px, 0);
+    box-shadow: 0 1px 2px rgb(24 24 27 / 4%), 0 4px 12px rgb(24 24 27 / 4%);
+  }
+
+  .interactive:active {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/*
+ * Reduced motion.
+ *
+ * Everything above collapses to instant. This is not optional: vestibular
+ * disorders are real and the OS setting exists because people rely on it. The
+ * shimmer stops too, since a perpetually moving placeholder is exactly the kind
+ * of motion that triggers symptoms.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .shimmer {
+    animation: none;
+    background: var(--color-ink-100);
+  }
+
+  .interactive:hover,
+  .interactive:active {
+    transform: none;
+  }
+}

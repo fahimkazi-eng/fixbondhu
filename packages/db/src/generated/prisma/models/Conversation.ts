@@ -295,6 +295,7 @@ export type ConversationOrderByWithRelationInput = {
 export type ConversationWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   bookingId?: string
+  customerId_providerProfileId?: Prisma.ConversationCustomerIdProviderProfileIdCompoundUniqueInput
   AND?: Prisma.ConversationWhereInput | Prisma.ConversationWhereInput[]
   OR?: Prisma.ConversationWhereInput[]
   NOT?: Prisma.ConversationWhereInput | Prisma.ConversationWhereInput[]
@@ -311,7 +312,7 @@ export type ConversationWhereUniqueInput = Prisma.AtLeast<{
   provider?: Prisma.XOR<Prisma.ProviderProfileScalarRelationFilter, Prisma.ProviderProfileWhereInput>
   booking?: Prisma.XOR<Prisma.BookingNullableScalarRelationFilter, Prisma.BookingWhereInput> | null
   messages?: Prisma.MessageListRelationFilter
-}, "id" | "bookingId">
+}, "id" | "bookingId" | "customerId_providerProfileId">
 
 export type ConversationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -461,6 +462,11 @@ export type ConversationOrderByRelationAggregateInput = {
 export type ConversationNullableScalarRelationFilter = {
   is?: Prisma.ConversationWhereInput | null
   isNot?: Prisma.ConversationWhereInput | null
+}
+
+export type ConversationCustomerIdProviderProfileIdCompoundUniqueInput = {
+  customerId: string
+  providerProfileId: string
 }
 
 export type ConversationCountOrderByAggregateInput = {

@@ -3,6 +3,8 @@ import { Inter, Noto_Sans_Bengali } from "next/font/google";
 
 import "./globals.css";
 
+import { DemoBanner } from "@/components/demo-banner";
+
 /*
  * Both fonts are self-hosted by next/font, so there is no third-party request
  * on first paint. That matters twice over in Bangladesh: it removes a round
@@ -64,6 +66,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <DemoBanner />
         {children}
       </body>
     </html>

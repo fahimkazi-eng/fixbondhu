@@ -1071,6 +1071,10 @@ model Conversation {
   booking  Booking?         @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   messages Message[]
 
+  // One thread per customer/provider pair. Without this, upserting a thread
+  // would need a find-then-create race, and a race here means duplicate
+  // conversations for the same pair.
+  @@unique([customerId, providerProfileId])
   @@index([customerId, lastMessageAt])
   @@index([providerProfileId, lastMessageAt])
   @@map("conversations")
