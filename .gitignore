@@ -4,7 +4,10 @@ node_modules/
 !.env.example
 .next/
 dist/
+.vercel/
 coverage/
 *.log
 uploads/
 work/
+
+.vercel
