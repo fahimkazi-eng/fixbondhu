@@ -448,13 +448,18 @@ async function main() {
   let completed = 0;
 
   for (const item of plan) {
+    const providerSpec = PROVIDERS[item.provider];
+    if (!providerSpec) continue;
+    const customerId = customerIds[item.customer];
+    if (!customerId) continue;
+
     const providerServices = services.filter(
-      (s) => s.providerProfile.user.phone === phone(PROVIDERS[item.provider].n),
+      (s) => s.providerProfile.user.phone === phone(providerSpec.n),
     );
     if (providerServices.length === 0) continue;
 
     const providerService = providerServices[created % providerServices.length];
-    const customerId = customerIds[item.customer];
+    if (!providerService) continue;
     const address = addresses[item.customer];
     if (!address) continue;
 
