@@ -499,9 +499,13 @@ async function main() {
       item.state === "COMPLETED" || item.state === "DISPUTED" ? 4 : -1;
 
     for (let i = 0; i <= stopAt; i += 1) {
+      const step = path[i];
+      // stopAt is -1 for states that should not progress, and never exceeds
+      // the last index, so this guard only satisfies the type checker.
+      if (!step) break;
       const result = await transitionBooking({
         bookingId: booking.id,
-        to: path[i],
+        to: step,
         actor: "PROVIDER",
         actorUserId: providerService.providerProfile.userId,
         waivePayment: true,
@@ -596,7 +600,9 @@ async function main() {
       completed += 1;
 
       if (item.review !== undefined) {
-        const [rating, title, body] = REVIEW_TEXTS[item.review % REVIEW_TEXTS.length];
+        const review = REVIEW_TEXTS[item.review % REVIEW_TEXTS.length];
+        if (!review) continue;
+        const [rating, title, body] = review;
         const total = bdtToPoisha(
           providerService.minPricePoisha +
             (item.charge?.approve ? item.charge.amount : 0),
@@ -654,7 +660,7 @@ async function main() {
     select: { id: true, userId: true },
   });
 
-  if (firstProvider) {
+  if (firstProvider && firstCustomer) {
     const conversation = await prisma.conversation.create({
       data: {
         customerId: firstCustomer,
@@ -740,10 +746,12 @@ Done. On branch ${branchId}
   users ${users} | providers ${providers} | bookings ${bookings} | reviews ${reviews} | payments ${payments}
 
 Demo sign-in (password for all: ${DEMO_PASSWORD})
-  customer  ${CUSTOMERS[0].name.padEnd(20)} ${phone(11)}
-  customer  ${CUSTOMERS[1].name.padEnd(20)} ${phone(12)}
-  provider  ${PROVIDERS[0].name.padEnd(20)} ${phone(1)}
-  provider  ${PROVIDERS[1].name.padEnd(20)} ${phone(2)}
+${CUSTOMERS.slice(0, 2)
+  .map((c) => `  customer  ${c.name.padEnd(20)} ${phone(c.n)}`)
+  .join("\n")}
+${PROVIDERS.slice(0, 2)
+  .map((p) => `  provider  ${p.name.padEnd(20)} ${phone(p.n)}`)
+  .join("\n")}
 
 This data exists only on the demo branch. The production branch is untouched.
 `);
