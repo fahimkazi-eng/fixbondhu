@@ -31,7 +31,7 @@ class Jar {
   absorb(response: Response) {
     const raw = response.headers.getSetCookie?.() ?? [];
     for (const line of raw) {
-      const [pair] = line.split(";");
+      const pair = line.split(";")[0] ?? "";
       const index = pair.indexOf("=");
       if (index > 0) this.cookies.set(pair.slice(0, index).trim(), pair.slice(index + 1).trim());
     }
