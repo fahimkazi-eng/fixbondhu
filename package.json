@@ -26,7 +26,9 @@
     "db:reset": "npm run reset --workspace=@fixbondhu/db",
     "setup": "npm install && npm run db:generate && npm run db:deploy && npm run db:seed",
     "verify:live": "npm run verify:live --workspace=@fixbondhu/web",
-    "cleanup:test-accounts": "npm run cleanup:test-accounts --workspace=@fixbondhu/web"
+    "cleanup:test-accounts": "npm run cleanup:test-accounts --workspace=@fixbondhu/web",
+    "seed:demo": "npm run seed:demo --workspace=@fixbondhu/web",
+    "verify:booking": "npm run verify:booking --workspace=@fixbondhu/web"
   },
   "allowScripts": {
     "prisma@7.10.0": true,
