@@ -1,0 +1,1630 @@
+// FixBondhu — canonical data model.
+//
+// Conventions used throughout:
+//  * Money is stored as INTEGER POISHA (1 BDT = 100 poisha). Never floats, never
+//    decimals — this is a payments-heavy marketplace and floating point money is
+//    a reconciliation bug waiting to happen.
+//  * Display strings (name, address, price at time of booking) are SNAPSHOTTED
+//    onto Booking so history stays truthful after a provider renames or reprices.
+//  * Verification is never a boolean. A badge renders only from an APPROVED
+//    ProviderVerification row, so it cannot be faked or go stale.
+//  * Soft delete on anything an admin or a customer may need to see later
+//    (deletedAt). Hard delete only for throwaway rows.
+
+// Prisma 7 generates plain TypeScript into the repo so the client is bundled
+// and tree-shaken like any other source. `importFileExtension = "ts"` keeps the
+// emitted imports resolvable by tsx, which the seed and scripts run through.
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  importFileExtension = "ts"
+  runtime             = "nodejs"
+}
+
+// Prisma 7 moved connection URLs out of the schema and into prisma.config.ts,
+// and requires a driver adapter on the client. See packages/db/prisma.config.ts.
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum UserRole {
+  CUSTOMER
+  PROVIDER
+  ADMIN
+  SUPPORT
+  FINANCE
+  VERIFICATION
+  CONTENT
+  ANALYST
+}
+
+enum UserStatus {
+  PENDING_VERIFICATION
+  ACTIVE
+  SUSPENDED
+  BANNED
+  DEACTIVATED
+}
+
+enum OtpPurpose {
+  PHONE_VERIFY
+  LOGIN
+  PASSWORD_RESET
+  EMAIL_VERIFY
+}
+
+enum AddressType {
+  HOME
+  OFFICE
+  OTHER
+}
+
+enum LocationType {
+  DIVISION
+  DISTRICT
+  THANA
+  AREA
+}
+
+enum VerificationType {
+  PHONE
+  IDENTITY
+  BUSINESS
+  CERTIFICATE
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+enum ProviderStatus {
+  DRAFT
+  PENDING_REVIEW
+  ACTIVE
+  SUSPENDED
+  REJECTED
+  DEACTIVATED
+}
+
+enum PriceMode {
+  FIXED
+  RANGE
+  NEGOTIABLE
+}
+
+enum BookingStatus {
+  REQUESTED
+  ACCEPTED
+  ON_THE_WAY
+  ARRIVED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  REJECTED
+  DISPUTED
+  NO_SHOW
+  PAYMENT_PENDING
+}
+
+enum BookingActor {
+  CUSTOMER
+  PROVIDER
+  ADMIN
+  SYSTEM
+}
+
+enum PaymentStatus {
+  CREATED
+  PENDING
+  CAPTURED
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum PaymentMethod {
+  CASH
+  BKASH
+  A2A
+  NAGAD
+  CARD
+}
+
+enum PaymentChannel {
+  PROVIDER
+  SYSTEM
+}
+
+enum PayoutStatus {
+  PENDING
+  APPROVED
+  PROCESSING
+  PAID
+  FAILED
+  ON_HOLD
+}
+
+enum PayoutMethodType {
+  BKASH
+  NAGAD
+  ROCKET
+  BANK
+}
+
+enum AdditionalChargeStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  WITHDRAWN
+}
+
+enum MessageKind {
+  TEXT
+  SYSTEM
+  OFFER
+}
+
+enum ReviewStatus {
+  PENDING
+  PUBLISHED
+  HIDDEN
+  REMOVED
+}
+
+enum ComplaintAgainst {
+  CUSTOMER
+  PROVIDER
+  SYSTEM
+}
+
+enum ComplaintStatus {
+  OPEN
+  IN_REVIEW
+  AWAITING_CUSTOMER
+  AWAITING_PROVIDER
+  RESOLVED
+  REJECTED
+  CLOSED
+}
+
+enum ComplaintCategory {
+  SERVICE_QUALITY
+  NO_SHOW
+  OVERCHARGE
+    DAMAGED_PROPERTY
+  PROVIDER_MISCONDUCT
+  LATE_ARRIVAL
+  PAYMENT_ISSUE
+  PROVIDER_NO_SHOW
+  OTHER
+}
+
+enum Priority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum ResolutionType {
+  REFUND_FULL
+  REFUND_PARTIAL
+  NO_REFUND
+  PROVIDER_PENALTY
+  CUSTOMER_PENALTY
+  WARNING_ISSUED
+  ACCOUNT_SUSPENDED
+  OTHER
+}
+
+enum TicketStatus {
+  OPEN
+  PENDING_CUSTOMER
+  PENDING_AGENT
+  CLOSED
+}
+
+enum NotificationChannel {
+  IN_APP
+  SMS
+  EMAIL
+  PUSH
+}
+
+enum DeliveryStatus {
+  PENDING
+  SENT
+  FAILED
+  SKIPPED
+}
+
+enum NotificationType {
+  BOOKING_REQUESTED
+  BOOKING_ACCEPTED
+  BOOKING_REJECTED
+  PROVIDER_ON_THE_WAY
+  PROVIDER_ARRIVED
+  JOB_STARTED
+  JOB_COMPLETED
+  BOOKING_CANCELLED
+  NO_SHOW
+  ADDITIONAL_CHARGE_REQUESTED
+  ADDITIONAL_CHARGE_APPROVED
+  ADDITIONAL_CHARGE_REJECTED
+  PAYMENT_RECEIVED
+  PAYMENT_FAILED
+  REFUND_PROCESSED
+  PAYOUT_SENT
+  NEW_MESSAGE
+  NEW_REVIEW
+  REVIEW_REPLIED
+  COMPLAINT_UPDATED
+  DISPUTE_UPDATED
+  SUPPORT_TICKET_UPDATED
+  VERIFICATION_APPROVED
+  VERIFICATION_REJECTED
+  ACCOUNT_WARNING
+  PROMOTION
+  REFERRAL_QUALIFIED
+  REFERRAL_REWARDED
+  SYSTEM
+}
+
+enum CouponType {
+  PERCENT
+  FIXED
+}
+
+enum ReferralStatus {
+  PENDING
+  QUALIFIED
+  REWARDED
+  EXPIRED
+  REJECTED
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  DONE
+  FAILED
+  DEAD
+}
+
+enum JobType {
+  SEND_NOTIFICATION
+  DISPATCH_NOTIFICATION
+  BOOKING_REMINDER
+  EXPIRE_VERIFICATIONS
+  AUTO_CANCEL_NO_RESPONSE
+  RECALCULATE_PROVIDER_STATS
+  MATCH_JOBS_TO_PROVIDERS
+  ANALYTICS_SNAPSHOT
+  RECONCILE_PAYOUTS
+  EXPIRE_COUPONS
+  CLEANUP_OTP
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  APPROVE
+  REJECT
+  SUSPEND
+  RESTORE
+  LOGIN
+  LOGOUT
+  PASSWORD_CHANGE
+  ROLE_CHANGE
+  REFUND
+  PAYOUT
+  RESOLVE
+  EXPORT
+  IMPERSONATE
+  SETTINGS_UPDATE
+  SEND
+}
+
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  AWAITING_EVIDENCE
+  RESOLVED
+  DISMISSED
+  ESCALATED
+}
+
+// ---------------------------------------------------------------------------
+// Identity & access
+// ---------------------------------------------------------------------------
+
+model User {
+  id             String     @id @default(cuid())
+  phone          String?    @unique
+  email          String?    @unique
+  phoneVerifiedAt DateTime?
+  emailVerifiedAt DateTime?
+  passwordHash   String?
+  name           String
+  avatarUrl      String?
+  primaryRole    UserRole   @default(CUSTOMER)
+  status         UserStatus @default(PENDING_VERIFICATION)
+  locale         String     @default("en")
+  lastLoginAt    DateTime?
+  failedLoginCount Int      @default(0)
+  lockedUntil    DateTime?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  deletedAt      DateTime?
+
+  roles           UserRoleAssignment[]
+  sessions        Session[]
+  otpCodes        OtpCode[]
+  customerProfile CustomerProfile?
+  providerProfile ProviderProfile?
+  addresses       Address[]
+  savedProviders  SavedProvider[]
+  bookings        Booking[]                 @relation("CustomerBookings")
+  messages        Message[]
+  reviews         Review[]
+  payments        Payment[]                 @relation("CustomerPayments")
+  notifications   Notification[]
+  pushSubs        PushSubscription[]
+  complaints      Complaint[]               @relation("ComplaintCustomer")
+  tickets         SupportTicket[]           @relation("TicketOpener")
+  ticketMessages  TicketMessage[]
+  couponsUsed     CouponRedemption[]
+  referralsMade   Referral[]                @relation("Referrer")
+  referralUsed    Referral?                 @relation("Referred")
+  auditLogs       AuditLog[]
+  verifiedReviews Review[]                  @relation("ReviewVerifiedBy")
+  chargeRequests  AdditionalChargeRequest[] @relation("ChargeRequestedBy")
+  chargeResponses AdditionalChargeRequest[] @relation("ChargeRespondedBy")
+  bookingEvents   BookingEvent[]
+  bookingHistory  BookingStatusHistory[]
+  complaintsAssigned Complaint[]            @relation("ComplaintAssignee")
+  complaintEvents ComplaintEvent[]
+  disputesOpened  Dispute[]                 @relation("DisputeOpenedBy")
+  disputesDecided Dispute[]                 @relation("DisputeDecidedBy")
+  evidenceUploads DisputeEvidence[]
+  ticketsAssigned SupportTicket[]           @relation("TicketAssignee")
+  ticketCustomers SupportTicket[]           @relation("TicketCustomer")
+  refundDecisions Refund[]
+  payoutsApproved Payout[]
+  settingsUpdates Setting[]
+  reviewFlags     ReviewFlag[]
+  couponScopes    CommissionRule[]
+  notificationPreferences NotificationPreference[]
+  searchQueries   SearchQueryLog[]
+  verificationReviews ProviderVerification[] @relation("VerificationReviewedBy")
+  customerConversations Conversation[]     @relation("ConversationCustomer")
+
+  @@index([status, createdAt])
+  @@index([primaryRole, status])
+  @@index([deletedAt])
+  @@map("users")
+}
+
+/// A user may hold several staff roles (FINANCE + ANALYST, etc.). Customer and
+/// provider identity come from the linked profile, not from this table, so
+/// granting a staff role can never implicitly grant provider access.
+model UserRoleAssignment {
+  id        String   @id @default(cuid())
+  userId    String
+  role      UserRole
+  grantedBy String?
+  grantedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, role])
+  @@index([role])
+  @@map("user_role_assignments")
+}
+
+model OtpCode {
+  id         String     @id @default(cuid())
+  userId     String?
+  phone      String?
+  email      String?
+  codeHash   String
+  purpose    OtpPurpose
+  attempts   Int        @default(0)
+  maxAttempts Int       @default(5)
+  expiresAt  DateTime
+  consumedAt DateTime?
+  ip         String?
+  userAgent  String?
+  createdAt  DateTime   @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([phone, purpose, createdAt])
+  @@index([email, purpose, createdAt])
+  @@index([expiresAt])
+  @@map("otp_codes")
+}
+
+model Session {
+  id         String    @id @default(cuid())
+  userId     String
+  tokenHash  String    @unique
+  userAgent  String?
+  ip         String?
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  lastSeenAt DateTime  @default(now())
+  createdAt  DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, revokedAt])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+// ---------------------------------------------------------------------------
+// Bangladesh geography
+// ---------------------------------------------------------------------------
+
+/// Self-referencing place tree: DIVISION -> DISTRICT -> THANA -> AREA.
+/// `aliases` carries the Banglish spellings people actually type
+/// ("gulshan", "banani") so search matches real intent, not just official names.
+model Location {
+  id          String       @id @default(cuid())
+  parentId    String?
+  type        LocationType
+  code        String?      @unique
+  nameEn      String
+  nameBn      String
+  slug        String       @unique
+  aliases     String[]     @default([])
+  latitude    Float?
+  longitude   Float?
+  isActive    Boolean      @default(true)
+  sequence    Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  parent        Location?            @relation("LocationTree", fields: [parentId], references: [id], onDelete: Restrict)
+  children      Location[]           @relation("LocationTree")
+  addresses     Address[]
+  serviceAreas  ProviderServiceArea[]
+
+  @@index([parentId, type])
+  @@index([type, isActive])
+  @@map("locations")
+}
+
+// ---------------------------------------------------------------------------
+// Customer
+// ---------------------------------------------------------------------------
+
+model CustomerProfile {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  referralCode String   @unique
+  referredById String?
+  phone        String?
+  isBanned     Boolean  @default(false)
+  banReason    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  referredBy CustomerProfile? @relation("CustomerReferral", fields: [referredById], references: [id], onDelete: SetNull)
+  referrals  CustomerProfile[] @relation("CustomerReferral")
+
+  @@map("customer_profiles")
+}
+
+model Address {
+  id          String      @id @default(cuid())
+  userId      String
+  label       String
+  type        AddressType @default(HOME)
+  line1       String
+  line2       String?
+  landmark    String?
+  locationId  String?
+  areaName    String
+  districtName String
+  divisionName String
+  postalCode  String?
+  latitude    Float?
+  longitude   Float?
+  isDefault   Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  deletedAt   DateTime?
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  location Location? @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  bookings Booking[]
+
+  @@index([userId, isDefault])
+  @@index([locationId])
+  @@map("addresses")
+}
+
+model SavedProvider {
+  id                String   @id @default(cuid())
+  userId            String
+  providerProfileId String
+  createdAt         DateTime @default(now())
+
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, providerProfileId])
+  @@map("saved_providers")
+}
+
+// ---------------------------------------------------------------------------
+// Catalogue
+// ---------------------------------------------------------------------------
+
+model Category {
+  id            String   @id @default(cuid())
+  parentId      String?
+  slug          String   @unique
+  nameEn        String
+  nameBn        String
+  nameBanglish  String?
+  descriptionEn String?
+  descriptionBn String?
+  icon          String?
+  imageUrl      String?
+  /// Free-form search terms: "রেফ্রিজারেটর", "fridge", "cold machine"...
+  keywords      String[] @default([])
+  sequence      Int      @default(0)
+  isActive      Boolean  @default(true)
+  /// Categories only go live once a real supply of providers exists for them.
+  isPublished   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: Restrict)
+  children Category[] @relation("CategoryTree")
+  services Service[]
+
+  @@index([parentId, isActive])
+  @@index([isPublished, sequence])
+  @@map("categories")
+}
+
+model Service {
+  id            String   @id @default(cuid())
+  categoryId    String
+  slug          String   @unique
+  nameEn        String
+  nameBn        String
+  nameBanglish  String?
+  descriptionEn String?
+  descriptionBn String?
+  keywords      String[] @default([])
+  icon          String?
+  /// Service typically needs an on-site visit (vs. e.g. document pickup).
+  requiresVisit Boolean  @default(true)
+  /// Typical on-site duration, used to validate availability windows.
+  durationMinutes Int   @default(60)
+  isEmergency   Boolean  @default(false)
+  isActive      Boolean  @default(true)
+  isPublished   Boolean  @default(false)
+  sequence      Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  category          Category          @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  providerServices  ProviderService[]
+  bookings          Booking[]
+  commissionRules   CommissionRule[]
+
+  @@index([categoryId, isActive])
+  @@index([isPublished, sequence])
+  @@map("services")
+}
+
+// ---------------------------------------------------------------------------
+// Provider
+// ---------------------------------------------------------------------------
+
+model ProviderProfile {
+  id              String         @id @default(cuid())
+  userId          String         @unique
+  slug            String         @unique
+  displayName     String
+  headline        String?
+  bio             String?
+  photoUrl        String?
+  coverUrl        String?
+  businessName    String?
+  businessType    String?
+  tradeLicenseNo  String?
+  nidNumber       String?
+  experienceYears Int            @default(0)
+  status          ProviderStatus @default(DRAFT)
+  verificationSubmittedAt DateTime?
+  approvedAt      DateTime?
+  rejectionReason String?
+  deactivatedAt   DateTime?
+
+  // Paid placement. Rendered as a clearly labelled "Sponsored" chip that is
+  // visually distinct from every verification badge. Never used to rank above
+  // availability, distance or service compatibility.
+  isSponsored     Boolean   @default(false)
+  sponsoredUntil  DateTime?
+
+  // Operational limits and load, used by the matcher.
+  maxConcurrentJobs Int       @default(5)
+  acceptsUrgentJobs Boolean   @default(true)
+
+  // Cached counters. Recomputed from real bookings by a background job —
+  // never incremented from a client request.
+  responseRate     Float     @default(0)
+  avgResponseMinutes Int?
+  completedJobs    Int       @default(0)
+  cancelledJobs    Int       @default(0)
+  noShowCount      Int       @default(0)
+  ratingAvg        Float     @default(0)
+  ratingCount      Int       @default(0)
+  totalEarningsPoisha BigInt @default(0)
+  pendingPayoutPoisha BigInt @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  user            User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  verifications   ProviderVerification[]
+  services        ProviderService[]
+  serviceAreas    ProviderServiceArea[]
+  availability    ProviderAvailability[]
+  exceptions      ProviderAvailabilityException[]
+  timeOff         ProviderTimeOff[]
+  portfolio       PortfolioItem[]
+  bookings        Booking[]
+  payments        Payment[]
+  payouts         Payout[]
+  payoutMethods   ProviderPayoutMethod[]
+  reviews         Review[]
+  complaints      Complaint[]
+  conversations   Conversation[]
+  savedBy         SavedProvider[]
+
+  @@index([status, isSponsored])
+  @@index([ratingAvg, completedJobs])
+  @@index([createdAt])
+  @@index([deletedAt])
+  @@map("provider_profiles")
+}
+
+/// One row per verification type. A badge is rendered only when a row here has
+/// status APPROVED, so badges can never appear without a real verification.
+model ProviderVerification {
+  id                String             @id @default(cuid())
+  providerProfileId String
+  type              VerificationType
+  status            VerificationStatus @default(PENDING)
+  /// Private object-storage keys. Never public URLs.
+  documentKeys      String[]           @default([])
+  documentMeta      Json?
+  rejectionReason   String?
+  reviewedByUserId  String?
+  reviewedAt        DateTime?
+  expiresAt         DateTime?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  providerProfile ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Cascade)
+  reviewedBy      User?           @relation("VerificationReviewedBy", fields: [reviewedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([providerProfileId, type, status])
+  @@index([status, createdAt])
+  @@map("provider_verifications")
+}
+
+model ProviderService {
+  id                String    @id @default(cuid())
+  providerProfileId String
+  serviceId         String
+  priceMode         PriceMode @default(FIXED)
+  basePricePoisha   Int?
+  minPricePoisha    Int
+  maxPricePoisha    Int
+  currency          String    @default("BDT")
+  /// Free-text scope note, e.g. "Split & window AC up to 1.5 ton".
+  scopeNote         String?
+  minDurationMinutes Int      @default(60)
+  isActive          Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  providerProfile ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Cascade)
+  service         Service         @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  bookings        Booking[]
+
+  @@unique([providerProfileId, serviceId])
+  @@index([serviceId, isActive])
+  @@index([providerProfileId, isActive])
+  @@map("provider_services")
+}
+
+model ProviderServiceArea {
+  id                String   @id @default(cuid())
+  providerProfileId String
+  locationId        String
+  radiusKm          Int      @default(8)
+  travelFeePoisha   Int      @default(0)
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+
+  providerProfile ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Cascade)
+  location        Location        @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  @@unique([providerProfileId, locationId])
+  @@index([locationId, isActive])
+  @@map("provider_service_areas")
+}
+
+/// Weekly recurring working window, stored as minutes from midnight so there is
+/// no timezone ambiguity in the database.
+model ProviderAvailability {
+  id                String   @id @default(cuid())
+  providerProfileId String
+  /// 0 = Sunday ... 6 = Saturday (matches JS Date#getDay, Asia/Dhaka).
+  weekday           Int
+  startMinute       Int
+  endMinute         Int
+  slotMinutes       Int      @default(120)
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+
+  providerProfile ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Cascade)
+
+  @@unique([providerProfileId, weekday, startMinute, endMinute])
+  @@index([providerProfileId, weekday, isActive])
+  @@map("provider_availability")
+}
+
+model ProviderAvailabilityException {
+  id                String   @id @default(cuid())
+  providerProfileId String
+  date              DateTime @db.Date
+  isAvailable       Boolean  @default(false)
+  startMinute       Int?
+  endMinute         Int?
+  reason            String?
+  createdAt         DateTime @default(now())
+
+  providerProfile ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Cascade)
+
+  @@unique([providerProfileId, date])
+  @@index([date])
+  @@map("provider_availability_exceptions")
+}
+
+model ProviderTimeOff {
+  id                String   @id @default(cuid())
+  providerProfileId String
+  startsAt          DateTime
+  endsAt            DateTime
+  reason            String?
+  createdAt         DateTime @default(now())
+
+  providerProfile ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Cascade)
+
+  @@index([providerProfileId, startsAt, endsAt])
+  @@map("provider_time_off")
+}
+
+model ProviderPayoutMethod {
+  id                String          @id @default(cuid())
+  providerProfileId String
+  type              PayoutMethodType
+  accountNumber     String
+  accountName       String
+  bankName          String?
+  isPrimary         Boolean         @default(false)
+  isVerified        Boolean         @default(false)
+  verifiedAt        DateTime?
+  createdAt         DateTime        @default(now())
+  deletedAt         DateTime?
+
+  providerProfile ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Cascade)
+
+  @@index([providerProfileId, isVerified])
+  @@map("provider_payout_methods")
+}
+
+model PortfolioItem {
+  id                String   @id @default(cuid())
+  providerProfileId String
+  serviceId         String?
+  title             String
+  description       String?
+  imageKeys         String[] @default([])
+  completedAt       DateTime?
+  createdAt         DateTime @default(now())
+  deletedAt         DateTime?
+
+  providerProfile ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Cascade)
+
+  @@index([providerProfileId, createdAt])
+  @@map("portfolio_items")
+}
+
+// ---------------------------------------------------------------------------
+// Booking
+// ---------------------------------------------------------------------------
+
+model Booking {
+  id     String @id @default(cuid())
+  /// Human-quotable reference, e.g. FB-7KQ2M4. Shown to both sides and to
+  /// support, so it must be short and unambiguous.
+  reference String @unique
+
+  customerId         String
+  providerProfileId  String
+  serviceId          String
+  providerServiceId  String?
+  addressId          String?
+
+  // ---- snapshot of what was agreed at booking time -------------------------
+  serviceNameEn      String
+  serviceNameBn      String
+  categoryNameEn     String
+  providerName       String
+  providerPhone      String
+  addressSnapshot    Json
+  areaName           String
+  districtName       String
+  latitude           Float?
+  longitude          Float?
+
+  // ---- money ---------------------------------------------------------------
+  quotedMinPoisha    Int
+  quotedMaxPoisha    Int
+  /// The number both sides agreed to. For RANGE pricing this is null until the
+  /// provider quotes; the customer sees the range, never a silently higher total.
+  agreedPricePoisha  Int?
+  basePricePoisha    Int
+  extrasPoisha       Int      @default(0)
+  travelFeePoisha    Int      @default(0)
+  discountPoisha     Int      @default(0)
+  totalPoisha        Int
+  commissionPoisha   Int
+  providerEarningPoisha Int
+  currency           String   @default("BDT")
+  priceMode          PriceMode
+
+  // ---- schedule & state ----------------------------------------------------
+  status            BookingStatus @default(REQUESTED)
+  scheduledAt       DateTime
+  scheduledEndAt    DateTime?
+  acceptedAt        DateTime?
+  onTheWayAt        DateTime?
+  arrivedAt         DateTime?
+  startedAt         DateTime?
+  completedAt       DateTime?
+  cancelledAt       DateTime?
+  cancelledBy       BookingActor?
+  cancellationReason String?
+  cancellationFeePoisha Int     @default(0)
+  noShowBy          BookingActor?
+  disputedAt        DateTime?
+  /// Response deadline for the provider; an expiry job auto-cancels past it.
+  respondBy         DateTime?
+
+  paymentStatus     PaymentStatus @default(PENDING)
+  paymentMethod     PaymentMethod @default(CASH)
+  customerNote      String?
+  providerNote      String?
+  couponRedemptionId String?
+  referralId        String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  customer        User             @relation("CustomerBookings", fields: [customerId], references: [id], onDelete: Restrict)
+  providerProfile ProviderProfile  @relation(fields: [providerProfileId], references: [id], onDelete: Restrict)
+  service         Service          @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  providerService ProviderService? @relation(fields: [providerServiceId], references: [id], onDelete: SetNull)
+  address         Address?         @relation(fields: [addressId], references: [id], onDelete: SetNull)
+
+  statusHistory       BookingStatusHistory[]
+  events              BookingEvent[]
+  additionalCharges   AdditionalChargeRequest[]
+  messages            Message[]
+  conversation        Conversation?
+  review              Review?
+  payments            Payment[]
+  complaints          Complaint[]
+  disputes            Dispute[]
+  tickets             SupportTicket[]
+  couponRedemption    CouponRedemption?  @relation("BookingCoupon")
+  referral            Referral?         @relation("ReferralQualifyingBooking")
+
+  @@index([customerId, status, createdAt])
+  @@index([providerProfileId, status, scheduledAt])
+  @@index([status, respondBy])
+  @@index([status, createdAt])
+  @@index([serviceId, createdAt])
+  @@index([createdAt])
+  @@map("bookings")
+}
+
+model BookingStatusHistory {
+  id        String        @id @default(cuid())
+  bookingId String
+  fromStatus BookingStatus?
+  toStatus  BookingStatus
+  actor     BookingActor
+  actorUserId String?
+  reason    String?
+  meta      Json?
+  createdAt DateTime      @default(now())
+
+  booking    Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  actorUser  User?   @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([bookingId, createdAt])
+  @@map("booking_status_history")
+}
+
+/// Non-status activity on a booking (charge requested, navigated, etc). Powers
+/// the single timeline both parties and support see.
+model BookingEvent {
+  id        String   @id @default(cuid())
+  bookingId String
+  actor     BookingActor
+  actorUserId String?
+  type      String
+  summary   String
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  actorUser User?   @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([bookingId, createdAt])
+  @@map("booking_events")
+}
+
+/// Providers may never just raise the final price. Any extra cost is a request
+/// the customer sees, and only an APPROVED request is ever added to the total.
+model AdditionalChargeRequest {
+  id             String                 @id @default(cuid())
+  bookingId      String
+  requestedByUserId String
+  amountPoisha   Int
+  reason         String
+  status         AdditionalChargeStatus @default(PENDING)
+  customerNote   String?
+  respondedAt    DateTime?
+  respondedByUserId String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+
+  booking        Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  requestedBy    User    @relation("ChargeRequestedBy", fields: [requestedByUserId], references: [id], onDelete: Restrict)
+  respondedBy    User?   @relation("ChargeRespondedBy", fields: [respondedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([bookingId, status])
+  @@index([requestedByUserId, createdAt])
+  @@map("additional_charge_requests")
+}
+
+// ---------------------------------------------------------------------------
+// Messaging
+// ---------------------------------------------------------------------------
+
+model Conversation {
+  id                String   @id @default(cuid())
+  customerId        String
+  providerProfileId String
+  bookingId         String?  @unique
+  lastMessageAt     DateTime @default(now())
+  lastMessagePreview String?
+  customerUnread    Int      @default(0)
+  providerUnread    Int      @default(0)
+  isClosed          Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  customer User             @relation("ConversationCustomer", fields: [customerId], references: [id], onDelete: Cascade)
+  provider ProviderProfile  @relation(fields: [providerProfileId], references: [id], onDelete: Cascade)
+  booking  Booking?         @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@index([customerId, lastMessageAt])
+  @@index([providerProfileId, lastMessageAt])
+  @@map("conversations")
+}
+
+model Message {
+  id             String      @id @default(cuid())
+  conversationId String
+  senderUserId   String
+  bookingId      String?
+  kind           MessageKind @default(TEXT)
+  body           String
+  attachmentKeys String[]    @default([])
+  readAt         DateTime?
+  createdAt      DateTime    @default(now())
+  deletedAt      DateTime?
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation(fields: [senderUserId], references: [id], onDelete: Cascade)
+  booking      Booking?     @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+
+  @@index([conversationId, createdAt])
+  @@index([senderUserId, readAt])
+  @@map("messages")
+}
+
+// ---------------------------------------------------------------------------
+// Reviews
+// ---------------------------------------------------------------------------
+
+/// One review per completed booking, enforced by the unique constraint. This is
+/// the structural guarantee that ratings cannot be invented.
+model Review {
+  id                String       @id @default(cuid())
+  bookingId         String       @unique
+  customerId        String
+  providerProfileId String
+  serviceId         String
+  rating            Int
+  title             String?
+  body              String
+  providerReply     String?
+  providerRepliedAt DateTime?
+  status            ReviewStatus @default(PUBLISHED)
+  moderatedByUserId String?
+  moderationNote    String?
+  reportCount       Int          @default(0)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  booking         Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  customer        User           @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  providerProfile ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Cascade)
+  moderatedBy     User?          @relation("ReviewVerifiedBy", fields: [moderatedByUserId], references: [id], onDelete: SetNull)
+  flags           ReviewFlag[]
+
+  @@index([providerProfileId, status, createdAt])
+  @@index([customerId, createdAt])
+  @@index([status, reportCount])
+  @@map("reviews")
+}
+
+model ReviewFlag {
+  id           String   @id @default(cuid())
+  reviewId     String
+  reason       String
+  detail       String?
+  reportedByUserId String?
+  resolvedAt   DateTime?
+  resolution   String?
+  createdAt    DateTime @default(now())
+
+  review     Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  reportedBy User?   @relation(fields: [reportedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([reviewId])
+  @@index([resolvedAt])
+  @@map("review_flags")
+}
+
+// ---------------------------------------------------------------------------
+// Money
+// ---------------------------------------------------------------------------
+
+model Payment {
+  id                String        @id @default(cuid())
+  bookingId         String
+  customerId        String
+  providerProfileId String
+  method            PaymentMethod
+  channel           PaymentChannel @default(PROVIDER)
+  amountPoisha      Int
+  commissionPoisha  Int
+  providerAmountPoisha Int
+  refundedPoisha    Int           @default(0)
+  currency          String        @default("BDT")
+  status            PaymentStatus @default(CREATED)
+  /// Gateway identity. `idempotencyKey` is what makes a retry safe: a duplicate
+  /// create request can never produce a second charge.
+  gateway           String
+  idempotencyKey    String        @unique
+  gatewayPaymentId  String?
+  gatewayOrderId    String?
+  gatewayReference  String?
+  /// Raw gateway response kept for dispute evidence and reconciliation.
+  gatewayPayload    Json?
+  failureCode       String?
+  failureReason     String?
+  paidAt            DateTime?
+  capturedByUserId  String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  booking         Booking        @relation(fields: [bookingId], references: [id], onDelete: Restrict)
+  customer        User           @relation("CustomerPayments", fields: [customerId], references: [id], onDelete: Restrict)
+  providerProfile ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Restrict)
+  refunds         Refund[]
+  payoutItems     PayoutItem[]
+
+  @@index([bookingId, status])
+  @@index([providerProfileId, status, createdAt])
+  @@index([customerId, createdAt])
+  @@index([status, createdAt])
+  @@map("payments")
+}
+
+model Refund {
+  id                String        @id @default(cuid())
+  paymentId         String
+  amountPoisha      Int
+  reason            String
+  status            PaymentStatus @default(PENDING)
+  gatewayRefundId   String?
+  processedByUserId String?
+  processedAt       DateTime?
+  createdAt         DateTime      @default(now())
+
+  payment   Payment @relation(fields: [paymentId], references: [id], onDelete: Restrict)
+  processedBy User?  @relation(fields: [processedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([paymentId, createdAt])
+  @@index([status])
+  @@map("refunds")
+}
+
+model Payout {
+  id                String       @id @default(cuid())
+  reference         String       @unique
+  providerProfileId String
+  periodStart       DateTime
+  periodEnd         DateTime
+  grossPoisha       Int
+  commissionPoisha  Int
+  adjustmentPoisha  Int          @default(0)
+  netPoisha         Int
+  currency          String       @default("BDT")
+  status            PayoutStatus @default(PENDING)
+  methodId          String?
+  methodSnapshot    Json?
+  gatewayTransferId String?
+  note              String?
+  processedByUserId String?
+  processedAt       DateTime?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  providerProfile ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Restrict)
+  items           PayoutItem[]
+  processedBy     User?           @relation(fields: [processedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([providerProfileId, status, createdAt])
+  @@index([status, createdAt])
+  @@map("payouts")
+}
+
+/// Ties a payout to the exact captured payments it settles, so earnings always
+/// reconcile against real transactions.
+model PayoutItem {
+  id          String   @id @default(cuid())
+  payoutId    String
+  paymentId   String
+  amountPoisha Int
+
+  payout  Payout  @relation(fields: [payoutId], references: [id], onDelete: Cascade)
+  payment Payment @relation(fields: [paymentId], references: [id], onDelete: Restrict)
+
+  @@unique([payoutId, paymentId])
+  @@index([paymentId])
+  @@map("payout_items")
+}
+
+/// Commission is data, not code. The most specific active rule wins:
+/// service > category > global.
+model CommissionRule {
+  id             String   @id @default(cuid())
+  name           String
+  commissionBps  Int
+  serviceId      String?
+  categoryId     String?
+  effectiveFrom  DateTime @default(now())
+  effectiveTo    DateTime?
+  isActive       Boolean  @default(true)
+  createdByUserId String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  service Service? @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  createdBy User?   @relation(fields: [createdByUserId], references: [id], onDelete: SetNull)
+
+  @@index([isActive, effectiveFrom])
+  @@index([serviceId])
+  @@index([categoryId])
+  @@map("commission_rules")
+}
+
+// ---------------------------------------------------------------------------
+// Complaints, disputes, support
+// ---------------------------------------------------------------------------
+
+model Complaint {
+  id                String           @id @default(cuid())
+  reference         String           @unique
+  bookingId         String?
+  customerId        String
+  providerProfileId String?
+  against           ComplaintAgainst
+  category          ComplaintCategory
+  subject           String
+  description       String
+  status            ComplaintStatus  @default(OPEN)
+  priority          Priority         @default(NORMAL)
+  assignedToUserId  String?
+  resolution        String?
+  resolutionType    ResolutionType?
+  resolvedAt        DateTime?
+  closedAt          DateTime?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  booking         Booking?          @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  customer        User              @relation("ComplaintCustomer", fields: [customerId], references: [id], onDelete: Restrict)
+  providerProfile ProviderProfile?  @relation(fields: [providerProfileId], references: [id], onDelete: SetNull)
+  assignedTo      User?             @relation("ComplaintAssignee", fields: [assignedToUserId], references: [id], onDelete: SetNull)
+  dispute         Dispute?
+  evidence        DisputeEvidence[]
+  events          ComplaintEvent[]
+
+  @@index([status, priority, createdAt])
+  @@index([customerId, createdAt])
+  @@index([providerProfileId, createdAt])
+  @@index([assignedToUserId, status])
+  @@map("complaints")
+}
+
+model Dispute {
+  id                String        @id @default(cuid())
+  complaintId       String        @unique
+  bookingId         String
+  openedByUserId    String
+  status            DisputeStatus @default(OPEN)
+  claimAmountPoisha Int
+  awardedAmountPoisha Int?
+  currency          String        @default("BDT")
+  decision          String?
+  decidedByUserId   String?
+  decidedAt         DateTime?
+  openedAt          DateTime      @default(now())
+  closedAt          DateTime?
+
+  complaint Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  booking   Booking   @relation(fields: [bookingId], references: [id], onDelete: Restrict)
+  openedBy  User      @relation("DisputeOpenedBy", fields: [openedByUserId], references: [id], onDelete: Restrict)
+  decidedBy User?     @relation("DisputeDecidedBy", fields: [decidedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([status, openedAt])
+  @@index([bookingId])
+  @@map("disputes")
+}
+
+model DisputeEvidence {
+  id               String   @id @default(cuid())
+  complaintId      String
+  uploadedByUserId String
+  kind             String
+  storageKey       String
+  mimeType         String?
+  sizeBytes        Int?
+  note             String?
+  createdAt        DateTime @default(now())
+
+  complaint  Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  uploadedBy User      @relation(fields: [uploadedByUserId], references: [id], onDelete: Cascade)
+
+  @@index([complaintId, createdAt])
+  @@map("dispute_evidence")
+}
+
+model ComplaintEvent {
+  id          String   @id @default(cuid())
+  complaintId String
+  actorUserId String?
+  actorRole   String?
+  type        String
+  note        String?
+  meta        Json?
+  createdAt   DateTime @default(now())
+
+  complaint Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  actor     User?     @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([complaintId, createdAt])
+  @@map("complaint_events")
+}
+
+model SupportTicket {
+  id               String       @id @default(cuid())
+  reference        String       @unique
+  openedByUserId   String
+  customerId       String?
+  bookingId        String?
+  category         String
+  subject          String
+  priority         Priority     @default(NORMAL)
+  status           TicketStatus @default(OPEN)
+  assignedToUserId String?
+  lastMessageAt    DateTime     @default(now())
+  closedAt         DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  openedBy   User            @relation("TicketOpener", fields: [openedByUserId], references: [id], onDelete: Restrict)
+  customer   User?           @relation("TicketCustomer", fields: [customerId], references: [id], onDelete: SetNull)
+  booking    Booking?        @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  assignedTo User?           @relation("TicketAssignee", fields: [assignedToUserId], references: [id], onDelete: SetNull)
+  messages   TicketMessage[]
+
+  @@index([status, priority, lastMessageAt])
+  @@index([assignedToUserId, status])
+  @@index([openedByUserId, createdAt])
+  @@map("support_tickets")
+}
+
+model TicketMessage {
+  id         String   @id @default(cuid())
+  ticketId   String
+  senderUserId String
+  body       String
+  attachmentKeys String[] @default([])
+  isStaff    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  ticket SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  sender User          @relation(fields: [senderUserId], references: [id], onDelete: Cascade)
+
+  @@index([ticketId, createdAt])
+  @@map("ticket_messages")
+}
+
+// ---------------------------------------------------------------------------
+// Notifications
+// ---------------------------------------------------------------------------
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  body      String
+  /// Deep link target, e.g. /pro/bookings/abc
+  href      String?
+  data      Json?
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+
+  user      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deliveries NotificationDelivery[]
+
+  @@index([userId, readAt, createdAt])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+model NotificationDelivery {
+  id             String              @id @default(cuid())
+  notificationId String
+  channel        NotificationChannel
+  status         DeliveryStatus      @default(PENDING)
+  providerId     String?
+  error          String?
+  attempts       Int                 @default(0)
+  sentAt         DateTime?
+  createdAt      DateTime            @default(now())
+
+  notification Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@unique([notificationId, channel])
+  @@index([status, createdAt])
+  @@map("notification_deliveries")
+}
+
+model NotificationPreference {
+  id      String              @id @default(cuid())
+  userId  String
+  channel NotificationChannel
+  event   NotificationType
+  enabled Boolean             @default(true)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, channel, event])
+  @@map("notification_preferences")
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  userAgent String?
+  lastSeenAt DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("push_subscriptions")
+}
+
+// ---------------------------------------------------------------------------
+// Coupons & referrals
+// ---------------------------------------------------------------------------
+
+model Coupon {
+  id            String              @id @default(cuid())
+  code          String              @unique
+  description   String?
+  type          CouponType
+  /// PERCENT -> basis points of the subtotal. FIXED -> poisha.
+  value         Int
+  maxDiscountPoisha Int?
+  minOrderPoisha Int?
+  startsAt      DateTime
+  endsAt        DateTime
+  maxRedemptions Int?
+  maxRedemptionsPerUser Int          @default(1)
+  redemptionCount Int               @default(0)
+  appliesToServiceIds  String[]      @default([])
+  appliesToCategoryIds String[]      @default([])
+  firstBookingOnly     Boolean        @default(false)
+  isActive      Boolean             @default(true)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+
+  redemptions CouponRedemption[]
+
+  @@index([isActive, startsAt, endsAt])
+  @@map("coupons")
+}
+
+model CouponRedemption {
+  id            String   @id @default(cuid())
+  couponId      String
+  userId        String
+  bookingId     String   @unique
+  subtotalPoisha Int
+  discountPoisha Int
+  createdAt     DateTime @default(now())
+
+  coupon  Coupon  @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  booking Booking @relation("BookingCoupon", fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@index([couponId, userId])
+  @@map("coupon_redemptions")
+}
+
+model Referral {
+  id             String         @id @default(cuid())
+  code           String         @unique
+  referrerUserId String
+  referredUserId String         @unique
+  status         ReferralStatus @default(PENDING)
+  rewardPoisha   Int            @default(0)
+  qualifyingBookingId String?    @unique
+  qualifiedAt    DateTime?
+  rewardedAt     DateTime?
+  createdAt      DateTime       @default(now())
+
+  referrer     User     @relation("Referrer", fields: [referrerUserId], references: [id], onDelete: Cascade)
+  referred     User     @relation("Referred", fields: [referredUserId], references: [id], onDelete: Cascade)
+  booking      Booking? @relation("ReferralQualifyingBooking", fields: [qualifyingBookingId], references: [id], onDelete: SetNull)
+
+  @@index([referrerUserId, status])
+  @@index([status, createdAt])
+  @@map("referrals")
+}
+
+// ---------------------------------------------------------------------------
+// Platform operations
+// ---------------------------------------------------------------------------
+
+/// Business rules live here so cancellation windows, fees and commission
+/// defaults are configurable from the admin panel instead of hard-coded.
+model Setting {
+  key         String   @id
+  value       Json
+  group       String   @default("general")
+  description String?
+  updatedByUserId String?
+  updatedAt   DateTime @updatedAt
+
+  updatedBy User? @relation(fields: [updatedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([group])
+  @@map("settings")
+}
+
+model AuditLog {
+  id         String      @id @default(cuid())
+  actorUserId String?
+  actorRole  String?
+  action     AuditAction
+  entityType String
+  entityId   String
+  summary    String?
+  before     Json?
+  after      Json?
+  ip         String?
+  userAgent  String?
+  createdAt  DateTime    @default(now())
+
+  actor User? @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, entityId, createdAt])
+  @@index([actorUserId, createdAt])
+  @@index([action, createdAt])
+  @@map("audit_logs")
+}
+
+/// Durable queue. Workers claim rows with SELECT ... FOR UPDATE SKIP LOCKED, so
+/// multiple workers can run safely without a dedicated broker.
+model Job {
+  id          String    @id @default(cuid())
+  type        JobType
+  status      JobStatus @default(PENDING)
+  payload     Json
+  priority    Int       @default(0)
+  attempts    Int       @default(0)
+  maxAttempts Int       @default(3)
+  runAt       DateTime  @default(now())
+  lockedAt    DateTime?
+  lockedBy    String?
+  lastError   String?
+  /// Collapses duplicate work, e.g. reminder-per-booking-per-day.
+  dedupeKey   String?   @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([status, runAt, priority])
+  @@index([type, status])
+  @@map("jobs")
+}
+
+/// Real demand signal, not decoration: what people actually searched for and
+/// whether they found a provider. Feeds launch-city planning.
+model SearchQueryLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  rawQuery   String
+  normalizedQuery String
+  detectedLanguage String?
+  locationId String?
+  resultCount Int    @default(0)
+  clickedProviderId String?
+  createdAt  DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([normalizedQuery, createdAt])
+  @@index([createdAt])
+  @@map("search_query_logs")
+}

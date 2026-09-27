@@ -1,0 +1,33 @@
+{
+  "name": "fixbondhu",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FixBondhu — verified local services marketplace for Bangladesh",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@fixbondhu/web",
+    "build": "npm run build --workspace=@fixbondhu/web",
+    "start": "npm run start --workspace=@fixbondhu/web",
+    "lint": "npm run lint --workspace=@fixbondhu/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "db:generate": "npm run generate --workspace=@fixbondhu/db",
+    "db:migrate": "npm run migrate --workspace=@fixbondhu/db",
+    "db:deploy": "npm run deploy --workspace=@fixbondhu/db",
+    "db:push": "npm run push --workspace=@fixbondhu/db",
+    "db:seed": "npm run seed --workspace=@fixbondhu/db",
+    "db:studio": "npm run studio --workspace=@fixbondhu/db",
+    "db:reset": "npm run reset --workspace=@fixbondhu/db",
+    "setup": "npm install && npm run db:generate && npm run db:deploy && npm run db:seed"
+  },
+  "allowScripts": {
+    "prisma@7.10.0": true,
+    "@prisma/engines@7.10.0": true,
+    "esbuild@0.28.2": true
+  }
+}

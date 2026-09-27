@@ -1,0 +1,32 @@
+{
+  "name": "@fixbondhu/db",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate": "prisma generate",
+    "migrate": "prisma migrate dev",
+    "deploy": "prisma migrate deploy",
+    "push": "prisma db push",
+    "seed": "tsx src/seed.ts",
+    "studio": "prisma studio",
+    "validate": "prisma validate",
+    "format": "prisma format",
+    "reset": "prisma migrate reset --force",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@prisma/adapter-neon": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "prisma": "^7.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
