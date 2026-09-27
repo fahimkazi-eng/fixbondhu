@@ -1,36 +1,29 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "FixBondhu Operations",
-  robots: { index: false, follow: false },
-};
+import { SurfaceNav } from "@/components/surface-nav";
+import { adminNav } from "@/lib/admin-nav";
+import { headers } from "next/headers";
+
+export const metadata: Metadata = { title: "FixBondhu Operations", robots: { index: false } };
+export const dynamic = "force-dynamic";
 
 /**
- * Admin chrome.
+ * Admin layout.
  *
- * Navigation lists the areas that exist. Every data page behind these links
- * calls requireStaff() on the server, so hiding an item here is presentation
- * only, never the control. Role-specific limits are enforced per permission
- * inside each page, because a SUPPORT agent must not be able to reach
- * /admin/finance by typing the URL.
+ * Chrome only. The menu lists what exists, but every page behind it calls
+ * requireStaff() and checks a specific permission, because a SUPPORT agent
+ * legitimately sees this navigation while still being refused /admin/payouts.
+ * Hiding a link is presentation, never the control.
  */
-const SECTIONS = [
-  { href: "/admin", label: "Operations" },
-  { href: "/admin/providers", label: "Providers" },
-  { href: "/admin/verification", label: "Verification" },
-  { href: "/admin/bookings", label: "Bookings" },
-  { href: "/admin/complaints", label: "Complaints" },
-  { href: "/admin/payments", label: "Payments" },
-  { href: "/admin/content", label: "Content" },
-  { href: "/admin/analytics", label: "Analytics" },
-  { href: "/admin/audit", label: "Audit log" },
-];
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  const { groups, unread } = await adminNav();
+  const h = await headers();
+  const current = h.get("x-next-url") ?? h.get("x-invoke-path") ?? "/admin";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-dvh bg-ink-100">
-      <header className="border-b border-ink-200 bg-white">
+      <header className="sticky top-0 z-20 border-b border-ink-200 bg-white">
         <div className="container-page flex h-14 items-center justify-between">
           <Link href="/admin" className="flex items-center gap-2">
             <span
@@ -43,26 +36,62 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               FixBondhu <span className="font-normal text-ink-500">Operations</span>
             </span>
           </Link>
-          <Link href="/" className="text-xs text-ink-600 hover:text-ink-900">
-            Customer site
-          </Link>
+          <nav className="flex items-center gap-1 text-sm">
+            <Link href="/pro" className="hidden btn btn-secondary sm:inline-flex">
+              Provider view
+            </Link>
+            <Link href="/" className="btn btn-secondary">Customer site</Link>
+          </nav>
         </div>
       </header>
 
-      <div className="container-page py-6">
-        <nav className="mb-6 flex flex-wrap gap-1" aria-label="Admin sections">
-          {SECTIONS.map((section) => (
-            <Link
-              key={section.href}
-              href={section.href}
-              className="rounded-md border border-ink-200 bg-white px-2.5 py-1.5 text-xs font-medium text-ink-700 transition-colors hover:border-ink-300 hover:text-ink-900"
-            >
-              {section.label}
-            </Link>
-          ))}
-        </nav>
-        <main id="main">{children}</main>
+      <div className="container-page flex gap-6 py-6">
+        <aside className="hidden w-60 shrink-0 lg:block">
+          <div className="sticky top-20">
+            <SurfaceNav
+              groups={groups}
+              current={current}
+              homeHref="/admin"
+              homeLabel="Overview"
+              brandLabel="Admin"
+              unreadCount={unread}
+            />
+          </div>
+        </aside>
+
+        <main id="main" className="min-w-0 flex-1">
+          {children}
+        </main>
       </div>
+
+      <nav
+        aria-label="Admin sections"
+        className="sticky bottom-0 z-20 border-t border-ink-200 bg-white lg:hidden"
+      >
+        <ul className="container-page flex gap-1 overflow-x-auto py-2 text-sm">
+          {groups.flatMap((g) => g.items).map((item) => {
+            const active = current.startsWith(item.href);
+            return (
+              <li key={item.href} className="shrink-0">
+                <Link
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`rounded-md px-2.5 py-1.5 whitespace-nowrap transition-colors ${
+                    active ? "bg-brand-50 font-medium text-brand-800" : "text-ink-600"
+                  }`}
+                >
+                  {item.short ?? item.label}
+                  {item.count ? (
+                    <span className="ml-1 rounded-full bg-brand-600 px-1.5 text-[11px] font-semibold text-white">
+                      {item.count}
+                    </span>
+                  ) : null}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
     </div>
   );
 }
