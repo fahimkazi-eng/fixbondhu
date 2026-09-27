@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useRef } from "react";
 
 import { providerSendMessage, type ActionState } from "@/app/actions/provider";
+import { sendMessage, type ActionState as CustomerActionState } from "@/app/actions/customer";
 import { FormFeedback } from "@/components/submit-button";
 
 export interface ChatMessage {
@@ -15,7 +16,7 @@ export interface ChatMessage {
 /**
  * Conversation view.
  *
- * Scrolls to the newest message only when the user is already at the bottom,
+ * Scrolls to the newest message only when the reader is already at the bottom,
  * because yanking someone back down while they are reading earlier messages is
  * the single most irritating thing a chat window can do.
  */
@@ -23,15 +24,27 @@ export function ChatThread({
   conversationId,
   messages,
   peerName,
+  asProvider = false,
 }: {
   conversationId: string;
   messages: ChatMessage[];
   peerName: string;
+  asProvider?: boolean;
 }) {
-  const [state, formAction, pending] = useActionState<ActionState | null, FormData>(
-    providerSendMessage,
-    null,
-  );
+  // Both actions are wired; the one used is chosen by role, so the server action
+  // that runs is always the one that verifies ownership of the conversation.
+  const [providerState, providerAction, providerPending] = useActionState<
+    ActionState | null,
+    FormData
+  >(providerSendMessage, null);
+  const [customerState, customerAction, customerPending] = useActionState<
+    CustomerActionState | null,
+    FormData
+  >(sendMessage, null);
+
+  const state = asProvider ? providerState : customerState;
+  const formAction = asProvider ? providerAction : customerAction;
+  const pending = asProvider ? providerPending : customerPending;
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const atBottomRef = useRef(true);
 
