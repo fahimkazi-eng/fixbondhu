@@ -6,14 +6,13 @@ import { getUser } from "@/lib/auth";
 import { AuthForm } from "@/components/auth-form";
 
 export const metadata: Metadata = {
-  title: "Sign in",
+  title: "Create your account",
   robots: { index: false, follow: false },
 };
 
 export const dynamic = "force-dynamic";
 
-export default async function LoginPage() {
-  // An authenticated visitor has no business on the sign-in page.
+export default async function RegisterPage() {
   if (await getUser()) {
     redirect("/account");
   }
@@ -32,17 +31,25 @@ export default async function LoginPage() {
 
       <div className="w-full max-w-sm sm:mx-auto">
         <div className="mt-10">
-          <h1 className="text-xl font-semibold tracking-tight text-ink-900">Sign in</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-ink-900">
+            Create your account
+          </h1>
           <p className="mt-1 text-sm text-ink-600">
-            Sign in with the mobile number you registered.
+            Book and track services with FixBondhu.
           </p>
         </div>
 
         <AuthForm
-          action="/api/auth/login"
-          submitLabel="Sign in"
-          createAccountHref="/register"
+          action="/api/auth/register"
+          submitLabel="Create account"
           fields={[
+            {
+              name: "name",
+              label: "Full name",
+              type: "text",
+              autoComplete: "name",
+              placeholder: "Your name",
+            },
             {
               name: "phone",
               label: "Mobile number",
@@ -55,9 +62,18 @@ export default async function LoginPage() {
               name: "password",
               label: "Password",
               type: "password",
-              autoComplete: "current-password",
+              autoComplete: "new-password",
+              hint: "At least 8 characters.",
             },
           ]}
+          footer={
+            <p className="text-center text-sm text-ink-600">
+              Already registered?{" "}
+              <a href="/login" className="font-medium text-brand-700 underline">
+                Sign in
+              </a>
+            </p>
+          }
         />
       </div>
     </main>

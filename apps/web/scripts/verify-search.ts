@@ -8,7 +8,7 @@
  * Run with: npx tsx src/verify-search.ts
  */
 
-import { loadRootEnv } from "./lib/load-root-env";
+import { loadRootEnv } from "../src/lib/load-root-env";
 
 // Imported first so DATABASE_URL exists before the Prisma client is first used.
 // The client is constructed lazily, so import order no longer matters.
@@ -16,7 +16,7 @@ loadRootEnv();
 
 import { prisma } from "@fixbondhu/db";
 import { parseQuery } from "@fixbondhu/core";
-import { searchServices } from "./lib/search";
+import { searchServices } from "../src/lib/search";
 
 const QUERIES: Array<{ query: string; expect: string; note: string }> = [
   { query: "AC repair", expect: "AC Repair", note: "plain english" },

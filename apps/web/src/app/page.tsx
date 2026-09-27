@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import { prisma } from "@/lib/db";
+import { getUser } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Book verified home services in Bangladesh",
@@ -20,8 +21,9 @@ export const dynamic = "force-dynamic";
  * counts are zero, the page says so plainly.
  */
 export default async function HomePage() {
-  const [categories, serviceCount, providerCount, activeBookings] =
+  const [user, categories, serviceCount, providerCount, activeBookings] =
     await Promise.all([
+      getUser(),
       prisma.category.findMany({
         where: { isActive: true, isPublished: true },
         orderBy: { sequence: "asc" },
@@ -55,12 +57,25 @@ export default async function HomePage() {
             <span className="text-[15px] font-semibold tracking-tight">FixBondhu</span>
           </Link>
           <nav className="flex items-center gap-1">
-            <Link href="/login" className="btn btn-secondary">
-              Sign in
-            </Link>
-            <Link href="/pro" className="btn btn-primary hidden sm:inline-flex">
-              Join as a provider
-            </Link>
+            {user ? (
+              <>
+                <Link href="/account" className="btn btn-secondary">
+                  Account
+                </Link>
+                <Link href="/pro" className="btn btn-primary hidden sm:inline-flex">
+                  Join as a provider
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="btn btn-secondary">
+                  Sign in
+                </Link>
+                <Link href="/register" className="btn btn-primary">
+                  Create account
+                </Link>
+              </>
+            )}
           </nav>
         </div>
       </header>

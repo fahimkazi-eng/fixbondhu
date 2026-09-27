@@ -14,7 +14,7 @@
     "dev": "npm run dev --workspace=@fixbondhu/web",
     "build": "npm run db:generate && npm run build --workspace=@fixbondhu/web",
     "start": "npm run start --workspace=@fixbondhu/web",
-    "verify": "npm run verify --workspace=@fixbondhu/core && npm run verify:search --workspace=@fixbondhu/web",
+    "verify": "npm run verify --workspace=@fixbondhu/core && npm run verify:auth --workspace=@fixbondhu/web && npm run verify:search --workspace=@fixbondhu/web",
     "lint": "npm run lint --workspace=@fixbondhu/web",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "db:generate": "npm run generate --workspace=@fixbondhu/db",
@@ -24,7 +24,9 @@
     "db:seed": "npm run seed --workspace=@fixbondhu/db",
     "db:studio": "npm run studio --workspace=@fixbondhu/db",
     "db:reset": "npm run reset --workspace=@fixbondhu/db",
-    "setup": "npm install && npm run db:generate && npm run db:deploy && npm run db:seed"
+    "setup": "npm install && npm run db:generate && npm run db:deploy && npm run db:seed",
+    "verify:live": "npm run verify:live --workspace=@fixbondhu/web",
+    "cleanup:test-accounts": "npm run cleanup:test-accounts --workspace=@fixbondhu/web"
   },
   "allowScripts": {
     "prisma@7.10.0": true,

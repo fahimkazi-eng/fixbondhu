@@ -111,7 +111,17 @@ export function homeFor(user: SessionUser): string {
   return surface === "admin" ? "/admin" : surface === "provider" ? "/pro" : "/";
 }
 
-/** True when the user is verified at the phone level, required to transact. */
+/**
+ * Whether the user may transact.
+ *
+ * Currently returns true for any signed-in account because phone verification
+ * is intentionally not built yet. It is kept as a single named check so that
+ * when verification lands, every booking and payment path has exactly one place
+ * to start enforcing it, rather than the rule being scattered and forgotten in
+ * some of them.
+ */
 export function canTransact(user: SessionUser | null): boolean {
-  return Boolean(user?.phoneVerified);
+  if (!user) return false;
+  if (user.status === "SUSPENDED" || user.status === "BANNED") return false;
+  return true;
 }
