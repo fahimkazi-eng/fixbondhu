@@ -43,3 +43,6 @@ coverage/
 # local uploads (dev only) - production uses object storage
 .storage/
 .neon
+
+.vercel
+.env*
