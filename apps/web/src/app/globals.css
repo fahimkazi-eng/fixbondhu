@@ -1,0 +1,274 @@
+@import "tailwindcss";
+
+/*
+ * FixBondhu design system.
+ *
+ * Constraints that shaped this:
+ *  - Light interface, dark neutral text. Local service is a utility product;
+ *    people use it on cheap phones in daylight, often outdoors.
+ *  - Exactly ONE brand colour (teal). It carries meaning: primary action,
+ *    active state, verified trust. Using it decoratively would dilute the
+ *    signal that matters most on a marketplace, which is "this provider is
+ *    trustworthy".
+ *  - Deliberately NOT green = verified. A green check beside a service name
+ *    reads as a quality claim, so the verification badge uses a distinct
+ *    outline treatment instead of a filled brand-coloured pill.
+ *  - Small radii (8-10px) and hairline borders over heavy shadows. A dense
+ *    listing of providers needs to scan quickly.
+ *  - No gradients, no glassmorphism, no large animation. Every byte matters on
+ *    a 3G connection in Bangladesh.
+ */
+
+@theme {
+  --color-brand-50: #f0fdfa;
+  --color-brand-100: #ccfbf1;
+  --color-brand-200: #99f6e4;
+  --color-brand-500: #14b8a6;
+  --color-brand-600: #0d9488;
+  --color-brand-700: #0f766e;
+  --color-brand-800: #115e59;
+  --color-brand-900: #134e4a;
+
+  --color-ink-50: #fafafa;
+  --color-ink-100: #f4f4f5;
+  --color-ink-200: #e4e4e7;
+  --color-ink-300: #d4d4d8;
+  --color-ink-400: #a1a1aa;
+  --color-ink-500: #71717a;
+  --color-ink-600: #52525b;
+  --color-ink-700: #3f3f46;
+  --color-ink-800: #27272a;
+  --color-ink-900: #18181b;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-bangla: var(--font-bangla), "Noto Sans Bengali", "Hind Siliguri",
+    "Bangla MN", sans-serif;
+
+  --radius-card: 10px;
+}
+
+/*
+ * Bangla needs more line height than Latin. Bengali script has ascenders,
+ * descenders and a headline that collide at Latin leading, so any element
+ * carrying Bangla text gets its own spacing rather than a global override.
+ */
+:where([lang="bn"], .font-bangla) {
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+
+* {
+  border-color: var(--color-ink-200);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-ink-50);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Focus is never removed, only restyled. Keyboard users are a real group and
+ * the default ring is the only thing telling them where they are.
+ */
+:focus-visible {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-brand-100);
+  color: var(--color-brand-900);
+}
+
+/*
+ * Respect the OS setting. A marketplace is used by people who may be motion
+ * sensitive, and animation here is decorative anyway.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .container-page {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 72rem;
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--color-ink-200);
+    border-radius: var(--radius-card);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 120ms ease, border-color 120ms ease;
+    min-height: 2.5rem;
+  }
+
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .btn-primary {
+    background: var(--color-brand-700);
+    color: #fff;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: var(--color-brand-800);
+  }
+
+  .btn-secondary {
+    background: #fff;
+    color: var(--color-ink-800);
+    border-color: var(--color-ink-300);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background: var(--color-ink-50);
+    border-color: var(--color-ink-400);
+  }
+
+  .btn-danger {
+    background: #fff;
+    color: #b91c1c;
+    border-color: #fecaca;
+  }
+
+  .btn-danger:hover:not(:disabled) {
+    background: #fef2f2;
+  }
+
+  .input {
+    width: 100%;
+    border: 1px solid var(--color-ink-300);
+    border-radius: 8px;
+    background: #fff;
+    padding: 0.625rem 0.75rem;
+    font-size: 0.9375rem;
+    color: var(--color-ink-900);
+    min-height: 2.75rem;
+  }
+
+  .input::placeholder {
+    color: var(--color-ink-400);
+  }
+
+  .input:focus {
+    outline: none;
+    border-color: var(--color-brand-600);
+    box-shadow: 0 0 0 3px var(--color-brand-100);
+  }
+
+  .input[aria-invalid="true"] {
+    border-color: #dc2626;
+  }
+
+  .label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-ink-700);
+    margin-bottom: 0.375rem;
+  }
+
+  /*
+   * Verification badge.
+   *
+   * Outline-only and explicitly labelled. This is deliberately NOT a filled
+   * brand pill: a filled brand-coloured badge would read as a quality claim
+   * rather than "an administrator checked a document", and sponsorship uses
+   * this same component so the two can never be confused.
+   */
+  .badge-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border: 1px solid var(--color-brand-600);
+    color: var(--color-brand-800);
+    background: var(--color-brand-50);
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    padding: 0.125rem 0.5rem;
+    line-height: 1.125rem;
+    white-space: nowrap;
+  }
+
+  /* Sponsored is a paid placement and is never styled as a trust signal. */
+  .badge-sponsored {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border: 1px dashed var(--color-ink-400);
+    color: var(--color-ink-600);
+    background: var(--color-ink-100);
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    padding: 0.125rem 0.5rem;
+    line-height: 1.125rem;
+    white-space: nowrap;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    padding: 0.125rem 0.5rem;
+    line-height: 1.125rem;
+    border: 1px solid var(--color-ink-200);
+    background: var(--color-ink-50);
+    color: var(--color-ink-700);
+    white-space: nowrap;
+  }
+
+  .skeleton {
+    background: var(--color-ink-100);
+    border-radius: 6px;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+  }
+}

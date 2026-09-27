@@ -15,7 +15,7 @@ import {
   formatPoisha,
   formatPoishaRange,
   parseBdtToPoisha,
-} from "./money.js";
+} from "./money";
 import {
   buildSearchTerms,
   detectLanguage,
@@ -23,13 +23,13 @@ import {
   latinSkeleton,
   normalizeForSearch,
   parseQuery,
-} from "./search.js";
+} from "./search";
 import {
   canTransition,
   evaluateTransition,
   isClosed,
   type BookingStatus,
-} from "./booking-state.js";
+} from "./booking-state";
 import {
   computeBookingTotal,
   computeCommission,
@@ -37,7 +37,7 @@ import {
   evaluateNoShow,
   isValidPriceBand,
   resolveCommissionBps,
-} from "./rules.js";
+} from "./rules";
 import {
   distanceKm,
   formatBdPhone,
@@ -45,7 +45,7 @@ import {
   maskPhone,
   normalizeBdPhone,
   slugifyBangla,
-} from "./bd.js";
+} from "./bd";
 
 let passed = 0;
 const failures: string[] = [];

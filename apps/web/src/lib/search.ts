@@ -1,7 +1,7 @@
 import { Prisma } from "@fixbondhu/db";
 import { latinSkeleton, parseQuery, type ParsedQuery } from "@fixbondhu/core";
 
-import { prisma } from "./db.js";
+import { prisma } from "./db";
 
 /**
  * Search.

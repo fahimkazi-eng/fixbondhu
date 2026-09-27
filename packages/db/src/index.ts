@@ -1,9 +1,9 @@
 import { PrismaNeon } from "@prisma/adapter-neon";
 
-import { PrismaClient } from "./generated/prisma/client.js";
+import { PrismaClient } from "./generated/prisma/client";
 
-export * from "./generated/prisma/client.js";
-export * as Enums from "./generated/prisma/enums.js";
+export * from "./generated/prisma/client";
+export * as Enums from "./generated/prisma/enums";
 
 // Neon is the target host, but nothing above this file knows that. The adapter
 // is the only place that decides how bytes reach Postgres, so swapping to plain

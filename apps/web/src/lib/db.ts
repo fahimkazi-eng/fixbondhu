@@ -1,4 +1,4 @@
-import { loadRootEnv } from "./load-root-env.js";
+import { loadRootEnv } from "./load-root-env";
 
 // Must run before the Prisma client is constructed, because the Neon adapter
 // reads DATABASE_URL at construction time.
@@ -16,7 +16,10 @@ loadRootEnv();
  * Never import this from a file with "use client".
  */
 import { prisma } from "@fixbondhu/db";
-import type { Role, UserStatus } from "@fixbondhu/core";
+// UserStatus is a Prisma enum, so it comes from the database package.
+// Role is a domain type and comes from core.
+import type { UserStatus } from "@fixbondhu/db";
+import type { Role } from "@fixbondhu/core";
 
 export { prisma };
 

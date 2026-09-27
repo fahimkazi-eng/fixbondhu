@@ -7,7 +7,7 @@
  * as an argument; nothing reads from a global.
  */
 
-import { applyCommissionBps, assertPoisha } from "./money.js";
+import { applyCommissionBps, assertPoisha } from "./money";
 
 // ---------------------------------------------------------------------------
 // Commission

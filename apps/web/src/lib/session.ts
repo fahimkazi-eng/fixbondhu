@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
 
-import { env, isProduction } from "./env.js";
-import { loadUserById, type SessionUser } from "./db.js";
+import { prisma, loadUserById, type SessionUser } from "./db";
+import { env, isProduction } from "./env";
 
 /**
  * Stateless session token.
@@ -63,7 +63,7 @@ export async function createSession(input: {
   ip?: string | null;
   userAgent?: string | null;
 }): Promise<void> {
-  const { prisma } = await import("./db.js");
+
   // The raw token is never stored. Hashing it means a database leak does not
   // hand an attacker usable sessions.
   const { createHash, randomUUID } = await import("node:crypto");
@@ -100,7 +100,7 @@ export async function destroySession(): Promise<void> {
   if (token) {
     const verified = await verifySessionToken(token);
     if (verified) {
-      const { prisma } = await import("./db.js");
+
       await prisma.session
         .update({
           where: { id: verified.sessionId },
@@ -125,7 +125,6 @@ export async function getCurrentUser(): Promise<SessionUser | null> {
   const verified = await verifySessionToken(token);
   if (!verified) return null;
 
-  const { prisma } = await import("./db.js");
   const session = await prisma.session.findUnique({
     where: { id: verified.sessionId },
     select: { revokedAt: true, expiresAt: true, userId: true },

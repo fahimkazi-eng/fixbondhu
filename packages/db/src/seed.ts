@@ -21,8 +21,8 @@ import { PrismaNeon } from "@prisma/adapter-neon";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { buildSearchTerms, slugify, slugifyBangla } from "../../../packages/core/src/index.js";
-import { PrismaClient } from "../src/generated/prisma/client.js";
+import { buildSearchTerms, slugify, slugifyBangla } from "../../../packages/core/src/index";
+import { PrismaClient } from "../src/generated/prisma/client";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 for (const candidate of [

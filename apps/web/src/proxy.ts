@@ -33,7 +33,13 @@ function surfaceFromHost(host: string): Surface | null {
   return null;
 }
 
-export function middleware(request: NextRequest): NextResponse {
+/**
+ * Next 16 renamed this convention from "middleware" to "proxy". The behaviour
+ * is identical: this runs before every matched route and may rewrite the
+ * request. Kept as a single file so the three-platform routing rule is
+ * auditable in one place.
+ */
+export function proxy(request: NextRequest): NextResponse {
   const { pathname, search } = request.nextUrl;
   const host = request.headers.get("host") ?? "";
 

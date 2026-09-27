@@ -20,6 +20,14 @@ export function loadRootEnv(): void {
   if (loaded) return;
   loaded = true;
 
+  /*
+   * Production gets its variables from the deployment platform. Reading files
+   * here would also defeat bundler tracing: Turbopack cannot statically scope a
+   * dynamic existsSync, so it would trace and ship the entire repository
+   * including the public folder.
+   */
+  if (process.env.NODE_ENV === "production") return;
+
   const candidates = [
     path.resolve(process.cwd(), "../../.env.local"),
     path.resolve(process.cwd(), "../../.env"),
@@ -28,7 +36,8 @@ export function loadRootEnv(): void {
   ];
 
   for (const candidate of candidates) {
-    if (!existsSync(candidate)) continue;
+    // turbopackIgnore: dev-only lookup, never traced into a deployment.
+    if (!existsSync(/* turbopackIgnore: true */ candidate)) continue;
     // override: false, so the environment always takes precedence.
     loadEnv({ path: candidate, override: false, quiet: true });
   }

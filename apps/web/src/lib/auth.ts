@@ -11,8 +11,8 @@ import {
   type Surface,
 } from "@fixbondhu/core";
 
-import { getCurrentUser } from "./session.js";
-import type { SessionUser } from "./db.js";
+import { getCurrentUser } from "./session";
+import type { SessionUser } from "./db";
 
 /**
  * Authorisation.
