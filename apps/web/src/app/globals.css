@@ -184,6 +184,14 @@ body {
     font-size: 0.9375rem;
     color: var(--color-ink-900);
     min-height: 2.75rem;
+    /*
+     * Form controls do not reliably inherit the page font stack, and the
+     * search box is the one control a Bangla customer is guaranteed to type
+     * into. Listing the Bangla face explicitly here means Bangla renders in
+     * the input even where the inherited stack does not reach it.
+     */
+    font-family: var(--font-inter), var(--font-bangla), ui-sans-serif, system-ui,
+      sans-serif;
   }
 
   .input::placeholder {

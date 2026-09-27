@@ -87,7 +87,7 @@ export default async function HomePage() {
                   name="q"
                   type="search"
                   autoComplete="off"
-                  placeholder="AC repair, বাসার ইলেকট্রিশিয়ান, fan thik korte hobe"
+                  placeholder="AC repair, plumber, গিজার"
                 />
               </div>
               <button className="btn btn-primary h-12 px-5" type="submit">
