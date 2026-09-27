@@ -20,6 +20,11 @@ next-env.d.ts
 # vercel
 .vercel
 
+# neon
+# .neon/ holds local branch context, not credentials, but it is per-machine
+# state. neon.ts IS committed: it is shared infrastructure config.
+.neon/
+
 # logs
 *.log
 npm-debug.log*
@@ -37,3 +42,4 @@ coverage/
 
 # local uploads (dev only) - production uses object storage
 .storage/
+.neon
