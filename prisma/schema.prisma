@@ -1,0 +1,58 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql"; url = env("DATABASE_URL") }
+
+enum Role { CUSTOMER PROVIDER ADMIN SUPPORT FINANCE VERIFICATION CONTENT ANALYST }
+enum VerificationType { PHONE IDENTITY BUSINESS CERTIFICATE }
+enum VerificationStatus { PENDING APPROVED REJECTED EXPIRED }
+enum BookingStatus { REQUESTED ACCEPTED ON_THE_WAY ARRIVED IN_PROGRESS COMPLETED CANCELLED REJECTED DISPUTED NO_SHOW PAYMENT_PENDING PAYMENT_COMPLETED }
+enum PaymentStatus { PENDING REQUIRES_ACTION PAID FAILED CANCELLED REFUNDED PARTIALLY_REFUNDED }
+enum ChargeStatus { REQUESTED APPROVED REJECTED CANCELLED }
+enum ComplaintStatus { OPEN IN_REVIEW WAITING_ON_CUSTOMER WAITING_ON_PROVIDER RESOLVED CLOSED }
+enum PayoutStatus { PENDING PROCESSING PAID FAILED REVERSED }
+
+model User {
+  id String @id @default(cuid())
+  phone String @unique
+  email String? @unique
+  passwordHash String?
+  roles Role[] @default([CUSTOMER])
+  phoneVerifiedAt DateTime?
+  isActive Boolean @default(true)
+  customer CustomerProfile?
+  provider ProviderProfile?
+  addresses Address[]
+  sentMessages Message[] @relation("sent_messages")
+  notifications Notification[]
+  auditLogs AuditLog[] @relation("acted_by")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([isActive])
+}
+
+model CustomerProfile { id String @id @default(cuid()); userId String @unique; displayName String; user User @relation(fields:[userId],references:[id],onDelete:Restrict); bookings Booking[] @relation("customer_bookings"); reviews Review[]; createdAt DateTime @default(now()) }
+model ProviderProfile {
+  id String @id @default(cuid()); userId String @unique; displayName String; bio String?; yearsExperience Int?; isAcceptingRequests Boolean @default(false); isPublished Boolean @default(false); responseRate Decimal? @db.Decimal(5,2); completedJobs Int @default(0)
+  user User @relation(fields:[userId],references:[id],onDelete:Restrict); verifications ProviderVerification[]; offerings ProviderService[]; areas ProviderServiceArea[]; availability AvailabilityRule[]; bookings Booking[] @relation("provider_bookings"); payouts Payout[]; createdAt DateTime @default(now()); updatedAt DateTime @updatedAt
+  @@index([isPublished,isAcceptingRequests])
+}
+model ProviderVerification { id String @id @default(cuid()); providerId String; type VerificationType; status VerificationStatus @default(PENDING); documentUrl String?; reviewedById String?; reviewedAt DateTime?; reason String?; provider ProviderProfile @relation(fields:[providerId],references:[id],onDelete:Restrict); createdAt DateTime @default(now()); @@unique([providerId,type]); @@index([status,type]) }
+model Category { id String @id @default(cuid()); nameEn String; nameBn String?; slug String @unique; parentId String?; parent Category? @relation("category_tree",fields:[parentId],references:[id]); children Category[] @relation("category_tree"); services Service[]; isActive Boolean @default(true) }
+model Service { id String @id @default(cuid()); categoryId String; nameEn String; nameBn String?; slug String @unique; searchAliases String[]; category Category @relation(fields:[categoryId],references:[id]); offerings ProviderService[]; bookings Booking[]; isActive Boolean @default(true); @@index([categoryId,isActive]) }
+model ProviderService { id String @id @default(cuid()); providerId String; serviceId String; priceFrom Decimal? @db.Decimal(12,2); priceTo Decimal? @db.Decimal(12,2); priceNote String?; isActive Boolean @default(true); provider ProviderProfile @relation(fields:[providerId],references:[id]); service Service @relation(fields:[serviceId],references:[id]); @@unique([providerId,serviceId]); @@index([serviceId,isActive]) }
+model Address { id String @id @default(cuid()); userId String; label String; formattedAddress String; division String?; city String; thanaOrUpazila String?; neighbourhood String?; latitude Decimal? @db.Decimal(10,7); longitude Decimal? @db.Decimal(10,7); user User @relation(fields:[userId],references:[id]); bookings Booking[]; createdAt DateTime @default(now()); @@index([city,thanaOrUpazila]) }
+model ProviderServiceArea { id String @id @default(cuid()); providerId String; city String; thanaOrUpazila String?; neighbourhood String?; radiusKm Decimal? @db.Decimal(5,2); provider ProviderProfile @relation(fields:[providerId],references:[id]); @@index([city,thanaOrUpazila]) }
+model AvailabilityRule { id String @id @default(cuid()); providerId String; weekday Int; startsAt String; endsAt String; isAvailable Boolean @default(true); provider ProviderProfile @relation(fields:[providerId],references:[id]); @@unique([providerId,weekday,startsAt]) }
+model Booking {
+  id String @id @default(cuid()); customerId String; providerId String?; serviceId String; addressId String; status BookingStatus @default(REQUESTED); description String; scheduledFor DateTime?; estimatedMin Decimal? @db.Decimal(12,2); estimatedMax Decimal? @db.Decimal(12,2); finalAmount Decimal? @db.Decimal(12,2); currency String @default("BDT")
+  customer CustomerProfile @relation("customer_bookings",fields:[customerId],references:[id]); provider ProviderProfile? @relation("provider_bookings",fields:[providerId],references:[id]); service Service @relation(fields:[serviceId],references:[id]); address Address @relation(fields:[addressId],references:[id]); history BookingStatusHistory[]; charges AdditionalCharge[]; messages Message[]; payment Payment?; review Review?; complaints Complaint[]; createdAt DateTime @default(now()); updatedAt DateTime @updatedAt
+  @@index([customerId,createdAt]); @@index([providerId,status]); @@index([status,scheduledFor])
+}
+model BookingStatusHistory { id String @id @default(cuid()); bookingId String; fromStatus BookingStatus?; toStatus BookingStatus; actorUserId String?; note String?; booking Booking @relation(fields:[bookingId],references:[id],onDelete:Restrict); createdAt DateTime @default(now()); @@index([bookingId,createdAt]) }
+model AdditionalCharge { id String @id @default(cuid()); bookingId String; amount Decimal @db.Decimal(12,2); reason String; status ChargeStatus @default(REQUESTED); requestedAt DateTime @default(now()); respondedAt DateTime?; booking Booking @relation(fields:[bookingId],references:[id]); @@index([bookingId,status]) }
+model Message { id String @id @default(cuid()); bookingId String?; senderId String; body String; createdAt DateTime @default(now()); booking Booking? @relation(fields:[bookingId],references:[id]); sender User @relation("sent_messages",fields:[senderId],references:[id]); @@index([bookingId,createdAt]) }
+model Payment { id String @id @default(cuid()); bookingId String @unique; provider String; providerReference String? @unique; amount Decimal @db.Decimal(12,2); status PaymentStatus @default(PENDING); verifiedAt DateTime?; booking Booking @relation(fields:[bookingId],references:[id]); createdAt DateTime @default(now()); updatedAt DateTime @updatedAt; @@index([status,createdAt]) }
+model Payout { id String @id @default(cuid()); providerId String; amount Decimal @db.Decimal(12,2); commission Decimal @db.Decimal(12,2); status PayoutStatus @default(PENDING); provider ProviderProfile @relation(fields:[providerId],references:[id]); createdAt DateTime @default(now()); @@index([providerId,status]) }
+model Review { id String @id @default(cuid()); bookingId String @unique; customerId String; rating Int; body String?; isPublished Boolean @default(true); booking Booking @relation(fields:[bookingId],references:[id]); customer CustomerProfile @relation(fields:[customerId],references:[id]); createdAt DateTime @default(now()); @@index([isPublished,createdAt]) }
+model Complaint { id String @id @default(cuid()); bookingId String?; openedByUserId String; status ComplaintStatus @default(OPEN); subject String; details String; resolution String?; resolvedAt DateTime?; booking Booking? @relation(fields:[bookingId],references:[id]); createdAt DateTime @default(now()); @@index([status,createdAt]) }
+model Notification { id String @id @default(cuid()); userId String; type String; payload Json; readAt DateTime?; createdAt DateTime @default(now()); user User @relation(fields:[userId],references:[id]); @@index([userId,readAt,createdAt]) }
+model AuditLog { id String @id @default(cuid()); actorUserId String?; action String; entityType String; entityId String; before Json?; after Json?; ipAddress String?; createdAt DateTime @default(now()); actor User? @relation("acted_by",fields:[actorUserId],references:[id]); @@index([entityType,entityId,createdAt]); @@index([actorUserId,createdAt]) }
