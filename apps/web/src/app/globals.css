@@ -42,20 +42,50 @@
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
-  --font-bangla: var(--font-bangla), "Noto Sans Bengali", "Hind Siliguri",
+
+  /*
+   * The Bangla stack. This must reference "--font-noto-bangla", the variable
+   * next/font actually emits. Naming this token "--font-bangla" while also
+   * asking next/font for a "--font-bangla" variable made the definition
+   * self-referential; it resolved to nothing, the font was never downloaded,
+   * and every Bangla string on the site silently fell back to a Latin-only
+   * stack. Verified in the browser via document.fonts, not assumed.
+   */
+  --font-bangla: var(--font-noto-bangla), "Noto Sans Bengali", "Hind Siliguri",
     "Bangla MN", sans-serif;
 
   --radius-card: 10px;
 }
 
 /*
- * Bangla needs more line height than Latin. Bengali script has ascenders,
- * descenders and a headline that collide at Latin leading, so any element
- * carrying Bangla text gets its own spacing rather than a global override.
+ * Bangla needs more line height than Latin, and a larger minimum size.
+ * Bengali script stacks matras and conjuncts above and below the base line, so
+ * at 12px the clusters visually collide. Any element carrying Bangla text is
+ * floored at 13px rather than scaled down with its Latin siblings.
  */
 :where([lang="bn"], .font-bangla) {
+  font-family: var(--font-bangla);
   line-height: 1.75;
   letter-spacing: 0;
+}
+
+/*
+ * Applied to Bangla runs inside otherwise Latin elements (links, placeholders,
+ * chips). Keeps the fix from requiring lang="bn" on every single string.
+ */
+.bn-text {
+  font-family: var(--font-bangla);
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+
+/*
+ * 14px is the size at which Bengali conjuncts verifiably render cleanly here;
+ * at 12px and 13px the stacked clusters visually collide. Matched to the
+ * category labels, which is where the correct rendering was observed.
+ */
+.bn-text:not([class*="text-["]) {
+  font-size: max(0.875rem, 1em);
 }
 
 * {
@@ -70,7 +100,14 @@ html {
 body {
   background: var(--color-ink-50);
   color: var(--color-ink-900);
-  font-family: var(--font-sans);
+  /*
+   * The Bangla face is listed as a fallback rather than a primary, so Latin
+   * text stays in Inter while Bangla falls through to Noto Sans Bengali
+   * automatically. Without this, any Bangla string in a component that did not
+   * opt in would render in a Latin-only fallback.
+   */
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", var(--font-bangla), sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 

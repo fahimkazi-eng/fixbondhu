@@ -6,8 +6,13 @@ import "./globals.css";
 /*
  * Both fonts are self-hosted by next/font, so there is no third-party request
  * on first paint. That matters twice over in Bangladesh: it removes a round
- * trip to Google's servers, and it removes a GDPR-shaped dependency from a
+ * trip to Google's servers, and it removes a third-party dependency from a
  * product used by small tradespeople.
+ *
+ * The variable name is deliberately NOT "--font-bangla". That name is used by
+ * the Tailwind theme token in globals.css, and declaring both produced a
+ * self-referential var() that resolved to nothing, silently preventing the
+ * Bangla face from ever loading.
  */
 const inter = Inter({
   subsets: ["latin"],
@@ -17,7 +22,7 @@ const inter = Inter({
 
 const bangla = Noto_Sans_Bengali({
   subsets: ["bengali"],
-  variable: "--font-bangla",
+  variable: "--font-noto-bangla",
   display: "swap",
 });
 

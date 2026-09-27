@@ -96,9 +96,18 @@ export default async function HomePage() {
             </form>
 
             <p className="mt-3 text-xs text-ink-500">
-              Try: <Link href="/search?q=plumber" className="underline">plumber</Link>,{" "}
-              <Link href="/search?q=এসি+রিপেয়ার" className="underline">এসি রিপেয়ার</Link>,{" "}
-              <Link href="/search?q=geyser" className="underline">geyser</Link>
+              Try:{" "}
+              <Link href="/search?q=plumber" className="underline">
+                plumber
+              </Link>
+              ,{" "}
+              <Link href="/search?q=এসি+রিপেয়ার" className="bn-text underline">
+                এসি রিপেয়ার
+              </Link>
+              ,{" "}
+              <Link href="/search?q=geyser" className="underline">
+                geyser
+              </Link>
             </p>
           </div>
         </section>
