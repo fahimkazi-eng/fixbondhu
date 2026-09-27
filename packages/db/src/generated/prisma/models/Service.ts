@@ -45,6 +45,8 @@ export type ServiceMinAggregateOutputType = {
   nameBanglish: string | null
   descriptionEn: string | null
   descriptionBn: string | null
+  searchText: string | null
+  searchSkeleton: string | null
   icon: string | null
   requiresVisit: boolean | null
   durationMinutes: number | null
@@ -65,6 +67,8 @@ export type ServiceMaxAggregateOutputType = {
   nameBanglish: string | null
   descriptionEn: string | null
   descriptionBn: string | null
+  searchText: string | null
+  searchSkeleton: string | null
   icon: string | null
   requiresVisit: boolean | null
   durationMinutes: number | null
@@ -86,6 +90,8 @@ export type ServiceCountAggregateOutputType = {
   descriptionEn: number
   descriptionBn: number
   keywords: number
+  searchText: number
+  searchSkeleton: number
   icon: number
   requiresVisit: number
   durationMinutes: number
@@ -118,6 +124,8 @@ export type ServiceMinAggregateInputType = {
   nameBanglish?: true
   descriptionEn?: true
   descriptionBn?: true
+  searchText?: true
+  searchSkeleton?: true
   icon?: true
   requiresVisit?: true
   durationMinutes?: true
@@ -138,6 +146,8 @@ export type ServiceMaxAggregateInputType = {
   nameBanglish?: true
   descriptionEn?: true
   descriptionBn?: true
+  searchText?: true
+  searchSkeleton?: true
   icon?: true
   requiresVisit?: true
   durationMinutes?: true
@@ -159,6 +169,8 @@ export type ServiceCountAggregateInputType = {
   descriptionEn?: true
   descriptionBn?: true
   keywords?: true
+  searchText?: true
+  searchSkeleton?: true
   icon?: true
   requiresVisit?: true
   durationMinutes?: true
@@ -267,6 +279,8 @@ export type ServiceGroupByOutputType = {
   descriptionEn: string | null
   descriptionBn: string | null
   keywords: string[]
+  searchText: string | null
+  searchSkeleton: string | null
   icon: string | null
   requiresVisit: boolean
   durationMinutes: number
@@ -311,6 +325,8 @@ export type ServiceWhereInput = {
   descriptionEn?: Prisma.StringNullableFilter<"Service"> | string | null
   descriptionBn?: Prisma.StringNullableFilter<"Service"> | string | null
   keywords?: Prisma.StringNullableListFilter<"Service">
+  searchText?: Prisma.StringNullableFilter<"Service"> | string | null
+  searchSkeleton?: Prisma.StringNullableFilter<"Service"> | string | null
   icon?: Prisma.StringNullableFilter<"Service"> | string | null
   requiresVisit?: Prisma.BoolFilter<"Service"> | boolean
   durationMinutes?: Prisma.IntFilter<"Service"> | number
@@ -336,6 +352,8 @@ export type ServiceOrderByWithRelationInput = {
   descriptionEn?: Prisma.SortOrderInput | Prisma.SortOrder
   descriptionBn?: Prisma.SortOrderInput | Prisma.SortOrder
   keywords?: Prisma.SortOrder
+  searchText?: Prisma.SortOrderInput | Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrderInput | Prisma.SortOrder
   icon?: Prisma.SortOrderInput | Prisma.SortOrder
   requiresVisit?: Prisma.SortOrder
   durationMinutes?: Prisma.SortOrder
@@ -364,6 +382,8 @@ export type ServiceWhereUniqueInput = Prisma.AtLeast<{
   descriptionEn?: Prisma.StringNullableFilter<"Service"> | string | null
   descriptionBn?: Prisma.StringNullableFilter<"Service"> | string | null
   keywords?: Prisma.StringNullableListFilter<"Service">
+  searchText?: Prisma.StringNullableFilter<"Service"> | string | null
+  searchSkeleton?: Prisma.StringNullableFilter<"Service"> | string | null
   icon?: Prisma.StringNullableFilter<"Service"> | string | null
   requiresVisit?: Prisma.BoolFilter<"Service"> | boolean
   durationMinutes?: Prisma.IntFilter<"Service"> | number
@@ -389,6 +409,8 @@ export type ServiceOrderByWithAggregationInput = {
   descriptionEn?: Prisma.SortOrderInput | Prisma.SortOrder
   descriptionBn?: Prisma.SortOrderInput | Prisma.SortOrder
   keywords?: Prisma.SortOrder
+  searchText?: Prisma.SortOrderInput | Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrderInput | Prisma.SortOrder
   icon?: Prisma.SortOrderInput | Prisma.SortOrder
   requiresVisit?: Prisma.SortOrder
   durationMinutes?: Prisma.SortOrder
@@ -418,6 +440,8 @@ export type ServiceScalarWhereWithAggregatesInput = {
   descriptionEn?: Prisma.StringNullableWithAggregatesFilter<"Service"> | string | null
   descriptionBn?: Prisma.StringNullableWithAggregatesFilter<"Service"> | string | null
   keywords?: Prisma.StringNullableListFilter<"Service">
+  searchText?: Prisma.StringNullableWithAggregatesFilter<"Service"> | string | null
+  searchSkeleton?: Prisma.StringNullableWithAggregatesFilter<"Service"> | string | null
   icon?: Prisma.StringNullableWithAggregatesFilter<"Service"> | string | null
   requiresVisit?: Prisma.BoolWithAggregatesFilter<"Service"> | boolean
   durationMinutes?: Prisma.IntWithAggregatesFilter<"Service"> | number
@@ -438,6 +462,8 @@ export type ServiceCreateInput = {
   descriptionEn?: string | null
   descriptionBn?: string | null
   keywords?: Prisma.ServiceCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   icon?: string | null
   requiresVisit?: boolean
   durationMinutes?: number
@@ -463,6 +489,8 @@ export type ServiceUncheckedCreateInput = {
   descriptionEn?: string | null
   descriptionBn?: string | null
   keywords?: Prisma.ServiceCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   icon?: string | null
   requiresVisit?: boolean
   durationMinutes?: number
@@ -486,6 +514,8 @@ export type ServiceUpdateInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -511,6 +541,8 @@ export type ServiceUncheckedUpdateInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -535,6 +567,8 @@ export type ServiceCreateManyInput = {
   descriptionEn?: string | null
   descriptionBn?: string | null
   keywords?: Prisma.ServiceCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   icon?: string | null
   requiresVisit?: boolean
   durationMinutes?: number
@@ -555,6 +589,8 @@ export type ServiceUpdateManyMutationInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -576,6 +612,8 @@ export type ServiceUncheckedUpdateManyInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -607,6 +645,8 @@ export type ServiceCountOrderByAggregateInput = {
   descriptionEn?: Prisma.SortOrder
   descriptionBn?: Prisma.SortOrder
   keywords?: Prisma.SortOrder
+  searchText?: Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrder
   icon?: Prisma.SortOrder
   requiresVisit?: Prisma.SortOrder
   durationMinutes?: Prisma.SortOrder
@@ -632,6 +672,8 @@ export type ServiceMaxOrderByAggregateInput = {
   nameBanglish?: Prisma.SortOrder
   descriptionEn?: Prisma.SortOrder
   descriptionBn?: Prisma.SortOrder
+  searchText?: Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrder
   icon?: Prisma.SortOrder
   requiresVisit?: Prisma.SortOrder
   durationMinutes?: Prisma.SortOrder
@@ -652,6 +694,8 @@ export type ServiceMinOrderByAggregateInput = {
   nameBanglish?: Prisma.SortOrder
   descriptionEn?: Prisma.SortOrder
   descriptionBn?: Prisma.SortOrder
+  searchText?: Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrder
   icon?: Prisma.SortOrder
   requiresVisit?: Prisma.SortOrder
   durationMinutes?: Prisma.SortOrder
@@ -782,6 +826,8 @@ export type ServiceCreateWithoutCategoryInput = {
   descriptionEn?: string | null
   descriptionBn?: string | null
   keywords?: Prisma.ServiceCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   icon?: string | null
   requiresVisit?: boolean
   durationMinutes?: number
@@ -805,6 +851,8 @@ export type ServiceUncheckedCreateWithoutCategoryInput = {
   descriptionEn?: string | null
   descriptionBn?: string | null
   keywords?: Prisma.ServiceCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   icon?: string | null
   requiresVisit?: boolean
   durationMinutes?: number
@@ -858,6 +906,8 @@ export type ServiceScalarWhereInput = {
   descriptionEn?: Prisma.StringNullableFilter<"Service"> | string | null
   descriptionBn?: Prisma.StringNullableFilter<"Service"> | string | null
   keywords?: Prisma.StringNullableListFilter<"Service">
+  searchText?: Prisma.StringNullableFilter<"Service"> | string | null
+  searchSkeleton?: Prisma.StringNullableFilter<"Service"> | string | null
   icon?: Prisma.StringNullableFilter<"Service"> | string | null
   requiresVisit?: Prisma.BoolFilter<"Service"> | boolean
   durationMinutes?: Prisma.IntFilter<"Service"> | number
@@ -878,6 +928,8 @@ export type ServiceCreateWithoutProviderServicesInput = {
   descriptionEn?: string | null
   descriptionBn?: string | null
   keywords?: Prisma.ServiceCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   icon?: string | null
   requiresVisit?: boolean
   durationMinutes?: number
@@ -902,6 +954,8 @@ export type ServiceUncheckedCreateWithoutProviderServicesInput = {
   descriptionEn?: string | null
   descriptionBn?: string | null
   keywords?: Prisma.ServiceCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   icon?: string | null
   requiresVisit?: boolean
   durationMinutes?: number
@@ -940,6 +994,8 @@ export type ServiceUpdateWithoutProviderServicesInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -964,6 +1020,8 @@ export type ServiceUncheckedUpdateWithoutProviderServicesInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -986,6 +1044,8 @@ export type ServiceCreateWithoutBookingsInput = {
   descriptionEn?: string | null
   descriptionBn?: string | null
   keywords?: Prisma.ServiceCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   icon?: string | null
   requiresVisit?: boolean
   durationMinutes?: number
@@ -1010,6 +1070,8 @@ export type ServiceUncheckedCreateWithoutBookingsInput = {
   descriptionEn?: string | null
   descriptionBn?: string | null
   keywords?: Prisma.ServiceCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   icon?: string | null
   requiresVisit?: boolean
   durationMinutes?: number
@@ -1048,6 +1110,8 @@ export type ServiceUpdateWithoutBookingsInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1072,6 +1136,8 @@ export type ServiceUncheckedUpdateWithoutBookingsInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1094,6 +1160,8 @@ export type ServiceCreateWithoutCommissionRulesInput = {
   descriptionEn?: string | null
   descriptionBn?: string | null
   keywords?: Prisma.ServiceCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   icon?: string | null
   requiresVisit?: boolean
   durationMinutes?: number
@@ -1118,6 +1186,8 @@ export type ServiceUncheckedCreateWithoutCommissionRulesInput = {
   descriptionEn?: string | null
   descriptionBn?: string | null
   keywords?: Prisma.ServiceCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   icon?: string | null
   requiresVisit?: boolean
   durationMinutes?: number
@@ -1156,6 +1226,8 @@ export type ServiceUpdateWithoutCommissionRulesInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1180,6 +1252,8 @@ export type ServiceUncheckedUpdateWithoutCommissionRulesInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1202,6 +1276,8 @@ export type ServiceCreateManyCategoryInput = {
   descriptionEn?: string | null
   descriptionBn?: string | null
   keywords?: Prisma.ServiceCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   icon?: string | null
   requiresVisit?: boolean
   durationMinutes?: number
@@ -1222,6 +1298,8 @@ export type ServiceUpdateWithoutCategoryInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1245,6 +1323,8 @@ export type ServiceUncheckedUpdateWithoutCategoryInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1268,6 +1348,8 @@ export type ServiceUncheckedUpdateManyWithoutCategoryInput = {
   descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionBn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.ServiceUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   durationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1338,6 +1420,8 @@ export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   descriptionEn?: boolean
   descriptionBn?: boolean
   keywords?: boolean
+  searchText?: boolean
+  searchSkeleton?: boolean
   icon?: boolean
   requiresVisit?: boolean
   durationMinutes?: boolean
@@ -1364,6 +1448,8 @@ export type ServiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   descriptionEn?: boolean
   descriptionBn?: boolean
   keywords?: boolean
+  searchText?: boolean
+  searchSkeleton?: boolean
   icon?: boolean
   requiresVisit?: boolean
   durationMinutes?: boolean
@@ -1386,6 +1472,8 @@ export type ServiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   descriptionEn?: boolean
   descriptionBn?: boolean
   keywords?: boolean
+  searchText?: boolean
+  searchSkeleton?: boolean
   icon?: boolean
   requiresVisit?: boolean
   durationMinutes?: boolean
@@ -1408,6 +1496,8 @@ export type ServiceSelectScalar = {
   descriptionEn?: boolean
   descriptionBn?: boolean
   keywords?: boolean
+  searchText?: boolean
+  searchSkeleton?: boolean
   icon?: boolean
   requiresVisit?: boolean
   durationMinutes?: boolean
@@ -1419,7 +1509,7 @@ export type ServiceSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ServiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "slug" | "nameEn" | "nameBn" | "nameBanglish" | "descriptionEn" | "descriptionBn" | "keywords" | "icon" | "requiresVisit" | "durationMinutes" | "isEmergency" | "isActive" | "isPublished" | "sequence" | "createdAt" | "updatedAt", ExtArgs["result"]["service"]>
+export type ServiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "slug" | "nameEn" | "nameBn" | "nameBanglish" | "descriptionEn" | "descriptionBn" | "keywords" | "searchText" | "searchSkeleton" | "icon" | "requiresVisit" | "durationMinutes" | "isEmergency" | "isActive" | "isPublished" | "sequence" | "createdAt" | "updatedAt", ExtArgs["result"]["service"]>
 export type ServiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   providerServices?: boolean | Prisma.Service$providerServicesArgs<ExtArgs>
@@ -1452,6 +1542,8 @@ export type $ServicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     descriptionEn: string | null
     descriptionBn: string | null
     keywords: string[]
+    searchText: string | null
+    searchSkeleton: string | null
     icon: string | null
     /**
      * Service typically needs an on-site visit (vs. e.g. document pickup).
@@ -1903,6 +1995,8 @@ export interface ServiceFieldRefs {
   readonly descriptionEn: Prisma.FieldRef<"Service", 'String'>
   readonly descriptionBn: Prisma.FieldRef<"Service", 'String'>
   readonly keywords: Prisma.FieldRef<"Service", 'String[]'>
+  readonly searchText: Prisma.FieldRef<"Service", 'String'>
+  readonly searchSkeleton: Prisma.FieldRef<"Service", 'String'>
   readonly icon: Prisma.FieldRef<"Service", 'String'>
   readonly requiresVisit: Prisma.FieldRef<"Service", 'Boolean'>
   readonly durationMinutes: Prisma.FieldRef<"Service", 'Int'>

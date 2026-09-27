@@ -45,6 +45,8 @@ export type CategoryMinAggregateOutputType = {
   descriptionBn: string | null
   icon: string | null
   imageUrl: string | null
+  searchText: string | null
+  searchSkeleton: string | null
   sequence: number | null
   isActive: boolean | null
   isPublished: boolean | null
@@ -63,6 +65,8 @@ export type CategoryMaxAggregateOutputType = {
   descriptionBn: string | null
   icon: string | null
   imageUrl: string | null
+  searchText: string | null
+  searchSkeleton: string | null
   sequence: number | null
   isActive: boolean | null
   isPublished: boolean | null
@@ -82,6 +86,8 @@ export type CategoryCountAggregateOutputType = {
   icon: number
   imageUrl: number
   keywords: number
+  searchText: number
+  searchSkeleton: number
   sequence: number
   isActive: number
   isPublished: number
@@ -110,6 +116,8 @@ export type CategoryMinAggregateInputType = {
   descriptionBn?: true
   icon?: true
   imageUrl?: true
+  searchText?: true
+  searchSkeleton?: true
   sequence?: true
   isActive?: true
   isPublished?: true
@@ -128,6 +136,8 @@ export type CategoryMaxAggregateInputType = {
   descriptionBn?: true
   icon?: true
   imageUrl?: true
+  searchText?: true
+  searchSkeleton?: true
   sequence?: true
   isActive?: true
   isPublished?: true
@@ -147,6 +157,8 @@ export type CategoryCountAggregateInputType = {
   icon?: true
   imageUrl?: true
   keywords?: true
+  searchText?: true
+  searchSkeleton?: true
   sequence?: true
   isActive?: true
   isPublished?: true
@@ -253,6 +265,8 @@ export type CategoryGroupByOutputType = {
   icon: string | null
   imageUrl: string | null
   keywords: string[]
+  searchText: string | null
+  searchSkeleton: string | null
   sequence: number
   isActive: boolean
   isPublished: boolean
@@ -295,6 +309,8 @@ export type CategoryWhereInput = {
   icon?: Prisma.StringNullableFilter<"Category"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Category"> | string | null
   keywords?: Prisma.StringNullableListFilter<"Category">
+  searchText?: Prisma.StringNullableFilter<"Category"> | string | null
+  searchSkeleton?: Prisma.StringNullableFilter<"Category"> | string | null
   sequence?: Prisma.IntFilter<"Category"> | number
   isActive?: Prisma.BoolFilter<"Category"> | boolean
   isPublished?: Prisma.BoolFilter<"Category"> | boolean
@@ -317,6 +333,8 @@ export type CategoryOrderByWithRelationInput = {
   icon?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   keywords?: Prisma.SortOrder
+  searchText?: Prisma.SortOrderInput | Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrderInput | Prisma.SortOrder
   sequence?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
@@ -342,6 +360,8 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   icon?: Prisma.StringNullableFilter<"Category"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Category"> | string | null
   keywords?: Prisma.StringNullableListFilter<"Category">
+  searchText?: Prisma.StringNullableFilter<"Category"> | string | null
+  searchSkeleton?: Prisma.StringNullableFilter<"Category"> | string | null
   sequence?: Prisma.IntFilter<"Category"> | number
   isActive?: Prisma.BoolFilter<"Category"> | boolean
   isPublished?: Prisma.BoolFilter<"Category"> | boolean
@@ -364,6 +384,8 @@ export type CategoryOrderByWithAggregationInput = {
   icon?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   keywords?: Prisma.SortOrder
+  searchText?: Prisma.SortOrderInput | Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrderInput | Prisma.SortOrder
   sequence?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
@@ -391,6 +413,8 @@ export type CategoryScalarWhereWithAggregatesInput = {
   icon?: Prisma.StringNullableWithAggregatesFilter<"Category"> | string | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Category"> | string | null
   keywords?: Prisma.StringNullableListFilter<"Category">
+  searchText?: Prisma.StringNullableWithAggregatesFilter<"Category"> | string | null
+  searchSkeleton?: Prisma.StringNullableWithAggregatesFilter<"Category"> | string | null
   sequence?: Prisma.IntWithAggregatesFilter<"Category"> | number
   isActive?: Prisma.BoolWithAggregatesFilter<"Category"> | boolean
   isPublished?: Prisma.BoolWithAggregatesFilter<"Category"> | boolean
@@ -409,6 +433,8 @@ export type CategoryCreateInput = {
   icon?: string | null
   imageUrl?: string | null
   keywords?: Prisma.CategoryCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   sequence?: number
   isActive?: boolean
   isPublished?: boolean
@@ -431,6 +457,8 @@ export type CategoryUncheckedCreateInput = {
   icon?: string | null
   imageUrl?: string | null
   keywords?: Prisma.CategoryCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   sequence?: number
   isActive?: boolean
   isPublished?: boolean
@@ -451,6 +479,8 @@ export type CategoryUpdateInput = {
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.CategoryUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequence?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -473,6 +503,8 @@ export type CategoryUncheckedUpdateInput = {
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.CategoryUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequence?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -494,6 +526,8 @@ export type CategoryCreateManyInput = {
   icon?: string | null
   imageUrl?: string | null
   keywords?: Prisma.CategoryCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   sequence?: number
   isActive?: boolean
   isPublished?: boolean
@@ -512,6 +546,8 @@ export type CategoryUpdateManyMutationInput = {
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.CategoryUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequence?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -531,6 +567,8 @@ export type CategoryUncheckedUpdateManyInput = {
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.CategoryUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequence?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -565,6 +603,8 @@ export type CategoryCountOrderByAggregateInput = {
   icon?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   keywords?: Prisma.SortOrder
+  searchText?: Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrder
   sequence?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
@@ -587,6 +627,8 @@ export type CategoryMaxOrderByAggregateInput = {
   descriptionBn?: Prisma.SortOrder
   icon?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  searchText?: Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrder
   sequence?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
@@ -605,6 +647,8 @@ export type CategoryMinOrderByAggregateInput = {
   descriptionBn?: Prisma.SortOrder
   icon?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  searchText?: Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrder
   sequence?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
@@ -713,6 +757,8 @@ export type CategoryCreateWithoutChildrenInput = {
   icon?: string | null
   imageUrl?: string | null
   keywords?: Prisma.CategoryCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   sequence?: number
   isActive?: boolean
   isPublished?: boolean
@@ -734,6 +780,8 @@ export type CategoryUncheckedCreateWithoutChildrenInput = {
   icon?: string | null
   imageUrl?: string | null
   keywords?: Prisma.CategoryCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   sequence?: number
   isActive?: boolean
   isPublished?: boolean
@@ -758,6 +806,8 @@ export type CategoryCreateWithoutParentInput = {
   icon?: string | null
   imageUrl?: string | null
   keywords?: Prisma.CategoryCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   sequence?: number
   isActive?: boolean
   isPublished?: boolean
@@ -778,6 +828,8 @@ export type CategoryUncheckedCreateWithoutParentInput = {
   icon?: string | null
   imageUrl?: string | null
   keywords?: Prisma.CategoryCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   sequence?: number
   isActive?: boolean
   isPublished?: boolean
@@ -819,6 +871,8 @@ export type CategoryUpdateWithoutChildrenInput = {
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.CategoryUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequence?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -840,6 +894,8 @@ export type CategoryUncheckedUpdateWithoutChildrenInput = {
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.CategoryUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequence?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -879,6 +935,8 @@ export type CategoryScalarWhereInput = {
   icon?: Prisma.StringNullableFilter<"Category"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Category"> | string | null
   keywords?: Prisma.StringNullableListFilter<"Category">
+  searchText?: Prisma.StringNullableFilter<"Category"> | string | null
+  searchSkeleton?: Prisma.StringNullableFilter<"Category"> | string | null
   sequence?: Prisma.IntFilter<"Category"> | number
   isActive?: Prisma.BoolFilter<"Category"> | boolean
   isPublished?: Prisma.BoolFilter<"Category"> | boolean
@@ -897,6 +955,8 @@ export type CategoryCreateWithoutServicesInput = {
   icon?: string | null
   imageUrl?: string | null
   keywords?: Prisma.CategoryCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   sequence?: number
   isActive?: boolean
   isPublished?: boolean
@@ -918,6 +978,8 @@ export type CategoryUncheckedCreateWithoutServicesInput = {
   icon?: string | null
   imageUrl?: string | null
   keywords?: Prisma.CategoryCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   sequence?: number
   isActive?: boolean
   isPublished?: boolean
@@ -953,6 +1015,8 @@ export type CategoryUpdateWithoutServicesInput = {
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.CategoryUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequence?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -974,6 +1038,8 @@ export type CategoryUncheckedUpdateWithoutServicesInput = {
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.CategoryUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequence?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -993,6 +1059,8 @@ export type CategoryCreateManyParentInput = {
   icon?: string | null
   imageUrl?: string | null
   keywords?: Prisma.CategoryCreatekeywordsInput | string[]
+  searchText?: string | null
+  searchSkeleton?: string | null
   sequence?: number
   isActive?: boolean
   isPublished?: boolean
@@ -1011,6 +1079,8 @@ export type CategoryUpdateWithoutParentInput = {
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.CategoryUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequence?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1031,6 +1101,8 @@ export type CategoryUncheckedUpdateWithoutParentInput = {
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.CategoryUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequence?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1051,6 +1123,8 @@ export type CategoryUncheckedUpdateManyWithoutParentInput = {
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keywords?: Prisma.CategoryUpdatekeywordsInput | string[]
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequence?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1110,6 +1184,8 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   icon?: boolean
   imageUrl?: boolean
   keywords?: boolean
+  searchText?: boolean
+  searchSkeleton?: boolean
   sequence?: boolean
   isActive?: boolean
   isPublished?: boolean
@@ -1133,6 +1209,8 @@ export type CategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   icon?: boolean
   imageUrl?: boolean
   keywords?: boolean
+  searchText?: boolean
+  searchSkeleton?: boolean
   sequence?: boolean
   isActive?: boolean
   isPublished?: boolean
@@ -1153,6 +1231,8 @@ export type CategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   icon?: boolean
   imageUrl?: boolean
   keywords?: boolean
+  searchText?: boolean
+  searchSkeleton?: boolean
   sequence?: boolean
   isActive?: boolean
   isPublished?: boolean
@@ -1173,6 +1253,8 @@ export type CategorySelectScalar = {
   icon?: boolean
   imageUrl?: boolean
   keywords?: boolean
+  searchText?: boolean
+  searchSkeleton?: boolean
   sequence?: boolean
   isActive?: boolean
   isPublished?: boolean
@@ -1180,7 +1262,7 @@ export type CategorySelectScalar = {
   updatedAt?: boolean
 }
 
-export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "parentId" | "slug" | "nameEn" | "nameBn" | "nameBanglish" | "descriptionEn" | "descriptionBn" | "icon" | "imageUrl" | "keywords" | "sequence" | "isActive" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
+export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "parentId" | "slug" | "nameEn" | "nameBn" | "nameBanglish" | "descriptionEn" | "descriptionBn" | "icon" | "imageUrl" | "keywords" | "searchText" | "searchSkeleton" | "sequence" | "isActive" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parent?: boolean | Prisma.Category$parentArgs<ExtArgs>
   children?: boolean | Prisma.Category$childrenArgs<ExtArgs>
@@ -1213,9 +1295,25 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     icon: string | null
     imageUrl: string | null
     /**
-     * Free-form search terms: "রেফ্রিজারেটর", "fridge", "cold machine"...
+     * Free-form search terms: "refrigerator", "fridge", "cold machine"...
      */
     keywords: string[]
+    /**
+     * Lowercased bag of every name and keyword across all three scripts, built
+     * by the catalogue write path. Postgres `unaccent` has no Bangla rules, so
+     * normalisation happens once at write time and is matched with pg_trgm.
+     * This is what lets a Bangla-script query reach the right service.
+     */
+    searchText: string | null
+    /**
+     * Latin-only consonant skeleton: "plumber" and "plambur" both become "plmbr".
+     * Banglish users swap vowels far more often than consonants, and trigram
+     * cannot see through a vowel swap because the swapped characters ARE the
+     * trigrams. Collapsing vowels first leaves trigram to handle only genuine
+     * consonant errors. Measured against realistic Banglish typos this takes
+     * recall from 1 in 12 to 10 in 12.
+     */
+    searchSkeleton: string | null
     sequence: number
     isActive: boolean
     /**
@@ -1661,6 +1759,8 @@ export interface CategoryFieldRefs {
   readonly icon: Prisma.FieldRef<"Category", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Category", 'String'>
   readonly keywords: Prisma.FieldRef<"Category", 'String[]'>
+  readonly searchText: Prisma.FieldRef<"Category", 'String'>
+  readonly searchSkeleton: Prisma.FieldRef<"Category", 'String'>
   readonly sequence: Prisma.FieldRef<"Category", 'Int'>
   readonly isActive: Prisma.FieldRef<"Category", 'Boolean'>
   readonly isPublished: Prisma.FieldRef<"Category", 'Boolean'>

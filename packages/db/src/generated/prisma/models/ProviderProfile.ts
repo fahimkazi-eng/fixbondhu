@@ -65,6 +65,8 @@ export type ProviderProfileMinAggregateOutputType = {
   coverUrl: string | null
   businessName: string | null
   businessType: string | null
+  searchText: string | null
+  searchSkeleton: string | null
   tradeLicenseNo: string | null
   nidNumber: string | null
   experienceYears: number | null
@@ -102,6 +104,8 @@ export type ProviderProfileMaxAggregateOutputType = {
   coverUrl: string | null
   businessName: string | null
   businessType: string | null
+  searchText: string | null
+  searchSkeleton: string | null
   tradeLicenseNo: string | null
   nidNumber: string | null
   experienceYears: number | null
@@ -139,6 +143,8 @@ export type ProviderProfileCountAggregateOutputType = {
   coverUrl: number
   businessName: number
   businessType: number
+  searchText: number
+  searchSkeleton: number
   tradeLicenseNo: number
   nidNumber: number
   experienceYears: number
@@ -206,6 +212,8 @@ export type ProviderProfileMinAggregateInputType = {
   coverUrl?: true
   businessName?: true
   businessType?: true
+  searchText?: true
+  searchSkeleton?: true
   tradeLicenseNo?: true
   nidNumber?: true
   experienceYears?: true
@@ -243,6 +251,8 @@ export type ProviderProfileMaxAggregateInputType = {
   coverUrl?: true
   businessName?: true
   businessType?: true
+  searchText?: true
+  searchSkeleton?: true
   tradeLicenseNo?: true
   nidNumber?: true
   experienceYears?: true
@@ -280,6 +290,8 @@ export type ProviderProfileCountAggregateInputType = {
   coverUrl?: true
   businessName?: true
   businessType?: true
+  searchText?: true
+  searchSkeleton?: true
   tradeLicenseNo?: true
   nidNumber?: true
   experienceYears?: true
@@ -404,6 +416,8 @@ export type ProviderProfileGroupByOutputType = {
   coverUrl: string | null
   businessName: string | null
   businessType: string | null
+  searchText: string | null
+  searchSkeleton: string | null
   tradeLicenseNo: string | null
   nidNumber: string | null
   experienceYears: number
@@ -464,6 +478,8 @@ export type ProviderProfileWhereInput = {
   coverUrl?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
   businessName?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
   businessType?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
+  searchText?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
+  searchSkeleton?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
   tradeLicenseNo?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
   nidNumber?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
   experienceYears?: Prisma.IntFilter<"ProviderProfile"> | number
@@ -517,6 +533,8 @@ export type ProviderProfileOrderByWithRelationInput = {
   coverUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   businessName?: Prisma.SortOrderInput | Prisma.SortOrder
   businessType?: Prisma.SortOrderInput | Prisma.SortOrder
+  searchText?: Prisma.SortOrderInput | Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrderInput | Prisma.SortOrder
   tradeLicenseNo?: Prisma.SortOrderInput | Prisma.SortOrder
   nidNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   experienceYears?: Prisma.SortOrder
@@ -573,6 +591,8 @@ export type ProviderProfileWhereUniqueInput = Prisma.AtLeast<{
   coverUrl?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
   businessName?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
   businessType?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
+  searchText?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
+  searchSkeleton?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
   tradeLicenseNo?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
   nidNumber?: Prisma.StringNullableFilter<"ProviderProfile"> | string | null
   experienceYears?: Prisma.IntFilter<"ProviderProfile"> | number
@@ -626,6 +646,8 @@ export type ProviderProfileOrderByWithAggregationInput = {
   coverUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   businessName?: Prisma.SortOrderInput | Prisma.SortOrder
   businessType?: Prisma.SortOrderInput | Prisma.SortOrder
+  searchText?: Prisma.SortOrderInput | Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrderInput | Prisma.SortOrder
   tradeLicenseNo?: Prisma.SortOrderInput | Prisma.SortOrder
   nidNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   experienceYears?: Prisma.SortOrder
@@ -671,6 +693,8 @@ export type ProviderProfileScalarWhereWithAggregatesInput = {
   coverUrl?: Prisma.StringNullableWithAggregatesFilter<"ProviderProfile"> | string | null
   businessName?: Prisma.StringNullableWithAggregatesFilter<"ProviderProfile"> | string | null
   businessType?: Prisma.StringNullableWithAggregatesFilter<"ProviderProfile"> | string | null
+  searchText?: Prisma.StringNullableWithAggregatesFilter<"ProviderProfile"> | string | null
+  searchSkeleton?: Prisma.StringNullableWithAggregatesFilter<"ProviderProfile"> | string | null
   tradeLicenseNo?: Prisma.StringNullableWithAggregatesFilter<"ProviderProfile"> | string | null
   nidNumber?: Prisma.StringNullableWithAggregatesFilter<"ProviderProfile"> | string | null
   experienceYears?: Prisma.IntWithAggregatesFilter<"ProviderProfile"> | number
@@ -707,6 +731,8 @@ export type ProviderProfileCreateInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -760,6 +786,8 @@ export type ProviderProfileUncheckedCreateInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -811,6 +839,8 @@ export type ProviderProfileUpdateInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -864,6 +894,8 @@ export type ProviderProfileUncheckedUpdateInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -916,6 +948,8 @@ export type ProviderProfileCreateManyInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -952,6 +986,8 @@ export type ProviderProfileUpdateManyMutationInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -989,6 +1025,8 @@ export type ProviderProfileUncheckedUpdateManyInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1036,6 +1074,8 @@ export type ProviderProfileCountOrderByAggregateInput = {
   coverUrl?: Prisma.SortOrder
   businessName?: Prisma.SortOrder
   businessType?: Prisma.SortOrder
+  searchText?: Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrder
   tradeLicenseNo?: Prisma.SortOrder
   nidNumber?: Prisma.SortOrder
   experienceYears?: Prisma.SortOrder
@@ -1087,6 +1127,8 @@ export type ProviderProfileMaxOrderByAggregateInput = {
   coverUrl?: Prisma.SortOrder
   businessName?: Prisma.SortOrder
   businessType?: Prisma.SortOrder
+  searchText?: Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrder
   tradeLicenseNo?: Prisma.SortOrder
   nidNumber?: Prisma.SortOrder
   experienceYears?: Prisma.SortOrder
@@ -1124,6 +1166,8 @@ export type ProviderProfileMinOrderByAggregateInput = {
   coverUrl?: Prisma.SortOrder
   businessName?: Prisma.SortOrder
   businessType?: Prisma.SortOrder
+  searchText?: Prisma.SortOrder
+  searchSkeleton?: Prisma.SortOrder
   tradeLicenseNo?: Prisma.SortOrder
   nidNumber?: Prisma.SortOrder
   experienceYears?: Prisma.SortOrder
@@ -1446,6 +1490,8 @@ export type ProviderProfileCreateWithoutUserInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -1497,6 +1543,8 @@ export type ProviderProfileUncheckedCreateWithoutUserInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -1564,6 +1612,8 @@ export type ProviderProfileUpdateWithoutUserInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1615,6 +1665,8 @@ export type ProviderProfileUncheckedUpdateWithoutUserInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1666,6 +1718,8 @@ export type ProviderProfileCreateWithoutSavedByInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -1718,6 +1772,8 @@ export type ProviderProfileUncheckedCreateWithoutSavedByInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -1784,6 +1840,8 @@ export type ProviderProfileUpdateWithoutSavedByInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1836,6 +1894,8 @@ export type ProviderProfileUncheckedUpdateWithoutSavedByInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1886,6 +1946,8 @@ export type ProviderProfileCreateWithoutVerificationsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -1938,6 +2000,8 @@ export type ProviderProfileUncheckedCreateWithoutVerificationsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -2004,6 +2068,8 @@ export type ProviderProfileUpdateWithoutVerificationsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2056,6 +2122,8 @@ export type ProviderProfileUncheckedUpdateWithoutVerificationsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2106,6 +2174,8 @@ export type ProviderProfileCreateWithoutServicesInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -2158,6 +2228,8 @@ export type ProviderProfileUncheckedCreateWithoutServicesInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -2224,6 +2296,8 @@ export type ProviderProfileUpdateWithoutServicesInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2276,6 +2350,8 @@ export type ProviderProfileUncheckedUpdateWithoutServicesInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2326,6 +2402,8 @@ export type ProviderProfileCreateWithoutServiceAreasInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -2378,6 +2456,8 @@ export type ProviderProfileUncheckedCreateWithoutServiceAreasInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -2444,6 +2524,8 @@ export type ProviderProfileUpdateWithoutServiceAreasInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2496,6 +2578,8 @@ export type ProviderProfileUncheckedUpdateWithoutServiceAreasInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2546,6 +2630,8 @@ export type ProviderProfileCreateWithoutAvailabilityInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -2598,6 +2684,8 @@ export type ProviderProfileUncheckedCreateWithoutAvailabilityInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -2664,6 +2752,8 @@ export type ProviderProfileUpdateWithoutAvailabilityInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2716,6 +2806,8 @@ export type ProviderProfileUncheckedUpdateWithoutAvailabilityInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2766,6 +2858,8 @@ export type ProviderProfileCreateWithoutExceptionsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -2818,6 +2912,8 @@ export type ProviderProfileUncheckedCreateWithoutExceptionsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -2884,6 +2980,8 @@ export type ProviderProfileUpdateWithoutExceptionsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2936,6 +3034,8 @@ export type ProviderProfileUncheckedUpdateWithoutExceptionsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2986,6 +3086,8 @@ export type ProviderProfileCreateWithoutTimeOffInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -3038,6 +3140,8 @@ export type ProviderProfileUncheckedCreateWithoutTimeOffInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -3104,6 +3208,8 @@ export type ProviderProfileUpdateWithoutTimeOffInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3156,6 +3262,8 @@ export type ProviderProfileUncheckedUpdateWithoutTimeOffInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3206,6 +3314,8 @@ export type ProviderProfileCreateWithoutPayoutMethodsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -3258,6 +3368,8 @@ export type ProviderProfileUncheckedCreateWithoutPayoutMethodsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -3324,6 +3436,8 @@ export type ProviderProfileUpdateWithoutPayoutMethodsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3376,6 +3490,8 @@ export type ProviderProfileUncheckedUpdateWithoutPayoutMethodsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3426,6 +3542,8 @@ export type ProviderProfileCreateWithoutPortfolioInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -3478,6 +3596,8 @@ export type ProviderProfileUncheckedCreateWithoutPortfolioInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -3544,6 +3664,8 @@ export type ProviderProfileUpdateWithoutPortfolioInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3596,6 +3718,8 @@ export type ProviderProfileUncheckedUpdateWithoutPortfolioInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3646,6 +3770,8 @@ export type ProviderProfileCreateWithoutBookingsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -3698,6 +3824,8 @@ export type ProviderProfileUncheckedCreateWithoutBookingsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -3764,6 +3892,8 @@ export type ProviderProfileUpdateWithoutBookingsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3816,6 +3946,8 @@ export type ProviderProfileUncheckedUpdateWithoutBookingsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3866,6 +3998,8 @@ export type ProviderProfileCreateWithoutConversationsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -3918,6 +4052,8 @@ export type ProviderProfileUncheckedCreateWithoutConversationsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -3984,6 +4120,8 @@ export type ProviderProfileUpdateWithoutConversationsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4036,6 +4174,8 @@ export type ProviderProfileUncheckedUpdateWithoutConversationsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4086,6 +4226,8 @@ export type ProviderProfileCreateWithoutReviewsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -4138,6 +4280,8 @@ export type ProviderProfileUncheckedCreateWithoutReviewsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -4204,6 +4348,8 @@ export type ProviderProfileUpdateWithoutReviewsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4256,6 +4402,8 @@ export type ProviderProfileUncheckedUpdateWithoutReviewsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4306,6 +4454,8 @@ export type ProviderProfileCreateWithoutPaymentsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -4358,6 +4508,8 @@ export type ProviderProfileUncheckedCreateWithoutPaymentsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -4424,6 +4576,8 @@ export type ProviderProfileUpdateWithoutPaymentsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4476,6 +4630,8 @@ export type ProviderProfileUncheckedUpdateWithoutPaymentsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4526,6 +4682,8 @@ export type ProviderProfileCreateWithoutPayoutsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -4578,6 +4736,8 @@ export type ProviderProfileUncheckedCreateWithoutPayoutsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -4644,6 +4804,8 @@ export type ProviderProfileUpdateWithoutPayoutsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4696,6 +4858,8 @@ export type ProviderProfileUncheckedUpdateWithoutPayoutsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4746,6 +4910,8 @@ export type ProviderProfileCreateWithoutComplaintsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -4798,6 +4964,8 @@ export type ProviderProfileUncheckedCreateWithoutComplaintsInput = {
   coverUrl?: string | null
   businessName?: string | null
   businessType?: string | null
+  searchText?: string | null
+  searchSkeleton?: string | null
   tradeLicenseNo?: string | null
   nidNumber?: string | null
   experienceYears?: number
@@ -4864,6 +5032,8 @@ export type ProviderProfileUpdateWithoutComplaintsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4916,6 +5086,8 @@ export type ProviderProfileUncheckedUpdateWithoutComplaintsInput = {
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchSkeleton?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tradeLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nidNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
@@ -5124,6 +5296,8 @@ export type ProviderProfileSelect<ExtArgs extends runtime.Types.Extensions.Inter
   coverUrl?: boolean
   businessName?: boolean
   businessType?: boolean
+  searchText?: boolean
+  searchSkeleton?: boolean
   tradeLicenseNo?: boolean
   nidNumber?: boolean
   experienceYears?: boolean
@@ -5178,6 +5352,8 @@ export type ProviderProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   coverUrl?: boolean
   businessName?: boolean
   businessType?: boolean
+  searchText?: boolean
+  searchSkeleton?: boolean
   tradeLicenseNo?: boolean
   nidNumber?: boolean
   experienceYears?: boolean
@@ -5216,6 +5392,8 @@ export type ProviderProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   coverUrl?: boolean
   businessName?: boolean
   businessType?: boolean
+  searchText?: boolean
+  searchSkeleton?: boolean
   tradeLicenseNo?: boolean
   nidNumber?: boolean
   experienceYears?: boolean
@@ -5254,6 +5432,8 @@ export type ProviderProfileSelectScalar = {
   coverUrl?: boolean
   businessName?: boolean
   businessType?: boolean
+  searchText?: boolean
+  searchSkeleton?: boolean
   tradeLicenseNo?: boolean
   nidNumber?: boolean
   experienceYears?: boolean
@@ -5280,7 +5460,7 @@ export type ProviderProfileSelectScalar = {
   deletedAt?: boolean
 }
 
-export type ProviderProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "slug" | "displayName" | "headline" | "bio" | "photoUrl" | "coverUrl" | "businessName" | "businessType" | "tradeLicenseNo" | "nidNumber" | "experienceYears" | "status" | "verificationSubmittedAt" | "approvedAt" | "rejectionReason" | "deactivatedAt" | "isSponsored" | "sponsoredUntil" | "maxConcurrentJobs" | "acceptsUrgentJobs" | "responseRate" | "avgResponseMinutes" | "completedJobs" | "cancelledJobs" | "noShowCount" | "ratingAvg" | "ratingCount" | "totalEarningsPoisha" | "pendingPayoutPoisha" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["providerProfile"]>
+export type ProviderProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "slug" | "displayName" | "headline" | "bio" | "photoUrl" | "coverUrl" | "businessName" | "businessType" | "searchText" | "searchSkeleton" | "tradeLicenseNo" | "nidNumber" | "experienceYears" | "status" | "verificationSubmittedAt" | "approvedAt" | "rejectionReason" | "deactivatedAt" | "isSponsored" | "sponsoredUntil" | "maxConcurrentJobs" | "acceptsUrgentJobs" | "responseRate" | "avgResponseMinutes" | "completedJobs" | "cancelledJobs" | "noShowCount" | "ratingAvg" | "ratingCount" | "totalEarningsPoisha" | "pendingPayoutPoisha" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["providerProfile"]>
 export type ProviderProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   verifications?: boolean | Prisma.ProviderProfile$verificationsArgs<ExtArgs>
@@ -5338,6 +5518,8 @@ export type $ProviderProfilePayload<ExtArgs extends runtime.Types.Extensions.Int
     coverUrl: string | null
     businessName: string | null
     businessType: string | null
+    searchText: string | null
+    searchSkeleton: string | null
     tradeLicenseNo: string | null
     nidNumber: string | null
     experienceYears: number
@@ -5811,6 +5993,8 @@ export interface ProviderProfileFieldRefs {
   readonly coverUrl: Prisma.FieldRef<"ProviderProfile", 'String'>
   readonly businessName: Prisma.FieldRef<"ProviderProfile", 'String'>
   readonly businessType: Prisma.FieldRef<"ProviderProfile", 'String'>
+  readonly searchText: Prisma.FieldRef<"ProviderProfile", 'String'>
+  readonly searchSkeleton: Prisma.FieldRef<"ProviderProfile", 'String'>
   readonly tradeLicenseNo: Prisma.FieldRef<"ProviderProfile", 'String'>
   readonly nidNumber: Prisma.FieldRef<"ProviderProfile", 'String'>
   readonly experienceYears: Prisma.FieldRef<"ProviderProfile", 'Int'>
