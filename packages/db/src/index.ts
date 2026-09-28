@@ -15,6 +15,28 @@ function createAdapter() {
       "DATABASE_URL is not set. Copy .env.example to .env and fill in your Postgres connection string.",
     );
   }
+
+  // Opt-in host assertion, free at runtime: a substring check, no query.
+  //
+  // This exists because of a real incident. The verification scripts run against
+  // the demo branch, but application code reaches the database through the
+  // shared client below, which reads DATABASE_URL. A script that built its own
+  // client pointed at the demo branch while the code under test used the shared
+  // one pointed at production, so the two silently talked to different
+  // databases. Nothing errored; the assertions just quietly failed.
+  //
+  // Setting PRISMA_EXPECT_HOST makes that mistake impossible to miss. It is
+  // opt-in so a production cold start pays nothing.
+  const expectHost = process.env.PRISMA_EXPECT_HOST;
+  if (expectHost && !connectionString.includes(expectHost)) {
+    throw new Error(
+      `Refusing to connect: DATABASE_URL does not contain "${expectHost}".\n` +
+        "This process was told to talk to a specific database and is pointed " +
+        "somewhere else. Set DATABASE_URL before importing anything that " +
+        "touches the database, or unset PRISMA_EXPECT_HOST to remove the check.",
+    );
+  }
+
   return new PrismaNeon({ connectionString });
 }
 

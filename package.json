@@ -14,7 +14,7 @@
     "dev": "npm run dev --workspace=@fixbondhu/web",
     "build": "npm run db:generate && npm run build --workspace=@fixbondhu/web",
     "start": "npm run start --workspace=@fixbondhu/web",
-    "verify": "npm run verify --workspace=@fixbondhu/core && npm run verify:auth --workspace=@fixbondhu/web && npm run verify:google --workspace=@fixbondhu/web && npm run verify:search --workspace=@fixbondhu/web",
+    "verify": "npm run verify --workspace=@fixbondhu/core && npm run verify:auth --workspace=@fixbondhu/web && npm run verify:google --workspace=@fixbondhu/web && npm run verify:google:account --workspace=@fixbondhu/web && npm run verify:search --workspace=@fixbondhu/web",
     "lint": "npm run lint --workspace=@fixbondhu/web",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "db:generate": "npm run generate --workspace=@fixbondhu/db",
