@@ -331,6 +331,52 @@ body {
  * this product is actually used on; faster reads as a flicker, not a transition.
  */
 @layer utilities {
+  /*
+   * Collapsible filter panel, no JavaScript.
+   *
+   * A full filter form is around 580px tall. Stacked above the results on a
+   * phone or tablet, that pushes every provider below the fold, which is the
+   * opposite of what a filter panel is for. So below lg it is a disclosure that
+   * starts closed and reports how many filters are active; from lg up it is a
+   * permanent rail and the toggle disappears.
+   *
+   * The `not([open])` override is what forces the body visible on wide
+   * screens, since a closed <details> hides its content by default.
+   */
+  .filters-panel > summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .filters-panel > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .filters-panel > summary::after {
+    content: "";
+    margin-left: auto;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform 180ms ease;
+  }
+
+  .filters-panel[open] > summary::after {
+    transform: rotate(-135deg) translateY(-2px);
+  }
+
+  @media (min-width: 64rem) {
+    .filters-panel > summary {
+      display: none;
+    }
+
+    .filters-panel:not([open]) > .filters-body {
+      display: block;
+    }
+  }
+
   @keyframes fb-fade-in {
     from { opacity: 0; }
     to { opacity: 1; }

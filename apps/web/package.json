@@ -12,6 +12,7 @@
     "verify:auth": "tsx scripts/verify-auth.ts",
     "verify:google": "tsx scripts/verify-google.ts",
     "verify:google:account": "tsx scripts/verify-google-account.ts",
+    "verify:marketplace": "tsx scripts/verify-marketplace.ts",
     "typecheck:scripts": "tsc -p tsconfig.scripts.json",
     "verify:live": "tsx scripts/verify-live.ts",
     "cleanup:test-accounts": "tsx scripts/cleanup-test-accounts.ts",

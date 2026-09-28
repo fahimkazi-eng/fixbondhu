@@ -3,6 +3,13 @@ import type { Metadata } from "next";
 
 import { prisma } from "@/lib/db";
 import { getUser } from "@/lib/auth";
+import {
+  findProviders,
+  listCategoriesWithCounts,
+  listServicesWithCounts,
+} from "@/lib/marketplace";
+import { ProviderCard } from "@/components/provider-card";
+import { CategoryIcon } from "@/components/category-icon";
 
 export const metadata: Metadata = {
   title: "Book verified home services in Bangladesh",
@@ -19,29 +26,32 @@ export const dynamic = "force-dynamic";
  * hard-coded "12,000+ providers" or "50,000 happy customers" figures, because
  * inventing them is how a marketplace loses the only thing it has. If the
  * counts are zero, the page says so plainly.
+ *
+ * The same rule decides which sections render. "Popular near you" needs real
+ * supply, so on a deployment with no approved providers the section is replaced
+ * by an explanation rather than padded with example cards.
  */
 export default async function HomePage() {
-  const [user, categories, serviceCount, providerCount, activeBookings] =
+  const [user, categories, serviceCount, providerCount, activeBookings, services, topProviders] =
     await Promise.all([
       getUser(),
-      prisma.category.findMany({
-        where: { isActive: true, isPublished: true },
-        orderBy: { sequence: "asc" },
-        select: {
-          id: true,
-          slug: true,
-          nameEn: true,
-          nameBn: true,
-          icon: true,
-          _count: { select: { services: { where: { isPublished: true } } } },
-        },
-      }),
+      listCategoriesWithCounts(),
       prisma.service.count({ where: { isActive: true, isPublished: true } }),
       prisma.providerProfile.count({ where: { status: "ACTIVE" } }),
       prisma.booking.count({
         where: { status: { in: ["ACCEPTED", "ON_THE_WAY", "ARRIVED", "IN_PROGRESS"] } },
       }),
+      listServicesWithCounts(),
+      findProviders({ sort: "recommended", limit: 6 }),
     ]);
+
+  // Only services someone can actually book right now, grouped for the
+  // "quick help" rail. A service with zero providers is not a call to action.
+  const bookable = services.filter((s) => s.providerCount > 0);
+  const emergency = bookable.filter((s) => s.isEmergency).slice(0, 4);
+  const popular = bookable.filter((s) => !s.isEmergency).slice(0, 8);
+
+  const hasSupply = providerCount > 0;
 
   return (
     <>
@@ -127,6 +137,74 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* ---- quick help ----
+            Rendered only from services with real supply. An "urgent" tile that
+            leads to an empty page is worse than no tile. */}
+        {emergency.length > 0 ? (
+          <section className="border-b border-ink-200 bg-white">
+            <div className="container-page py-6">
+              <div className="flex items-baseline justify-between gap-3">
+                <h2 className="text-base font-semibold tracking-tight text-ink-900">
+                  Need help urgently
+                </h2>
+                <Link href="/services" className="text-sm text-brand-700 hover:underline">
+                  All services
+                </Link>
+              </div>
+              <ul className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {emergency.map((service, i) => (
+                  <li
+                    key={service.id}
+                    className="animate-rise"
+                    style={{ "--i": Math.min(i, 8) } as React.CSSProperties}
+                  >
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="card interactive flex h-full flex-col p-3"
+                    >
+                      <span className="text-sm font-medium text-ink-900">
+                        {service.nameEn}
+                      </span>
+                      <span lang="bn" className="mt-0.5 text-xs text-ink-600">
+                        {service.nameBn}
+                      </span>
+                      <span className="mt-auto pt-2 text-xs tabular-nums text-ink-500">
+                        {service.providerCount} available
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        ) : null}
+
+        {/* ---- top professionals ----
+            Gated on real supply. This is the section most likely to tempt a
+            template into showing six invented cards, so it is the one that most
+            needs the guard. */}
+        {hasSupply && topProviders.length > 0 ? (
+          <section className="container-page py-8">
+            <div className="flex items-baseline justify-between gap-3">
+              <h2 className="text-base font-semibold tracking-tight text-ink-900">
+                Top rated professionals
+              </h2>
+              <Link href="/providers" className="text-sm text-brand-700 hover:underline">
+                See all {providerCount}
+              </Link>
+            </div>
+            <p className="mt-1 text-xs text-ink-500">
+              Ordered by real ratings and completed jobs, with sponsored placements
+              labelled.
+            </p>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {topProviders.map((provider, i) => (
+                <ProviderCard key={provider.id} provider={provider} index={i} />
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
         {/* ---- honest platform state ---- */}
         <section className="container-page py-8">
           <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -142,10 +220,15 @@ export default async function HomePage() {
         </section>
 
         {/* ---- categories ---- */}
-        <section className="container-page pb-16">
-          <h2 className="text-base font-semibold tracking-tight text-ink-900">
-            Browse by category
-          </h2>
+        <section className="container-page py-8">
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 className="text-base font-semibold tracking-tight text-ink-900">
+              Browse by category
+            </h2>
+            <Link href="/services" className="text-sm text-brand-700 hover:underline">
+              All {serviceCount} services
+            </Link>
+          </div>
 
           {categories.length === 0 ? (
             <p className="card mt-3 p-6 text-sm text-ink-600">
@@ -153,22 +236,36 @@ export default async function HomePage() {
             </p>
           ) : (
             <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-              {categories.map((category) => (
-                <li key={category.id}>
+              {categories.map((category, i) => (
+                <li
+                  key={category.id}
+                  className="animate-rise"
+                  style={{ "--i": Math.min(i, 8) } as React.CSSProperties}
+                >
                   <Link
-                    href={`/search?q=${encodeURIComponent(category.nameEn)}`}
-                    className="card block p-4 transition-colors hover:border-ink-300"
+                    href={`/services?category=${category.slug}`}
+                    className="card interactive flex h-full flex-col p-4"
                   >
-                    <div className="flex items-baseline justify-between gap-2">
+                    <span className="flex items-center gap-2">
+                      <span className="text-ink-500">
+                        <CategoryIcon name={category.icon} />
+                      </span>
                       <span className="text-sm font-medium text-ink-900">
                         {category.nameEn}
                       </span>
-                      <span className="shrink-0 text-xs text-ink-400">
-                        {category._count.services}
-                      </span>
-                    </div>
-                    <p lang="bn" className="mt-0.5 text-sm text-ink-600">
+                    </span>
+                    <p lang="bn" className="mt-1 text-sm text-ink-600">
                       {category.nameBn}
+                    </p>
+                    {/*
+                      Real supply per category. A category with no providers says
+                      0 rather than being hidden, because the trade exists and the
+                      absence is about us, not about the customer.
+                    */}
+                    <p className="mt-auto pt-3 text-xs tabular-nums text-ink-500">
+                      {category.serviceCount} services ·{" "}
+                      {category.providerCount}{" "}
+                      {category.providerCount === 1 ? "professional" : "professionals"}
                     </p>
                   </Link>
                 </li>
@@ -176,6 +273,32 @@ export default async function HomePage() {
             </ul>
           )}
         </section>
+
+        {/* ---- popular services ---- */}
+        {popular.length > 0 ? (
+          <section className="container-page pb-10">
+            <h2 className="text-base font-semibold tracking-tight text-ink-900">
+              Popular services
+            </h2>
+            <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {popular.map((service) => (
+                <li key={service.id}>
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="card interactive flex h-full flex-col p-3"
+                  >
+                    <span className="text-sm font-medium text-ink-900">
+                      {service.nameEn}
+                    </span>
+                    <span className="mt-auto pt-2 text-xs tabular-nums text-ink-500">
+                      {service.providerCount} available
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
 
         {/* ---- launch state ---- */}
         {providerCount === 0 ? (
