@@ -22,10 +22,30 @@ import { loadRootEnv } from "../src/lib/load-root-env";
 loadRootEnv();
 
 const BASE = process.env.BASE_URL ?? "https://fixbondhu-demo.vercel.app";
-const DEMO_URL = process.env.DEMO_DATABASE_URL ?? process.env.DATABASE_URL;
-if (!DEMO_URL) throw new Error("DEMO_DATABASE_URL is required.");
+
+// DEMO_DATABASE_URL is required outright, with no fallback to DATABASE_URL.
+//
+// The fallback that used to be here was actively dangerous. With it, a local
+// run silently created its two throwaway accounts on whatever DATABASE_URL
+// pointed at while logging in over HTTP at BASE — two different databases, so
+// the run failed with a baffling 401 having tested nothing. Worse, on a machine
+// where DATABASE_URL is production, this script creates a ProviderProfile with
+// approvedAt set: a verified-looking provider on the production branch, which is
+// precisely what the product promises never to show. The production branch is
+// checked explicitly below for the same reason.
+const DEMO_URL = process.env.DEMO_DATABASE_URL;
+if (!DEMO_URL) {
+  throw new Error(
+    "DEMO_DATABASE_URL is required. This suite creates a provider and a booking,\n" +
+      "so it must never be pointed at the production branch. Set it to the demo\n" +
+      "branch connection string and set BASE_URL to the matching deployment.",
+  );
+}
 
 const prisma = new PrismaClient({ adapter: new PrismaNeon({ connectionString: DEMO_URL }) });
+
+/** The production branch, which this suite must never write to. */
+const PRODUCTION_BRANCH_ID = "br-orange-bird-az5zc8uz";
 
 let passed = 0;
 const failures: string[] = [];
@@ -73,6 +93,22 @@ async function post(path: string, body: unknown, jar?: Jar) {
 
 async function main() {
   console.log(`Booking lifecycle against ${BASE}\n`);
+
+  // Refuse to run against production before creating anything. This suite builds
+  // an approved provider and a completed booking, so a mistaken run here would
+  // leave exactly the kind of fabricated record the product promises not to
+  // contain, on the branch real customers use.
+  const [branch] = await prisma.$queryRawUnsafe<Array<{ b: string }>>(
+    "SELECT current_setting('neon.branch_id') AS b",
+  );
+  const branchId = branch?.b ?? "unknown";
+  console.log(`  branch: ${branchId}\n`);
+  if (branchId === PRODUCTION_BRANCH_ID) {
+    throw new Error(
+      "Refusing to run: DEMO_DATABASE_URL points at the production branch " +
+        `(${PRODUCTION_BRANCH_ID}). Point it at the demo branch instead.`,
+    );
+  }
 
   // A dedicated pair of accounts so the run never disturbs the demo personas.
   // A Bangladeshi number is 11 digits: 0 + 10, national part starting 1[3-9].
