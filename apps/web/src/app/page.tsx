@@ -12,6 +12,8 @@ import { getCustomerArea } from "@/lib/recommendations";
 import { ProviderCard } from "@/components/provider-card";
 import { CategoryIcon } from "@/components/category-icon";
 import { PersonalRail } from "@/components/personal-rail";
+import { CountUp } from "@/components/count-up";
+import { Reveal } from "@/components/reveal";
 import {
   MobileTabBar,
   SiteFooter,
@@ -213,7 +215,9 @@ export default async function HomePage() {
           </p>
         </section>
 
-        {/* ---- categories ---- */}
+        {/* ---- categories ----
+            Wrapped in Reveal so the section arrives as it is scrolled to. Each
+            card is a group so the icon can zoom with the card, per the brief. */}
         <section className="container-page py-8">
           <div className="flex items-baseline justify-between gap-3">
             <h2 className="text-base font-semibold tracking-tight text-ink-900">
@@ -229,25 +233,22 @@ export default async function HomePage() {
               No categories have been published yet.
             </p>
           ) : (
-            <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-              {categories.map((category, i) => (
-                <li
-                  key={category.id}
-                  className="animate-rise"
-                  style={{ "--i": Math.min(i, 8) } as React.CSSProperties}
-                >
-                  <Link
-                    href={`/services?category=${category.slug}`}
-                    className="card interactive flex h-full flex-col p-4"
-                  >
-                    <span className="flex items-center gap-2">
-                      <span className="text-ink-500">
-                        <CategoryIcon name={category.icon} />
+            <Reveal className="mt-4">
+              <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                {categories.map((category) => (
+                  <li key={category.id}>
+                    <Link
+                      href={`/services?category=${category.slug}`}
+                      className="card group hover-lift flex h-full flex-col p-4"
+                    >
+                      <span className="flex items-center gap-2">
+                        <span className="media-zoom text-ink-500">
+                          <CategoryIcon name={category.icon} />
+                        </span>
+                        <span className="text-sm font-medium text-ink-900">
+                          {category.nameEn}
+                        </span>
                       </span>
-                      <span className="text-sm font-medium text-ink-900">
-                        {category.nameEn}
-                      </span>
-                    </span>
                     <p lang="bn" className="mt-1 text-sm text-ink-600">
                       {category.nameBn}
                     </p>
@@ -265,6 +266,7 @@ export default async function HomePage() {
                 </li>
               ))}
             </ul>
+            </Reveal>
           )}
         </section>
 
@@ -339,7 +341,12 @@ function Stat({ label, value }: { label: string; value: number }) {
     <div className="card px-4 py-3">
       <dt className="text-xs text-ink-500">{label}</dt>
       <dd className="mt-0.5 text-lg font-semibold tabular-nums tracking-tight text-ink-900">
-        {value.toLocaleString("en-US")}
+        {/*
+          CountUp only animates the journey to the number the server already
+          read from the database. It cannot invent one: if JS does not run, the
+          server-rendered value is what stands.
+        */}
+        <CountUp value={value} />
       </dd>
     </div>
   );

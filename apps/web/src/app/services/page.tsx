@@ -9,6 +9,7 @@ import {
   listAreasByDistrict,
 } from "@/lib/marketplace";
 import { CategoryIcon } from "@/components/category-icon";
+import { Reveal } from "@/components/reveal";
 import {
   MobileTabBar,
   SiteFooter,
@@ -173,14 +174,15 @@ export default async function ServicesPage({
         </nav>
 
         {/* ---- sections ---- */}
-        {sections.length === 0 ? (
+        {services.length === 0 ? (
           <div className="card mt-6 p-8 text-center">
             <p className="text-sm text-ink-600">No categories have been published yet.</p>
           </div>
         ) : (
           <div className="mt-8 space-y-10">
             {sections.map(({ category, services: items }) => (
-              <section key={category.slug} aria-labelledby={`cat-${category.slug}`}>
+              <Reveal key={category.slug}>
+                <section aria-labelledby={`cat-${category.slug}`}>
                 <div className="flex items-baseline justify-between gap-3 border-b border-ink-200 pb-2">
                   <h2
                     id={`cat-${category.slug}`}
@@ -257,7 +259,8 @@ export default async function ServicesPage({
                     ))}
                   </ul>
                 )}
-              </section>
+                </section>
+              </Reveal>
             ))}
           </div>
         )}

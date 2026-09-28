@@ -34,7 +34,17 @@ export function ProviderCard({
       className="animate-rise"
       style={{ "--i": Math.min(index, 8) } as React.CSSProperties}
     >
-      <article className="card interactive flex h-full flex-col p-4">
+      {/*
+       * `hover-lift` rather than `interactive`. The brief asks for a 4px rise on
+       * provider cards specifically, because they are what a reader is
+       * comparing. The pointer-only guard lives in the class, so a tap on a
+       * phone does not leave the card stuck in a raised state.
+       */}
+      <article
+        className={`card hover-lift flex h-full flex-col p-4${
+          provider.isSponsored ? " border-dashed" : ""
+        }`}
+      >
         <div className="flex items-start gap-3">
           {/*
             No stock photos and no generated avatars. Either the provider has
@@ -46,7 +56,7 @@ export function ProviderCard({
             <img
               src={provider.photoUrl}
               alt=""
-              className="h-12 w-12 shrink-0 rounded-lg object-cover"
+              className="media-zoom h-12 w-12 shrink-0 rounded-lg object-cover"
               loading="lazy"
             />
           ) : (

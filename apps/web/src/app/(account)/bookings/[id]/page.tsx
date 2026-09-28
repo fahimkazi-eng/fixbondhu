@@ -14,6 +14,7 @@ import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { CopyButton } from "@/components/copy-button";
 import { BookingActions } from "@/components/booking-actions";
+import { BookingProgress } from "@/components/booking-progress";
 import { ChargeDecision } from "@/components/charge-decision";
 import { ReviewForm } from "@/components/review-form";
 
@@ -98,45 +99,12 @@ export default async function BookingDetailPage({
             </span>
           </div>
 
-          {/* ---- progress tracker ---- */}
+          {/* ---- progress tracker ----
+              Reads HAPPY_PATH from core, so the steps shown are exactly the ones
+              the state machine permits. */}
           {onHappyPath ? (
             <div className="mt-6">
-              <ol className="relative flex justify-between">
-                {/* The connecting rail sits behind the dots and is drawn with a
-                    scaleX transition so the fill direction is obvious. */}
-                <div
-                  className="absolute left-0 right-0 top-[5px] h-0.5 bg-ink-200"
-                  aria-hidden
-                >
-                  <div
-                    className="progress-fill h-full bg-brand-600"
-                    style={{
-                      width: `${(current / (HAPPY_PATH.length - 1)) * 100}%`,
-                    }}
-                  />
-                </div>
-
-                {HAPPY_PATH.map((step, index) => {
-                  const done = index <= current;
-                  return (
-                    <li key={step} className="relative z-10 flex flex-col items-center gap-1.5">
-                      <span
-                        className={`h-3 w-3 rounded-full transition-colors duration-300 ${
-                          done ? DOT_CLASSES[STATUS_TONE[booking.status]] : "bg-ink-200"
-                        }`}
-                        aria-hidden
-                      />
-                      <span
-                        className={`max-w-[4.5rem] text-center text-[11px] leading-tight ${
-                          done ? "text-ink-900" : "text-ink-400"
-                        }`}
-                      >
-                        {STATUS_LABELS[step].en}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ol>
+              <BookingProgress status={booking.status} />
             </div>
           ) : null}
         </section>

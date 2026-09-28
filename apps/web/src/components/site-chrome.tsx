@@ -67,7 +67,7 @@ export function SiteHeader({
               Search services
             </label>
             <input
-              className="input h-9 pl-9 text-sm"
+              className="input focus-expand h-9 pl-9 text-sm"
               id="site-search"
               name="q"
               type="search"
