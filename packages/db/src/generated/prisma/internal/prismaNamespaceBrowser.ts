@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   UserRoleAssignment: 'UserRoleAssignment',
+  AuthIdentity: 'AuthIdentity',
   OtpCode: 'OtpCode',
   Session: 'Session',
   Location: 'Location',
@@ -150,6 +151,19 @@ export const UserRoleAssignmentScalarFieldEnum = {
 } as const
 
 export type UserRoleAssignmentScalarFieldEnum = (typeof UserRoleAssignmentScalarFieldEnum)[keyof typeof UserRoleAssignmentScalarFieldEnum]
+
+
+export const AuthIdentityScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  emailAtLink: 'emailAtLink',
+  createdAt: 'createdAt',
+  lastUsedAt: 'lastUsedAt'
+} as const
+
+export type AuthIdentityScalarFieldEnum = (typeof AuthIdentityScalarFieldEnum)[keyof typeof AuthIdentityScalarFieldEnum]
 
 
 export const OtpCodeScalarFieldEnum = {

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { getUser } from "@/lib/auth";
 import { AuthForm } from "@/components/auth-form";
+import { GoogleSignInButton } from "@/components/google-sign-in-button";
 
 export const metadata: Metadata = {
   title: "Create your account",
@@ -16,6 +17,9 @@ export default async function RegisterPage() {
   if (await getUser()) {
     redirect("/account");
   }
+
+  const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+  const googleEnabled = Boolean(googleClientId && process.env.GOOGLE_CLIENT_ID);
 
   return (
     <main id="main" className="container-page flex min-h-dvh flex-col py-8">
@@ -35,13 +39,19 @@ export default async function RegisterPage() {
             Create your account
           </h1>
           <p className="mt-1 text-sm text-ink-600">
-            Book and track services with FixBondhu.
+            Sign up with Google, or use your mobile number.
           </p>
         </div>
 
+        {googleEnabled && googleClientId ? (
+          <div className="mt-5">
+            <GoogleSignInButton clientId={googleClientId} intent="signup" />
+          </div>
+        ) : null}
+
         <AuthForm
           action="/api/auth/register"
-          submitLabel="Create account"
+          submitLabel="Create account with mobile"
           fields={[
             {
               name: "name",

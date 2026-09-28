@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { getUser } from "@/lib/auth";
 import { AuthForm } from "@/components/auth-form";
+import { GoogleSignInButton } from "@/components/google-sign-in-button";
 
 export const metadata: Metadata = {
   title: "Sign in",
@@ -13,10 +14,15 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function LoginPage() {
-  // An authenticated visitor has no business on the sign-in page.
   if (await getUser()) {
     redirect("/account");
   }
+
+  // Read on the server so the value is inlined at build/render time. If it is
+  // absent the Google option is not offered at all, rather than rendering a
+  // button that cannot work.
+  const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+  const googleEnabled = Boolean(googleClientId && process.env.GOOGLE_CLIENT_ID);
 
   return (
     <main id="main" className="container-page flex min-h-dvh flex-col py-8">
@@ -34,13 +40,19 @@ export default async function LoginPage() {
         <div className="mt-10">
           <h1 className="text-xl font-semibold tracking-tight text-ink-900">Sign in</h1>
           <p className="mt-1 text-sm text-ink-600">
-            Sign in with the mobile number you registered.
+            Sign in with the mobile number you registered, or continue with Google.
           </p>
         </div>
 
+        {googleEnabled && googleClientId ? (
+          <div className="mt-5">
+            <GoogleSignInButton clientId={googleClientId} intent="signin" />
+          </div>
+        ) : null}
+
         <AuthForm
           action="/api/auth/login"
-          submitLabel="Sign in"
+          submitLabel="Sign in with mobile"
           createAccountHref="/register"
           fields={[
             {

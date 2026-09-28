@@ -313,6 +313,7 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   roles?: Prisma.UserRoleAssignmentListRelationFilter
+  identities?: Prisma.AuthIdentityListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   otpCodes?: Prisma.OtpCodeListRelationFilter
   customerProfile?: Prisma.XOR<Prisma.CustomerProfileNullableScalarRelationFilter, Prisma.CustomerProfileWhereInput> | null
@@ -374,6 +375,7 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   roles?: Prisma.UserRoleAssignmentOrderByRelationAggregateInput
+  identities?: Prisma.AuthIdentityOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   otpCodes?: Prisma.OtpCodeOrderByRelationAggregateInput
   customerProfile?: Prisma.CustomerProfileOrderByWithRelationInput
@@ -438,6 +440,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   roles?: Prisma.UserRoleAssignmentListRelationFilter
+  identities?: Prisma.AuthIdentityListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   otpCodes?: Prisma.OtpCodeListRelationFilter
   customerProfile?: Prisma.XOR<Prisma.CustomerProfileNullableScalarRelationFilter, Prisma.CustomerProfileWhereInput> | null
@@ -547,6 +550,7 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -608,6 +612,7 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -669,6 +674,7 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -730,6 +736,7 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -954,6 +961,20 @@ export type UserUpdateOneRequiredWithoutRolesNestedInput = {
   upsert?: Prisma.UserUpsertWithoutRolesInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRolesInput, Prisma.UserUpdateWithoutRolesInput>, Prisma.UserUncheckedUpdateWithoutRolesInput>
+}
+
+export type UserCreateNestedOneWithoutIdentitiesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutIdentitiesInput, Prisma.UserUncheckedCreateWithoutIdentitiesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutIdentitiesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutIdentitiesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutIdentitiesInput, Prisma.UserUncheckedCreateWithoutIdentitiesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutIdentitiesInput
+  upsert?: Prisma.UserUpsertWithoutIdentitiesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutIdentitiesInput, Prisma.UserUpdateWithoutIdentitiesInput>, Prisma.UserUncheckedUpdateWithoutIdentitiesInput>
 }
 
 export type UserCreateNestedOneWithoutOtpCodesInput = {
@@ -1570,6 +1591,7 @@ export type UserCreateWithoutRolesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -1630,6 +1652,7 @@ export type UserUncheckedCreateWithoutRolesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -1706,6 +1729,7 @@ export type UserUpdateWithoutRolesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -1766,6 +1790,267 @@ export type UserUncheckedUpdateWithoutRolesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
+  customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
+  providerProfile?: Prisma.ProviderProfileUncheckedUpdateOneWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+  savedProviders?: Prisma.SavedProviderUncheckedUpdateManyWithoutUserNestedInput
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutCustomerNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCustomerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCustomerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  pushSubs?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutCustomerNestedInput
+  tickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOpenedByNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  couponsUsed?: Prisma.CouponRedemptionUncheckedUpdateManyWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
+  referralUsed?: Prisma.ReferralUncheckedUpdateOneWithoutReferredNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  verifiedReviews?: Prisma.ReviewUncheckedUpdateManyWithoutModeratedByNestedInput
+  chargeRequests?: Prisma.AdditionalChargeRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  chargeResponses?: Prisma.AdditionalChargeRequestUncheckedUpdateManyWithoutRespondedByNestedInput
+  bookingEvents?: Prisma.BookingEventUncheckedUpdateManyWithoutActorUserNestedInput
+  bookingHistory?: Prisma.BookingStatusHistoryUncheckedUpdateManyWithoutActorUserNestedInput
+  complaintsAssigned?: Prisma.ComplaintUncheckedUpdateManyWithoutAssignedToNestedInput
+  complaintEvents?: Prisma.ComplaintEventUncheckedUpdateManyWithoutActorNestedInput
+  disputesOpened?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
+  disputesDecided?: Prisma.DisputeUncheckedUpdateManyWithoutDecidedByNestedInput
+  evidenceUploads?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutUploadedByNestedInput
+  ticketsAssigned?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
+  ticketCustomers?: Prisma.SupportTicketUncheckedUpdateManyWithoutCustomerNestedInput
+  refundDecisions?: Prisma.RefundUncheckedUpdateManyWithoutProcessedByNestedInput
+  payoutsApproved?: Prisma.PayoutUncheckedUpdateManyWithoutProcessedByNestedInput
+  settingsUpdates?: Prisma.SettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  reviewFlags?: Prisma.ReviewFlagUncheckedUpdateManyWithoutReportedByNestedInput
+  couponScopes?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  searchQueries?: Prisma.SearchQueryLogUncheckedUpdateManyWithoutUserNestedInput
+  verificationReviews?: Prisma.ProviderVerificationUncheckedUpdateManyWithoutReviewedByNestedInput
+  customerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
+}
+
+export type UserCreateWithoutIdentitiesInput = {
+  id?: string
+  phone?: string | null
+  email?: string | null
+  phoneVerifiedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  name: string
+  avatarUrl?: string | null
+  primaryRole?: $Enums.UserRole
+  status?: $Enums.UserStatus
+  locale?: string
+  lastLoginAt?: Date | string | null
+  failedLoginCount?: number
+  lockedUntil?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
+  customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
+  providerProfile?: Prisma.ProviderProfileCreateNestedOneWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
+  savedProviders?: Prisma.SavedProviderCreateNestedManyWithoutUserInput
+  bookings?: Prisma.BookingCreateNestedManyWithoutCustomerInput
+  messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutCustomerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCustomerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  pushSubs?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutCustomerInput
+  tickets?: Prisma.SupportTicketCreateNestedManyWithoutOpenedByInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
+  couponsUsed?: Prisma.CouponRedemptionCreateNestedManyWithoutUserInput
+  referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
+  referralUsed?: Prisma.ReferralCreateNestedOneWithoutReferredInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  verifiedReviews?: Prisma.ReviewCreateNestedManyWithoutModeratedByInput
+  chargeRequests?: Prisma.AdditionalChargeRequestCreateNestedManyWithoutRequestedByInput
+  chargeResponses?: Prisma.AdditionalChargeRequestCreateNestedManyWithoutRespondedByInput
+  bookingEvents?: Prisma.BookingEventCreateNestedManyWithoutActorUserInput
+  bookingHistory?: Prisma.BookingStatusHistoryCreateNestedManyWithoutActorUserInput
+  complaintsAssigned?: Prisma.ComplaintCreateNestedManyWithoutAssignedToInput
+  complaintEvents?: Prisma.ComplaintEventCreateNestedManyWithoutActorInput
+  disputesOpened?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
+  disputesDecided?: Prisma.DisputeCreateNestedManyWithoutDecidedByInput
+  evidenceUploads?: Prisma.DisputeEvidenceCreateNestedManyWithoutUploadedByInput
+  ticketsAssigned?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
+  ticketCustomers?: Prisma.SupportTicketCreateNestedManyWithoutCustomerInput
+  refundDecisions?: Prisma.RefundCreateNestedManyWithoutProcessedByInput
+  payoutsApproved?: Prisma.PayoutCreateNestedManyWithoutProcessedByInput
+  settingsUpdates?: Prisma.SettingCreateNestedManyWithoutUpdatedByInput
+  reviewFlags?: Prisma.ReviewFlagCreateNestedManyWithoutReportedByInput
+  couponScopes?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
+  searchQueries?: Prisma.SearchQueryLogCreateNestedManyWithoutUserInput
+  verificationReviews?: Prisma.ProviderVerificationCreateNestedManyWithoutReviewedByInput
+  customerConversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
+}
+
+export type UserUncheckedCreateWithoutIdentitiesInput = {
+  id?: string
+  phone?: string | null
+  email?: string | null
+  phoneVerifiedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  name: string
+  avatarUrl?: string | null
+  primaryRole?: $Enums.UserRole
+  status?: $Enums.UserStatus
+  locale?: string
+  lastLoginAt?: Date | string | null
+  failedLoginCount?: number
+  lockedUntil?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
+  customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
+  providerProfile?: Prisma.ProviderProfileUncheckedCreateNestedOneWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
+  savedProviders?: Prisma.SavedProviderUncheckedCreateNestedManyWithoutUserInput
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutCustomerInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCustomerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCustomerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  pushSubs?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutCustomerInput
+  tickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOpenedByInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  couponsUsed?: Prisma.CouponRedemptionUncheckedCreateNestedManyWithoutUserInput
+  referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
+  referralUsed?: Prisma.ReferralUncheckedCreateNestedOneWithoutReferredInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  verifiedReviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutModeratedByInput
+  chargeRequests?: Prisma.AdditionalChargeRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  chargeResponses?: Prisma.AdditionalChargeRequestUncheckedCreateNestedManyWithoutRespondedByInput
+  bookingEvents?: Prisma.BookingEventUncheckedCreateNestedManyWithoutActorUserInput
+  bookingHistory?: Prisma.BookingStatusHistoryUncheckedCreateNestedManyWithoutActorUserInput
+  complaintsAssigned?: Prisma.ComplaintUncheckedCreateNestedManyWithoutAssignedToInput
+  complaintEvents?: Prisma.ComplaintEventUncheckedCreateNestedManyWithoutActorInput
+  disputesOpened?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
+  disputesDecided?: Prisma.DisputeUncheckedCreateNestedManyWithoutDecidedByInput
+  evidenceUploads?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutUploadedByInput
+  ticketsAssigned?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
+  ticketCustomers?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutCustomerInput
+  refundDecisions?: Prisma.RefundUncheckedCreateNestedManyWithoutProcessedByInput
+  payoutsApproved?: Prisma.PayoutUncheckedCreateNestedManyWithoutProcessedByInput
+  settingsUpdates?: Prisma.SettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  reviewFlags?: Prisma.ReviewFlagUncheckedCreateNestedManyWithoutReportedByInput
+  couponScopes?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
+  searchQueries?: Prisma.SearchQueryLogUncheckedCreateNestedManyWithoutUserInput
+  verificationReviews?: Prisma.ProviderVerificationUncheckedCreateNestedManyWithoutReviewedByInput
+  customerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
+}
+
+export type UserCreateOrConnectWithoutIdentitiesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutIdentitiesInput, Prisma.UserUncheckedCreateWithoutIdentitiesInput>
+}
+
+export type UserUpsertWithoutIdentitiesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutIdentitiesInput, Prisma.UserUncheckedUpdateWithoutIdentitiesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutIdentitiesInput, Prisma.UserUncheckedCreateWithoutIdentitiesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutIdentitiesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutIdentitiesInput, Prisma.UserUncheckedUpdateWithoutIdentitiesInput>
+}
+
+export type UserUpdateWithoutIdentitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryRole?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  locale?: Prisma.StringFieldUpdateOperationsInput | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedLoginCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
+  customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
+  providerProfile?: Prisma.ProviderProfileUpdateOneWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
+  savedProviders?: Prisma.SavedProviderUpdateManyWithoutUserNestedInput
+  bookings?: Prisma.BookingUpdateManyWithoutCustomerNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutCustomerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCustomerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  pushSubs?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutCustomerNestedInput
+  tickets?: Prisma.SupportTicketUpdateManyWithoutOpenedByNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
+  couponsUsed?: Prisma.CouponRedemptionUpdateManyWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
+  referralUsed?: Prisma.ReferralUpdateOneWithoutReferredNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  verifiedReviews?: Prisma.ReviewUpdateManyWithoutModeratedByNestedInput
+  chargeRequests?: Prisma.AdditionalChargeRequestUpdateManyWithoutRequestedByNestedInput
+  chargeResponses?: Prisma.AdditionalChargeRequestUpdateManyWithoutRespondedByNestedInput
+  bookingEvents?: Prisma.BookingEventUpdateManyWithoutActorUserNestedInput
+  bookingHistory?: Prisma.BookingStatusHistoryUpdateManyWithoutActorUserNestedInput
+  complaintsAssigned?: Prisma.ComplaintUpdateManyWithoutAssignedToNestedInput
+  complaintEvents?: Prisma.ComplaintEventUpdateManyWithoutActorNestedInput
+  disputesOpened?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
+  disputesDecided?: Prisma.DisputeUpdateManyWithoutDecidedByNestedInput
+  evidenceUploads?: Prisma.DisputeEvidenceUpdateManyWithoutUploadedByNestedInput
+  ticketsAssigned?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
+  ticketCustomers?: Prisma.SupportTicketUpdateManyWithoutCustomerNestedInput
+  refundDecisions?: Prisma.RefundUpdateManyWithoutProcessedByNestedInput
+  payoutsApproved?: Prisma.PayoutUpdateManyWithoutProcessedByNestedInput
+  settingsUpdates?: Prisma.SettingUpdateManyWithoutUpdatedByNestedInput
+  reviewFlags?: Prisma.ReviewFlagUpdateManyWithoutReportedByNestedInput
+  couponScopes?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
+  searchQueries?: Prisma.SearchQueryLogUpdateManyWithoutUserNestedInput
+  verificationReviews?: Prisma.ProviderVerificationUpdateManyWithoutReviewedByNestedInput
+  customerConversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutIdentitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryRole?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  locale?: Prisma.StringFieldUpdateOperationsInput | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedLoginCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -1827,6 +2112,7 @@ export type UserCreateWithoutOtpCodesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
   providerProfile?: Prisma.ProviderProfileCreateNestedOneWithoutUserInput
@@ -1887,6 +2173,7 @@ export type UserUncheckedCreateWithoutOtpCodesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
   providerProfile?: Prisma.ProviderProfileUncheckedCreateNestedOneWithoutUserInput
@@ -1963,6 +2250,7 @@ export type UserUpdateWithoutOtpCodesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
   providerProfile?: Prisma.ProviderProfileUpdateOneWithoutUserNestedInput
@@ -2023,6 +2311,7 @@ export type UserUncheckedUpdateWithoutOtpCodesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
   providerProfile?: Prisma.ProviderProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -2083,6 +2372,7 @@ export type UserCreateWithoutSessionsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
   providerProfile?: Prisma.ProviderProfileCreateNestedOneWithoutUserInput
@@ -2143,6 +2433,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
   providerProfile?: Prisma.ProviderProfileUncheckedCreateNestedOneWithoutUserInput
@@ -2219,6 +2510,7 @@ export type UserUpdateWithoutSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
   providerProfile?: Prisma.ProviderProfileUpdateOneWithoutUserNestedInput
@@ -2279,6 +2571,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
   providerProfile?: Prisma.ProviderProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -2339,6 +2632,7 @@ export type UserCreateWithoutCustomerProfileInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   providerProfile?: Prisma.ProviderProfileCreateNestedOneWithoutUserInput
@@ -2399,6 +2693,7 @@ export type UserUncheckedCreateWithoutCustomerProfileInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   providerProfile?: Prisma.ProviderProfileUncheckedCreateNestedOneWithoutUserInput
@@ -2475,6 +2770,7 @@ export type UserUpdateWithoutCustomerProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   providerProfile?: Prisma.ProviderProfileUpdateOneWithoutUserNestedInput
@@ -2535,6 +2831,7 @@ export type UserUncheckedUpdateWithoutCustomerProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   providerProfile?: Prisma.ProviderProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -2595,6 +2892,7 @@ export type UserCreateWithoutAddressesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -2655,6 +2953,7 @@ export type UserUncheckedCreateWithoutAddressesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -2731,6 +3030,7 @@ export type UserUpdateWithoutAddressesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -2791,6 +3091,7 @@ export type UserUncheckedUpdateWithoutAddressesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -2851,6 +3152,7 @@ export type UserCreateWithoutSavedProvidersInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -2911,6 +3213,7 @@ export type UserUncheckedCreateWithoutSavedProvidersInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -2987,6 +3290,7 @@ export type UserUpdateWithoutSavedProvidersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -3047,6 +3351,7 @@ export type UserUncheckedUpdateWithoutSavedProvidersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -3107,6 +3412,7 @@ export type UserCreateWithoutProviderProfileInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -3167,6 +3473,7 @@ export type UserUncheckedCreateWithoutProviderProfileInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -3243,6 +3550,7 @@ export type UserUpdateWithoutProviderProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -3303,6 +3611,7 @@ export type UserUncheckedUpdateWithoutProviderProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -3363,6 +3672,7 @@ export type UserCreateWithoutVerificationReviewsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -3423,6 +3733,7 @@ export type UserUncheckedCreateWithoutVerificationReviewsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -3499,6 +3810,7 @@ export type UserUpdateWithoutVerificationReviewsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -3559,6 +3871,7 @@ export type UserUncheckedUpdateWithoutVerificationReviewsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -3619,6 +3932,7 @@ export type UserCreateWithoutBookingsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -3679,6 +3993,7 @@ export type UserUncheckedCreateWithoutBookingsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -3755,6 +4070,7 @@ export type UserUpdateWithoutBookingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -3815,6 +4131,7 @@ export type UserUncheckedUpdateWithoutBookingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -3875,6 +4192,7 @@ export type UserCreateWithoutBookingHistoryInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -3935,6 +4253,7 @@ export type UserUncheckedCreateWithoutBookingHistoryInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -4011,6 +4330,7 @@ export type UserUpdateWithoutBookingHistoryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -4071,6 +4391,7 @@ export type UserUncheckedUpdateWithoutBookingHistoryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -4131,6 +4452,7 @@ export type UserCreateWithoutBookingEventsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -4191,6 +4513,7 @@ export type UserUncheckedCreateWithoutBookingEventsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -4267,6 +4590,7 @@ export type UserUpdateWithoutBookingEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -4327,6 +4651,7 @@ export type UserUncheckedUpdateWithoutBookingEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -4387,6 +4712,7 @@ export type UserCreateWithoutChargeRequestsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -4447,6 +4773,7 @@ export type UserUncheckedCreateWithoutChargeRequestsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -4512,6 +4839,7 @@ export type UserCreateWithoutChargeResponsesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -4572,6 +4900,7 @@ export type UserUncheckedCreateWithoutChargeResponsesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -4648,6 +4977,7 @@ export type UserUpdateWithoutChargeRequestsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -4708,6 +5038,7 @@ export type UserUncheckedUpdateWithoutChargeRequestsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -4779,6 +5110,7 @@ export type UserUpdateWithoutChargeResponsesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -4839,6 +5171,7 @@ export type UserUncheckedUpdateWithoutChargeResponsesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -4899,6 +5232,7 @@ export type UserCreateWithoutCustomerConversationsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -4959,6 +5293,7 @@ export type UserUncheckedCreateWithoutCustomerConversationsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -5035,6 +5370,7 @@ export type UserUpdateWithoutCustomerConversationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -5095,6 +5431,7 @@ export type UserUncheckedUpdateWithoutCustomerConversationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -5155,6 +5492,7 @@ export type UserCreateWithoutMessagesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -5215,6 +5553,7 @@ export type UserUncheckedCreateWithoutMessagesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -5291,6 +5630,7 @@ export type UserUpdateWithoutMessagesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -5351,6 +5691,7 @@ export type UserUncheckedUpdateWithoutMessagesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -5411,6 +5752,7 @@ export type UserCreateWithoutReviewsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -5471,6 +5813,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -5536,6 +5879,7 @@ export type UserCreateWithoutVerifiedReviewsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -5596,6 +5940,7 @@ export type UserUncheckedCreateWithoutVerifiedReviewsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -5672,6 +6017,7 @@ export type UserUpdateWithoutReviewsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -5732,6 +6078,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -5803,6 +6150,7 @@ export type UserUpdateWithoutVerifiedReviewsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -5863,6 +6211,7 @@ export type UserUncheckedUpdateWithoutVerifiedReviewsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -5923,6 +6272,7 @@ export type UserCreateWithoutReviewFlagsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -5983,6 +6333,7 @@ export type UserUncheckedCreateWithoutReviewFlagsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -6059,6 +6410,7 @@ export type UserUpdateWithoutReviewFlagsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -6119,6 +6471,7 @@ export type UserUncheckedUpdateWithoutReviewFlagsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -6179,6 +6532,7 @@ export type UserCreateWithoutPaymentsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -6239,6 +6593,7 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -6315,6 +6670,7 @@ export type UserUpdateWithoutPaymentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -6375,6 +6731,7 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -6435,6 +6792,7 @@ export type UserCreateWithoutRefundDecisionsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -6495,6 +6853,7 @@ export type UserUncheckedCreateWithoutRefundDecisionsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -6571,6 +6930,7 @@ export type UserUpdateWithoutRefundDecisionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -6631,6 +6991,7 @@ export type UserUncheckedUpdateWithoutRefundDecisionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -6691,6 +7052,7 @@ export type UserCreateWithoutPayoutsApprovedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -6751,6 +7113,7 @@ export type UserUncheckedCreateWithoutPayoutsApprovedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -6827,6 +7190,7 @@ export type UserUpdateWithoutPayoutsApprovedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -6887,6 +7251,7 @@ export type UserUncheckedUpdateWithoutPayoutsApprovedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -6947,6 +7312,7 @@ export type UserCreateWithoutCouponScopesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -7007,6 +7373,7 @@ export type UserUncheckedCreateWithoutCouponScopesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -7083,6 +7450,7 @@ export type UserUpdateWithoutCouponScopesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -7143,6 +7511,7 @@ export type UserUncheckedUpdateWithoutCouponScopesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -7203,6 +7572,7 @@ export type UserCreateWithoutComplaintsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -7263,6 +7633,7 @@ export type UserUncheckedCreateWithoutComplaintsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -7328,6 +7699,7 @@ export type UserCreateWithoutComplaintsAssignedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -7388,6 +7760,7 @@ export type UserUncheckedCreateWithoutComplaintsAssignedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -7464,6 +7837,7 @@ export type UserUpdateWithoutComplaintsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -7524,6 +7898,7 @@ export type UserUncheckedUpdateWithoutComplaintsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -7595,6 +7970,7 @@ export type UserUpdateWithoutComplaintsAssignedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -7655,6 +8031,7 @@ export type UserUncheckedUpdateWithoutComplaintsAssignedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -7715,6 +8092,7 @@ export type UserCreateWithoutDisputesOpenedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -7775,6 +8153,7 @@ export type UserUncheckedCreateWithoutDisputesOpenedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -7840,6 +8219,7 @@ export type UserCreateWithoutDisputesDecidedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -7900,6 +8280,7 @@ export type UserUncheckedCreateWithoutDisputesDecidedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -7976,6 +8357,7 @@ export type UserUpdateWithoutDisputesOpenedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -8036,6 +8418,7 @@ export type UserUncheckedUpdateWithoutDisputesOpenedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -8107,6 +8490,7 @@ export type UserUpdateWithoutDisputesDecidedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -8167,6 +8551,7 @@ export type UserUncheckedUpdateWithoutDisputesDecidedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -8227,6 +8612,7 @@ export type UserCreateWithoutEvidenceUploadsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -8287,6 +8673,7 @@ export type UserUncheckedCreateWithoutEvidenceUploadsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -8363,6 +8750,7 @@ export type UserUpdateWithoutEvidenceUploadsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -8423,6 +8811,7 @@ export type UserUncheckedUpdateWithoutEvidenceUploadsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -8483,6 +8872,7 @@ export type UserCreateWithoutComplaintEventsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -8543,6 +8933,7 @@ export type UserUncheckedCreateWithoutComplaintEventsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -8619,6 +9010,7 @@ export type UserUpdateWithoutComplaintEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -8679,6 +9071,7 @@ export type UserUncheckedUpdateWithoutComplaintEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -8739,6 +9132,7 @@ export type UserCreateWithoutTicketsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -8799,6 +9193,7 @@ export type UserUncheckedCreateWithoutTicketsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -8864,6 +9259,7 @@ export type UserCreateWithoutTicketCustomersInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -8924,6 +9320,7 @@ export type UserUncheckedCreateWithoutTicketCustomersInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -8989,6 +9386,7 @@ export type UserCreateWithoutTicketsAssignedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -9049,6 +9447,7 @@ export type UserUncheckedCreateWithoutTicketsAssignedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -9125,6 +9524,7 @@ export type UserUpdateWithoutTicketsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -9185,6 +9585,7 @@ export type UserUncheckedUpdateWithoutTicketsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -9256,6 +9657,7 @@ export type UserUpdateWithoutTicketCustomersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -9316,6 +9718,7 @@ export type UserUncheckedUpdateWithoutTicketCustomersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -9387,6 +9790,7 @@ export type UserUpdateWithoutTicketsAssignedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -9447,6 +9851,7 @@ export type UserUncheckedUpdateWithoutTicketsAssignedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -9507,6 +9912,7 @@ export type UserCreateWithoutTicketMessagesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -9567,6 +9973,7 @@ export type UserUncheckedCreateWithoutTicketMessagesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -9643,6 +10050,7 @@ export type UserUpdateWithoutTicketMessagesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -9703,6 +10111,7 @@ export type UserUncheckedUpdateWithoutTicketMessagesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -9763,6 +10172,7 @@ export type UserCreateWithoutNotificationsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -9823,6 +10233,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -9899,6 +10310,7 @@ export type UserUpdateWithoutNotificationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -9959,6 +10371,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -10019,6 +10432,7 @@ export type UserCreateWithoutNotificationPreferencesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -10079,6 +10493,7 @@ export type UserUncheckedCreateWithoutNotificationPreferencesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -10155,6 +10570,7 @@ export type UserUpdateWithoutNotificationPreferencesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -10215,6 +10631,7 @@ export type UserUncheckedUpdateWithoutNotificationPreferencesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -10275,6 +10692,7 @@ export type UserCreateWithoutPushSubsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -10335,6 +10753,7 @@ export type UserUncheckedCreateWithoutPushSubsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -10411,6 +10830,7 @@ export type UserUpdateWithoutPushSubsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -10471,6 +10891,7 @@ export type UserUncheckedUpdateWithoutPushSubsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -10531,6 +10952,7 @@ export type UserCreateWithoutCouponsUsedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -10591,6 +11013,7 @@ export type UserUncheckedCreateWithoutCouponsUsedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -10667,6 +11090,7 @@ export type UserUpdateWithoutCouponsUsedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -10727,6 +11151,7 @@ export type UserUncheckedUpdateWithoutCouponsUsedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -10787,6 +11212,7 @@ export type UserCreateWithoutReferralsMadeInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -10847,6 +11273,7 @@ export type UserUncheckedCreateWithoutReferralsMadeInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -10912,6 +11339,7 @@ export type UserCreateWithoutReferralUsedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -10972,6 +11400,7 @@ export type UserUncheckedCreateWithoutReferralUsedInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -11048,6 +11477,7 @@ export type UserUpdateWithoutReferralsMadeInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -11108,6 +11538,7 @@ export type UserUncheckedUpdateWithoutReferralsMadeInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -11179,6 +11610,7 @@ export type UserUpdateWithoutReferralUsedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -11239,6 +11671,7 @@ export type UserUncheckedUpdateWithoutReferralUsedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -11299,6 +11732,7 @@ export type UserCreateWithoutSettingsUpdatesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -11359,6 +11793,7 @@ export type UserUncheckedCreateWithoutSettingsUpdatesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -11435,6 +11870,7 @@ export type UserUpdateWithoutSettingsUpdatesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -11495,6 +11931,7 @@ export type UserUncheckedUpdateWithoutSettingsUpdatesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -11555,6 +11992,7 @@ export type UserCreateWithoutAuditLogsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -11615,6 +12053,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -11691,6 +12130,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -11751,6 +12191,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -11811,6 +12252,7 @@ export type UserCreateWithoutSearchQueriesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileCreateNestedOneWithoutUserInput
@@ -11871,6 +12313,7 @@ export type UserUncheckedCreateWithoutSearchQueriesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  identities?: Prisma.AuthIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   customerProfile?: Prisma.CustomerProfileUncheckedCreateNestedOneWithoutUserInput
@@ -11947,6 +12390,7 @@ export type UserUpdateWithoutSearchQueriesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUpdateOneWithoutUserNestedInput
@@ -12007,6 +12451,7 @@ export type UserUncheckedUpdateWithoutSearchQueriesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roles?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  identities?: Prisma.AuthIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   customerProfile?: Prisma.CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -12055,6 +12500,7 @@ export type UserUncheckedUpdateWithoutSearchQueriesInput = {
 
 export type UserCountOutputType = {
   roles: number
+  identities: number
   sessions: number
   otpCodes: number
   addresses: number
@@ -12096,6 +12542,7 @@ export type UserCountOutputType = {
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   roles?: boolean | UserCountOutputTypeCountRolesArgs
+  identities?: boolean | UserCountOutputTypeCountIdentitiesArgs
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   otpCodes?: boolean | UserCountOutputTypeCountOtpCodesArgs
   addresses?: boolean | UserCountOutputTypeCountAddressesArgs
@@ -12150,6 +12597,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
  */
 export type UserCountOutputTypeCountRolesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.UserRoleAssignmentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountIdentitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuthIdentityWhereInput
 }
 
 /**
@@ -12431,6 +12885,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   deletedAt?: boolean
   roles?: boolean | Prisma.User$rolesArgs<ExtArgs>
+  identities?: boolean | Prisma.User$identitiesArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   otpCodes?: boolean | Prisma.User$otpCodesArgs<ExtArgs>
   customerProfile?: boolean | Prisma.User$customerProfileArgs<ExtArgs>
@@ -12537,6 +12992,7 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "phone" | "email" | "phoneVerifiedAt" | "emailVerifiedAt" | "passwordHash" | "name" | "avatarUrl" | "primaryRole" | "status" | "locale" | "lastLoginAt" | "failedLoginCount" | "lockedUntil" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   roles?: boolean | Prisma.User$rolesArgs<ExtArgs>
+  identities?: boolean | Prisma.User$identitiesArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   otpCodes?: boolean | Prisma.User$otpCodesArgs<ExtArgs>
   customerProfile?: boolean | Prisma.User$customerProfileArgs<ExtArgs>
@@ -12586,6 +13042,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     roles: Prisma.$UserRoleAssignmentPayload<ExtArgs>[]
+    identities: Prisma.$AuthIdentityPayload<ExtArgs>[]
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     otpCodes: Prisma.$OtpCodePayload<ExtArgs>[]
     customerProfile: Prisma.$CustomerProfilePayload<ExtArgs> | null
@@ -13040,6 +13497,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   roles<T extends Prisma.User$rolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$rolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserRoleAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  identities<T extends Prisma.User$identitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$identitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthIdentityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   otpCodes<T extends Prisma.User$otpCodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpCodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OtpCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customerProfile<T extends Prisma.User$customerProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$customerProfileArgs<ExtArgs>>): Prisma.Prisma__CustomerProfileClient<runtime.Types.Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -13540,6 +13998,30 @@ export type User$rolesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.UserRoleAssignmentScalarFieldEnum | Prisma.UserRoleAssignmentScalarFieldEnum[]
+}
+
+/**
+ * User.identities
+ */
+export type User$identitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuthIdentity
+   */
+  select?: Prisma.AuthIdentitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuthIdentity
+   */
+  omit?: Prisma.AuthIdentityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuthIdentityInclude<ExtArgs> | null
+  where?: Prisma.AuthIdentityWhereInput
+  orderBy?: Prisma.AuthIdentityOrderByWithRelationInput | Prisma.AuthIdentityOrderByWithRelationInput[]
+  cursor?: Prisma.AuthIdentityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuthIdentityScalarFieldEnum | Prisma.AuthIdentityScalarFieldEnum[]
 }
 
 /**

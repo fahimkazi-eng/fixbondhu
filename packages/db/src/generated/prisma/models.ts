@@ -10,6 +10,7 @@
  */
 export type * from './models/User.ts'
 export type * from './models/UserRoleAssignment.ts'
+export type * from './models/AuthIdentity.ts'
 export type * from './models/OtpCode.ts'
 export type * from './models/Session.ts'
 export type * from './models/Location.ts'

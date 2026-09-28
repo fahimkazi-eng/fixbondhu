@@ -366,6 +366,7 @@ model User {
   deletedAt      DateTime?
 
   roles           UserRoleAssignment[]
+  identities      AuthIdentity[]
   sessions        Session[]
   otpCodes        OtpCode[]
   customerProfile CustomerProfile?
@@ -428,6 +429,28 @@ model UserRoleAssignment {
   @@unique([userId, role])
   @@index([role])
   @@map("user_role_assignments")
+}
+
+model AuthIdentity {
+  id       String @id @default(cuid())
+  userId   String
+  /// "google" today; the shape allows Apple or a phone OTP later without a
+  /// migration or a second table.
+  provider String
+  /// The provider's own account identifier, i.e. Google's `sub` claim.
+  /// Stable for the life of the Google account and never reused.
+  providerAccountId String
+  emailAtLink  String?
+  createdAt DateTime @default(now())
+  lastUsedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // One external account can only be linked to one FixBondhu user. Without
+  // this, two accounts could claim the same Google identity.
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("auth_identities")
 }
 
 model OtpCode {

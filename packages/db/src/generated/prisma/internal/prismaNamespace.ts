@@ -399,6 +399,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   UserRoleAssignment: 'UserRoleAssignment',
+  AuthIdentity: 'AuthIdentity',
   OtpCode: 'OtpCode',
   Session: 'Session',
   Location: 'Location',
@@ -461,7 +462,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userRoleAssignment" | "otpCode" | "session" | "location" | "customerProfile" | "address" | "savedProvider" | "category" | "service" | "providerProfile" | "providerVerification" | "providerService" | "providerServiceArea" | "providerAvailability" | "providerAvailabilityException" | "providerTimeOff" | "providerPayoutMethod" | "portfolioItem" | "booking" | "bookingStatusHistory" | "bookingEvent" | "additionalChargeRequest" | "conversation" | "message" | "review" | "reviewFlag" | "payment" | "refund" | "payout" | "payoutItem" | "commissionRule" | "complaint" | "dispute" | "disputeEvidence" | "complaintEvent" | "supportTicket" | "ticketMessage" | "notification" | "notificationDelivery" | "notificationPreference" | "pushSubscription" | "coupon" | "couponRedemption" | "referral" | "setting" | "auditLog" | "job" | "searchQueryLog"
+    modelProps: "user" | "userRoleAssignment" | "authIdentity" | "otpCode" | "session" | "location" | "customerProfile" | "address" | "savedProvider" | "category" | "service" | "providerProfile" | "providerVerification" | "providerService" | "providerServiceArea" | "providerAvailability" | "providerAvailabilityException" | "providerTimeOff" | "providerPayoutMethod" | "portfolioItem" | "booking" | "bookingStatusHistory" | "bookingEvent" | "additionalChargeRequest" | "conversation" | "message" | "review" | "reviewFlag" | "payment" | "refund" | "payout" | "payoutItem" | "commissionRule" | "complaint" | "dispute" | "disputeEvidence" | "complaintEvent" | "supportTicket" | "ticketMessage" | "notification" | "notificationDelivery" | "notificationPreference" | "pushSubscription" | "coupon" | "couponRedemption" | "referral" | "setting" | "auditLog" | "job" | "searchQueryLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -610,6 +611,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserRoleAssignmentCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserRoleAssignmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    AuthIdentity: {
+      payload: Prisma.$AuthIdentityPayload<ExtArgs>
+      fields: Prisma.AuthIdentityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AuthIdentityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthIdentityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AuthIdentityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthIdentityPayload>
+        }
+        findFirst: {
+          args: Prisma.AuthIdentityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthIdentityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AuthIdentityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthIdentityPayload>
+        }
+        findMany: {
+          args: Prisma.AuthIdentityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthIdentityPayload>[]
+        }
+        create: {
+          args: Prisma.AuthIdentityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthIdentityPayload>
+        }
+        createMany: {
+          args: Prisma.AuthIdentityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AuthIdentityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthIdentityPayload>[]
+        }
+        delete: {
+          args: Prisma.AuthIdentityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthIdentityPayload>
+        }
+        update: {
+          args: Prisma.AuthIdentityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthIdentityPayload>
+        }
+        deleteMany: {
+          args: Prisma.AuthIdentityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AuthIdentityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AuthIdentityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthIdentityPayload>[]
+        }
+        upsert: {
+          args: Prisma.AuthIdentityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthIdentityPayload>
+        }
+        aggregate: {
+          args: Prisma.AuthIdentityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAuthIdentity>
+        }
+        groupBy: {
+          args: Prisma.AuthIdentityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthIdentityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AuthIdentityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthIdentityCountAggregateOutputType> | number
         }
       }
     }
@@ -4164,6 +4239,19 @@ export const UserRoleAssignmentScalarFieldEnum = {
 export type UserRoleAssignmentScalarFieldEnum = (typeof UserRoleAssignmentScalarFieldEnum)[keyof typeof UserRoleAssignmentScalarFieldEnum]
 
 
+export const AuthIdentityScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  emailAtLink: 'emailAtLink',
+  createdAt: 'createdAt',
+  lastUsedAt: 'lastUsedAt'
+} as const
+
+export type AuthIdentityScalarFieldEnum = (typeof AuthIdentityScalarFieldEnum)[keyof typeof AuthIdentityScalarFieldEnum]
+
+
 export const OtpCodeScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -5804,6 +5892,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   userRoleAssignment?: Prisma.UserRoleAssignmentOmit
+  authIdentity?: Prisma.AuthIdentityOmit
   otpCode?: Prisma.OtpCodeOmit
   session?: Prisma.SessionOmit
   location?: Prisma.LocationOmit

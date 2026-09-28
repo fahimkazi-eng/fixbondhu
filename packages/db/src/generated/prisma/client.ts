@@ -54,6 +54,11 @@ export type User = Prisma.UserModel
  */
 export type UserRoleAssignment = Prisma.UserRoleAssignmentModel
 /**
+ * Model AuthIdentity
+ * 
+ */
+export type AuthIdentity = Prisma.AuthIdentityModel
+/**
  * Model OtpCode
  * 
  */
