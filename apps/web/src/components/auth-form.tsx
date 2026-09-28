@@ -78,7 +78,22 @@ export function AuthForm({
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="card mt-6 space-y-4 p-5">
+    /*
+     * method="post" is a security control, not a detail.
+     *
+     * Without it the form defaults to GET, so any submit that happens before
+     * hydration, or with JavaScript disabled, navigates to
+     * /login?phone=...&password=... and puts the password in the URL. That
+     * writes it to server access logs, the browser history, and any proxy along
+     * the way. onSubmit calls preventDefault, but preventDefault only exists
+     * once the JavaScript has loaded; this attribute is what makes the failure
+     * mode "request fails" instead of "password leaks".
+     *
+     * POST-ing to the page rather than the API is deliberate. Without
+     * JavaScript there is no way to submit JSON, and a failed request is a much
+     * better outcome than a successful one that leaks the credential.
+     */
+    <form method="post" onSubmit={onSubmit} noValidate className="card mt-6 space-y-4 p-5">
       {fields.map((field) => {
         const error = errors[field.name];
         const errorId = `${field.name}-error`;

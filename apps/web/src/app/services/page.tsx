@@ -9,6 +9,12 @@ import {
   listAreasByDistrict,
 } from "@/lib/marketplace";
 import { CategoryIcon } from "@/components/category-icon";
+import {
+  MobileTabBar,
+  SiteFooter,
+  SiteHeader,
+  TabBarSpacer,
+} from "@/components/site-chrome";
 
 export const metadata: Metadata = {
   title: "All services",
@@ -68,27 +74,10 @@ export default async function ServicesPage({
   );
 
   return (
-    <div className="min-h-dvh bg-ink-50">
-      <header className="border-b border-ink-200 bg-white">
-        <div className="container-page flex h-14 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span
-              aria-hidden
-              className="grid h-7 w-7 place-items-center rounded-md bg-brand-700 text-sm font-bold text-white"
-            >
-              F
-            </span>
-            <span className="text-[15px] font-semibold tracking-tight">FixBondhu</span>
-          </Link>
-          <nav className="flex items-center gap-1 text-sm">
-            <Link href="/providers" className="text-ink-600 hover:text-ink-900">
-              Professionals
-            </Link>
-          </nav>
-        </div>
-      </header>
+    <div className="flex min-h-dvh flex-col">
+      <SiteHeader path="/services" signedInName={null} areaName={null} />
 
-      <main id="main" className="container-page py-6">
+      <main id="main" className="container-page flex-1 py-6">
         <h1 className="text-xl font-semibold tracking-tight text-ink-900">
           All services
         </h1>
@@ -263,6 +252,10 @@ export default async function ServicesPage({
           </div>
         )}
       </main>
+
+      <SiteFooter />
+      <MobileTabBar path="/services" />
+      <TabBarSpacer />
     </div>
   );
 }

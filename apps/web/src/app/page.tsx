@@ -8,8 +8,16 @@ import {
   listCategoriesWithCounts,
   listServicesWithCounts,
 } from "@/lib/marketplace";
+import { getCustomerArea } from "@/lib/recommendations";
 import { ProviderCard } from "@/components/provider-card";
 import { CategoryIcon } from "@/components/category-icon";
+import { PersonalRail } from "@/components/personal-rail";
+import {
+  MobileTabBar,
+  SiteFooter,
+  SiteHeader,
+  TabBarSpacer,
+} from "@/components/site-chrome";
 
 export const metadata: Metadata = {
   title: "Book verified home services in Bangladesh",
@@ -45,6 +53,13 @@ export default async function HomePage() {
       findProviders({ sort: "recommended", limit: 6 }),
     ]);
 
+  /*
+   * The area chip is only ever the customer's own saved default address. There
+   * is no IP geolocation and no city-wide default, so nothing on this page can
+   * claim to know where someone is unless they told us.
+   */
+  const area = user ? await getCustomerArea(user.id) : null;
+
   // Only services someone can actually book right now, grouped for the
   // "quick help" rail. A service with zero providers is not a call to action.
   const bookable = services.filter((s) => s.providerCount > 0);
@@ -54,43 +69,14 @@ export default async function HomePage() {
   const hasSupply = providerCount > 0;
 
   return (
-    <>
-      <header className="border-b border-ink-200 bg-white">
-        <div className="container-page flex h-14 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span
-              aria-hidden
-              className="grid h-7 w-7 place-items-center rounded-md bg-brand-700 text-sm font-bold text-white"
-            >
-              F
-            </span>
-            <span className="text-[15px] font-semibold tracking-tight">FixBondhu</span>
-          </Link>
-          <nav className="flex items-center gap-1">
-            {user ? (
-              <>
-                <Link href="/account" className="btn btn-secondary">
-                  Account
-                </Link>
-                <Link href="/pro" className="btn btn-primary hidden sm:inline-flex">
-                  Join as a provider
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link href="/login" className="btn btn-secondary">
-                  Sign in
-                </Link>
-                <Link href="/register" className="btn btn-primary">
-                  Create account
-                </Link>
-              </>
-            )}
-          </nav>
-        </div>
-      </header>
+    <div className="flex min-h-dvh flex-col">
+      <SiteHeader
+        path="/"
+        signedInName={user?.name ?? null}
+        areaName={area ? area.areaName : null}
+      />
 
-      <main id="main">
+      <main id="main" className="flex-1">
         {/* ---- search ---- */}
         <section className="border-b border-ink-200 bg-white">
           <div className="container-page py-10 md:py-14">
@@ -101,7 +87,13 @@ export default async function HomePage() {
               Search in English, Bangla or Banglish.
             </p>
 
-            <form action="/search" method="get" className="mt-6 flex gap-2">
+            {/*
+              The header carries a prominent search from md up, so showing a
+              second one in the hero left two identical boxes on every desktop
+              page. This one is the mobile search only; the header's is hidden
+              below md, so exactly one is ever on screen.
+            */}
+            <form action="/search" method="get" className="mt-6 flex gap-2 md:hidden">
               <div className="relative flex-1">
                 <label className="sr-only" htmlFor="q">
                   What do you need fixed?
@@ -120,7 +112,9 @@ export default async function HomePage() {
               </button>
             </form>
 
-            <p className="mt-3 text-xs text-ink-500">
+            {/* Example queries, desktop only: on mobile the hero is already
+                short and these are a luxury. */}
+            <p className="mt-3 hidden text-xs text-ink-500 md:block">
               Try:{" "}
               <Link href="/search?q=plumber" className="underline">
                 plumber
@@ -300,6 +294,12 @@ export default async function HomePage() {
           </section>
         ) : null}
 
+        {/* ---- book again / recommended ----
+            Rendered only for a signed-in customer, and only from real booking
+            history. Both sections return null when there is nothing to base them
+            on, so a new customer simply does not see them. */}
+        {user ? <PersonalRail customerId={user.id} /> : null}
+
         {/* ---- launch state ---- */}
         {providerCount === 0 ? (
           <section className="border-t border-ink-200 bg-white">
@@ -327,17 +327,10 @@ export default async function HomePage() {
         ) : null}
       </main>
 
-      <footer className="border-t border-ink-200 bg-white">
-        <div className="container-page flex flex-col gap-2 py-6 text-xs text-ink-500 sm:flex-row sm:items-center sm:justify-between">
-          <p>FixBondhu — local services, properly verified.</p>
-          <nav className="flex gap-4">
-            <Link href="/support" className="hover:text-ink-800">Support</Link>
-            <Link href="/terms" className="hover:text-ink-800">Terms</Link>
-            <Link href="/privacy" className="hover:text-ink-800">Privacy</Link>
-          </nav>
-        </div>
-      </footer>
-    </>
+      <SiteFooter />
+      <MobileTabBar path="/" />
+      <TabBarSpacer />
+    </div>
   );
 }
 

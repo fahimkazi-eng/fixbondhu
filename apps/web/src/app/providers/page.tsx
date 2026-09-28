@@ -12,6 +12,12 @@ import {
   type ProviderSort,
 } from "@/lib/marketplace";
 import { ProviderCard } from "@/components/provider-card";
+import {
+  MobileTabBar,
+  SiteFooter,
+  SiteHeader,
+  TabBarSpacer,
+} from "@/components/site-chrome";
 
 export const metadata: Metadata = {
   title: "Find a professional",
@@ -114,25 +120,10 @@ export default async function ProvidersPage({
   }
 
   return (
-    <div className="min-h-dvh bg-ink-50">
-      <header className="border-b border-ink-200 bg-white">
-        <div className="container-page flex h-14 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span
-              aria-hidden
-              className="grid h-7 w-7 place-items-center rounded-md bg-brand-700 text-sm font-bold text-white"
-            >
-              F
-            </span>
-            <span className="text-[15px] font-semibold tracking-tight">FixBondhu</span>
-          </Link>
-          <Link href="/search" className="text-sm text-ink-600 hover:text-ink-900">
-            Search
-          </Link>
-        </div>
-      </header>
+    <div className="flex min-h-dvh flex-col">
+      <SiteHeader path="/providers" signedInName={null} areaName={null} />
 
-      <main id="main" className="container-page py-6">
+      <main id="main" className="container-page flex-1 py-6">
         <h1 className="text-xl font-semibold tracking-tight text-ink-900">
           {serviceSlug
             ? `Professionals for this service${areaName ? ` in ${areaName}` : ""}`
@@ -364,6 +355,10 @@ export default async function ProvidersPage({
           </section>
         </div>
       </main>
+
+      <SiteFooter />
+      <MobileTabBar path="/providers" />
+      <TabBarSpacer />
     </div>
   );
 }
