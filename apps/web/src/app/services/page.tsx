@@ -87,13 +87,18 @@ export default async function ServicesPage({
           professional available right now.
         </p>
 
-        {/* Search + area, the two things every marketplace leads with. */}
-        <form method="get" action="/search" className="mt-5 flex flex-wrap gap-2">
+        {/*
+          Catalogue search, distinct from the header one: this is the only place
+          with an area filter. Laid out as a grid so it stays one row on wider
+          screens instead of stacking the input, the select and the button into
+          three full-width bands.
+        */}
+        <form method="get" action="/search" className="mt-5 grid gap-2 sm:grid-cols-[1fr_auto_auto]">
           <label className="sr-only" htmlFor="q">
             What do you need?
           </label>
           <input
-            className="input h-11 min-w-0 flex-1"
+            className="input h-11"
             id="q"
             name="q"
             type="search"
@@ -102,7 +107,12 @@ export default async function ServicesPage({
           <label className="sr-only" htmlFor="area">
             Area
           </label>
-          <select className="input h-11" id="area" name="location" defaultValue={areaFilter ?? ""}>
+          <select
+            className="input h-11 sm:w-44"
+            id="area"
+            name="location"
+            defaultValue={areaFilter ?? ""}
+          >
             <option value="">Any area</option>
             {areas.map((district) => (
               <optgroup key={district.district} label={district.district}>
