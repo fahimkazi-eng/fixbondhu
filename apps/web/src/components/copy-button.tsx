@@ -31,7 +31,7 @@ export function CopyButton({ value, label = "Copy" }: { value: string; label?: s
       className="chip transition-colors hover:border-ink-300"
       aria-label={`${label} ${value}`}
     >
-      <span className={copied ? "animate-pop text-brand-700" : "text-ink-500"}>
+      <span className={copied ? "animate-pop text-brand-300" : "text-ink-500"}>
         {copied ? "Copied" : label}
       </span>
     </button>

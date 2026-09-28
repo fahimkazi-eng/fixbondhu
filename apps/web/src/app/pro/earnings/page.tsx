@@ -71,7 +71,7 @@ export default async function ProviderEarningsPage() {
       <h1 className="text-lg font-semibold tracking-tight text-ink-900">Earnings</h1>
 
       {awaiting._count > 0 ? (
-        <p className="mt-3 rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+        <p className="mt-3 rounded-md tone-warning px-3 py-2 text-sm">
           {awaiting._count} completed cash{" "}
           {awaiting._count === 1 ? "job has" : "jobs have"} not been marked as
           collected yet. Confirm collection on each job so it reaches your

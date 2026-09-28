@@ -148,7 +148,7 @@ export default async function ProvidersPage({
               <summary className="flex items-center gap-2 p-4 text-sm font-semibold text-ink-900">
                 Filters
                 {activeFilterCount > 0 ? (
-                  <span className="chip text-brand-800">{activeFilterCount} active</span>
+                  <span className="chip tone-accent">{activeFilterCount} active</span>
                 ) : null}
               </summary>
 
@@ -299,7 +299,7 @@ export default async function ProvidersPage({
                     aria-current={sort === option.key ? "true" : undefined}
                     className={`chip transition-colors ${
                       sort === option.key
-                        ? "border-brand-600 bg-brand-50 text-brand-800"
+                        ? "tone-accent"
                         : "hover:border-ink-300"
                     }`}
                   >

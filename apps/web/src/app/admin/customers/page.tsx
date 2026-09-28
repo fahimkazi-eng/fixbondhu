@@ -92,7 +92,7 @@ export default async function AdminCustomersPage({
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="text-[15px] font-medium text-ink-900">{customer.name}</p>
                       {customer.customerProfile?.isBanned ? (
-                        <span className="rounded-full border border-red-200 bg-red-50 px-2 py-0.5 text-xs text-red-700">
+                        <span className="rounded-full tone-danger px-2 py-0.5 text-xs">
                           banned
                         </span>
                       ) : null}

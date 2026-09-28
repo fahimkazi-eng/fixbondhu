@@ -9,11 +9,11 @@ export const metadata: Metadata = { title: "Complaints", robots: { index: false 
 export const dynamic = "force-dynamic";
 
 const STATUS_TONE: Record<string, string> = {
-  OPEN: "border-red-200 bg-red-50 text-red-800",
-  IN_REVIEW: "border-amber-200 bg-amber-50 text-amber-800",
+  OPEN: "tone-danger",
+  IN_REVIEW: "tone-warning",
   AWAITING_CUSTOMER: "border-ink-200 bg-ink-50 text-ink-700",
   AWAITING_PROVIDER: "border-blue-200 bg-blue-50 text-blue-800",
-  RESOLVED: "border-green-200 bg-green-50 text-green-800",
+  RESOLVED: "tone-success",
   REJECTED: "border-ink-200 bg-ink-50 text-ink-600",
   CLOSED: "border-ink-200 bg-ink-50 text-ink-600",
 };

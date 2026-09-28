@@ -27,9 +27,9 @@ export function ReviewForm({
 
   if (state?.ok) {
     return (
-      <section className="card animate-pop border-brand-200 bg-brand-50 p-5">
-        <h2 className="text-sm font-semibold text-brand-900">Review published</h2>
-        <p className="mt-1 text-sm text-brand-800">{state.message}</p>
+      <section className="card animate-pop tone-accent p-5">
+        <h2 className="text-sm font-semibold text-brand-100">Review published</h2>
+        <p className="mt-1 text-sm text-brand-200">{state.message}</p>
       </section>
     );
   }
@@ -54,8 +54,8 @@ export function ReviewForm({
               key={value}
               className={`interactive cursor-pointer rounded-md border px-3 py-1.5 text-sm font-medium ${
                 value <= rating
-                  ? "border-brand-600 bg-brand-50 text-brand-800"
-                  : "border-ink-200 bg-white text-ink-500"
+                  ? "tone-accent"
+                  : "border-ink-300 bg-ink-100 text-ink-500"
               }`}
             >
               <input

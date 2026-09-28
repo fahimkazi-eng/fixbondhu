@@ -74,8 +74,8 @@ export default async function ProviderHistoryPage({
               aria-current={isActive ? "page" : undefined}
               className={`rounded-md border px-2.5 py-1.5 text-xs font-medium transition-colors duration-150 ${
                 isActive
-                  ? "border-brand-600 bg-brand-50 text-brand-800"
-                  : "border-ink-200 bg-white text-ink-600 hover:border-ink-300"
+                  ? "tone-accent"
+                  : "border-ink-300 bg-ink-100 text-ink-600 hover:border-ink-400"
               }`}
             >
               {tab.label}

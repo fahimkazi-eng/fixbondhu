@@ -53,8 +53,8 @@ export function BookingProgress({ status }: { status: BookingStatus }) {
               <span
                 className={`step-dot-in grid h-6 w-6 place-items-center rounded-full border-2 ${
                   done
-                    ? "border-brand-600 bg-brand-600 text-white"
-                    : "border-ink-200 bg-white text-ink-400"
+                    ? "border-brand-600 bg-brand-600 text-ink-50"
+                    : "border-ink-300 bg-ink-100 text-ink-400"
                 }`}
                 style={{ animationDelay: `${index * 50}ms` }}
               >
@@ -72,7 +72,7 @@ export function BookingProgress({ status }: { status: BookingStatus }) {
                   </svg>
                 ) : (
                   <span
-                    className={`text-[10px] font-semibold ${isCurrent ? "text-brand-700" : ""}`}
+                    className={`text-[10px] font-semibold ${isCurrent ? "text-brand-300" : ""}`}
                   >
                     {index + 1}
                   </span>

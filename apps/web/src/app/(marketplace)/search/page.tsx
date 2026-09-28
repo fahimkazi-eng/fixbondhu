@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import { formatPoisha, formatPoishaRange } from "@fixbondhu/core";
+import { BrandMark } from "@/components/brand-mark";
+
 
 import { searchServices, logSearch } from "@/lib/search";
 import { getUser } from "@/lib/auth";
@@ -28,6 +30,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
     return (
       <Shell query="">
         <EmptyState
+          level={1}
           title="What do you need?"
           body="Search in English, Bangla or Banglish. For example: AC repair, বাসার ইলেকট্রিশিয়ান, or fan thik korte hobe."
         />
@@ -78,7 +81,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
                         {hit.nameEn}
                       </h2>
                       {hit.isEmergency ? (
-                        <span className="chip border-red-200 bg-red-50 text-red-700">
+                        <span className="chip tone-danger">
                           Emergency
                         </span>
                       ) : null}
@@ -131,15 +134,10 @@ export default async function SearchPage({ searchParams }: PageProps) {
 function Shell({ query, children }: { query: string; children: React.ReactNode }) {
   return (
     <>
-      <header className="border-b border-ink-200 bg-white">
+      <header className="border-b border-ink-300/60 bg-ink-100/40">
         <div className="container-page flex h-14 items-center gap-3">
           <Link href="/" className="flex shrink-0 items-center gap-2">
-            <span
-              aria-hidden
-              className="grid h-7 w-7 place-items-center rounded-md bg-brand-700 text-sm font-bold text-white"
-            >
-              F
-            </span>
+            <BrandMark className="h-7 w-7" />
             <span className="hidden text-[15px] font-semibold tracking-tight sm:inline">
               FixBondhu
             </span>
@@ -169,10 +167,29 @@ function Shell({ query, children }: { query: string; children: React.ReactNode }
   );
 }
 
-function EmptyState({ title, body }: { title: string; body: string }) {
+/**
+ * The no-results / no-query panel.
+ *
+ * `level` exists because the two call sites are not the same. With a query the
+ * page already owns an <h1> ("Results for ..."), so this is an <h2>. Without a
+ * query there is no other heading on the page at all, and a page whose top
+ * heading is an <h2> is a real accessibility defect, not a style preference:
+ * screen-reader users navigate by heading level, and starting a document at
+ * level 2 reads as though content above it went missing.
+ */
+function EmptyState({
+  title,
+  body,
+  level = 2,
+}: {
+  title: string;
+  body: string;
+  level?: 1 | 2;
+}) {
+  const Heading = level === 1 ? "h1" : "h2";
   return (
     <div className="card px-6 py-12 text-center">
-      <h2 className="text-[15px] font-medium text-ink-900">{title}</h2>
+      <Heading className="text-[15px] font-medium text-ink-900">{title}</Heading>
       <p className="mx-auto mt-1.5 max-w-md text-sm leading-relaxed text-ink-600">
         {body}
       </p>

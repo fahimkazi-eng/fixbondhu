@@ -72,13 +72,13 @@ export default async function AdminReviewsPage({
               aria-current={active ? "page" : undefined}
               className={`rounded-md border px-2.5 py-1.5 text-xs font-medium ${
                 active
-                  ? "border-brand-600 bg-brand-50 text-brand-800"
-                  : "border-ink-200 bg-white text-ink-600"
+                  ? "tone-accent"
+                  : "border-ink-300 bg-ink-100 text-ink-600"
               }`}
             >
               {tab.label}
               {tab.count ? (
-                <span className="ml-1 rounded-full bg-brand-600 px-1.5 text-[11px] text-white">
+                <span className="ml-1 rounded-full bg-brand-600 px-1.5 text-[11px] text-ink-50">
                   {tab.count}
                 </span>
               ) : null}
@@ -106,7 +106,7 @@ export default async function AdminReviewsPage({
                     on{" "}
                     <Link
                       href={`/providers/${review.providerProfile.slug}`}
-                      className="text-brand-700 underline"
+                      className="text-brand-300 underline"
                     >
                       {review.providerProfile.displayName}
                     </Link>{" "}
@@ -118,7 +118,7 @@ export default async function AdminReviewsPage({
                   <span
                     className={`rounded-full border px-2 py-0.5 text-xs ${
                       review.status === "PUBLISHED"
-                        ? "border-green-200 bg-green-50 text-green-800"
+                        ? "tone-success"
                         : "border-ink-200 bg-ink-50 text-ink-600"
                     }`}
                   >
@@ -133,7 +133,7 @@ export default async function AdminReviewsPage({
               <p className="mt-1 text-sm leading-relaxed text-ink-700">{review.body}</p>
 
               {review.flags.length > 0 ? (
-                <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 p-2.5">
+                <div className="mt-3 rounded-md tone-warning p-2.5">
                   <p className="text-xs font-medium text-amber-900">
                     {review.reportCount} report{review.reportCount === 1 ? "" : "s"}
                   </p>

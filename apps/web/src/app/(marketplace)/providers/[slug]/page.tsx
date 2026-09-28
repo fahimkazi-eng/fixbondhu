@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import { formatPoisha, formatPoishaRange, formatBdPhone } from "@fixbondhu/core";
+import { BrandMark } from "@/components/brand-mark";
+
 
 import { prisma } from "@/lib/db";
 import { getUser } from "@/lib/auth";
@@ -93,10 +95,10 @@ export default async function ProviderPage({ params }: { params: Promise<{ slug:
 
   return (
     <div className="min-h-dvh bg-ink-50">
-      <header className="border-b border-ink-200 bg-white">
+      <header className="border-b border-ink-300/60 bg-ink-100/40">
         <div className="container-page flex h-14 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <span aria-hidden className="grid h-7 w-7 place-items-center rounded-md bg-brand-700 text-sm font-bold text-white">F</span>
+            <BrandMark className="h-7 w-7" />
             <span className="text-[15px] font-semibold tracking-tight">FixBondhu</span>
           </Link>
           {user ? (
@@ -188,7 +190,7 @@ export default async function ProviderPage({ params }: { params: Promise<{ slug:
                     <CopyButton value={formatBdPhone(provider.user.phone ?? "")} label="Copy" />
                   </span>
                 ) : (
-                  <Link href="/login" className="text-brand-700 underline">Sign in to see contact</Link>
+                  <Link href="/login" className="text-brand-300 underline">Sign in to see contact</Link>
                 )}
               </dd>
             </div>

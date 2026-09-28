@@ -138,7 +138,7 @@ export function AuthForm({
       {formError ? (
         <p
           role="alert"
-          className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+          className="rounded-md tone-danger px-3 py-2 text-sm"
         >
           {formError}
         </p>
@@ -151,7 +151,7 @@ export function AuthForm({
       {createAccountHref ? (
         <p className="text-center text-sm text-ink-600">
           New to FixBondhu?{" "}
-          <a href={createAccountHref} className="font-medium text-brand-700 underline">
+          <a href={createAccountHref} className="font-medium text-brand-300 underline">
             Create an account
           </a>
         </p>

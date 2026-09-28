@@ -78,8 +78,8 @@ export default async function AdminVerificationPage({
               aria-current={active ? "page" : undefined}
               className={`rounded-md border px-2.5 py-1.5 text-xs font-medium transition-colors duration-150 ${
                 active
-                  ? "border-brand-600 bg-brand-50 text-brand-800"
-                  : "border-ink-200 bg-white text-ink-600 hover:border-ink-300"
+                  ? "tone-accent"
+                  : "border-ink-300 bg-ink-100 text-ink-600 hover:border-ink-400"
               }`}
             >
               {tab.label}
@@ -129,10 +129,10 @@ export default async function AdminVerificationPage({
                         key={other.type}
                         className={`chip ${
                           other.status === "APPROVED"
-                            ? "border-green-200 bg-green-50 text-green-800"
+                            ? "tone-success"
                             : other.status === "PENDING"
-                              ? "border-amber-200 bg-amber-50 text-amber-800"
-                              : "border-red-200 bg-red-50 text-red-700"
+                              ? "tone-warning"
+                              : "tone-danger"
                         }`}
                       >
                         {TYPE_LABELS[other.type] ?? other.type}:{" "}
@@ -188,7 +188,7 @@ export default async function AdminVerificationPage({
 
                 <Link
                   href={`/admin/providers?focus=${profile.id}`}
-                  className="mt-3 inline-block text-xs text-brand-700 underline"
+                  className="mt-3 inline-block text-xs text-brand-300 underline"
                 >
                   Open provider
                 </Link>

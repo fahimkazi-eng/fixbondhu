@@ -29,10 +29,10 @@ export interface BookingListItem {
 const TONE: Record<string, string> = {
   neutral: "border-ink-200 bg-ink-50 text-ink-700",
   info: "border-blue-200 bg-blue-50 text-blue-800",
-  progress: "border-brand-200 bg-brand-50 text-brand-800",
-  success: "border-green-200 bg-green-50 text-green-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  danger: "border-red-200 bg-red-50 text-red-800",
+  progress: "tone-accent",
+  success: "tone-success",
+  warning: "tone-warning",
+  danger: "tone-danger",
 };
 
 const TONE_DOT: Record<string, string> = {

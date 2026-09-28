@@ -18,9 +18,9 @@ const VERIFICATION_LABELS: Record<string, string> = {
 };
 
 const VERIFICATION_TONE: Record<string, string> = {
-  APPROVED: "border-green-200 bg-green-50 text-green-800",
-  PENDING: "border-amber-200 bg-amber-50 text-amber-800",
-  REJECTED: "border-red-200 bg-red-50 text-red-700",
+  APPROVED: "tone-success",
+  PENDING: "tone-warning",
+  REJECTED: "tone-danger",
   EXPIRED: "border-ink-200 bg-ink-50 text-ink-600",
 };
 
@@ -60,10 +60,10 @@ export default async function ProviderProfilePage() {
       <div
         className={`mt-4 rounded-[10px] border p-4 ${
           profile.status === "ACTIVE"
-            ? "border-green-200 bg-green-50"
+            ? "tone-success"
             : profile.status === "PENDING_REVIEW"
-              ? "border-amber-200 bg-amber-50"
-              : "border-ink-200 bg-white"
+              ? "tone-warning"
+              : "border-ink-300 bg-ink-100"
         }`}
       >
         <p className="text-sm font-medium text-ink-900">
@@ -208,7 +208,7 @@ export default async function ProviderProfilePage() {
               <li
                 key={type}
                 className={`flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3 ${
-                  record ? VERIFICATION_TONE[record.status] : "border-ink-200 bg-white"
+                  record ? VERIFICATION_TONE[record.status] : "border-ink-300 bg-ink-100"
                 }`}
               >
                 <div>

@@ -73,7 +73,7 @@ export default async function AdminContentPage() {
                   <span
                     className={`rounded-full border px-2 py-0.5 text-xs ${
                       coupon.isActive && coupon.endsAt > new Date()
-                        ? "border-green-200 bg-green-50 text-green-800"
+                        ? "tone-success"
                         : "border-ink-200 bg-ink-50 text-ink-600"
                     }`}
                   >

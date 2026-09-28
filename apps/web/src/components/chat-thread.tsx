@@ -73,8 +73,8 @@ export function ChatThread({
             <div
               className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${
                 message.mine
-                  ? "bg-brand-700 text-white"
-                  : "border border-ink-200 bg-white text-ink-900"
+                  ? "bg-brand-700 text-ink-50"
+                  : "border border-ink-300 bg-ink-100 text-ink-900"
               }`}
             >
               <p className="whitespace-pre-wrap break-words">{message.body}</p>

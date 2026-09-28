@@ -118,7 +118,7 @@ export default async function ProviderReviewsPage() {
                 ) : null}
                 <Link
                   href={`/pro/bookings/${review.bookingId}`}
-                  className="mt-2 inline-block text-xs text-brand-700 underline"
+                  className="mt-2 inline-block text-xs text-brand-300 underline"
                 >
                   View job {review.booking.reference}
                 </Link>

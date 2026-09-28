@@ -68,7 +68,7 @@ export default async function AccountPage() {
       <p className="mt-1 text-sm text-ink-600">{user.phone}</p>
 
       {!user.phoneVerified ? (
-        <p className="mt-3 rounded-md border border-ink-200 bg-white px-3 py-2 text-xs text-ink-600">
+        <p className="mt-3 rounded-md border border-ink-300 bg-ink-100 px-3 py-2 text-xs text-ink-600">
           This account is not phone-verified. Verification is not required to book
           right now, and nothing on this page claims otherwise.
         </p>
@@ -80,7 +80,7 @@ export default async function AccountPage() {
             <dt className="text-xs text-ink-500">{card.label}</dt>
             <dd
               className={`mt-0.5 text-lg font-semibold tabular-nums tracking-tight ${
-                card.emphasis ? "text-brand-700" : "text-ink-900"
+                card.emphasis ? "text-brand-300" : "text-ink-900"
               }`}
             >
               {card.value}

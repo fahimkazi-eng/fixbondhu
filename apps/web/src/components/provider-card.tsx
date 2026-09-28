@@ -31,7 +31,7 @@ export function ProviderCard({
 
   return (
     <li
-      className="animate-rise"
+      className="animate-rise h-full"
       style={{ "--i": Math.min(index, 8) } as React.CSSProperties}
     >
       {/*
@@ -41,10 +41,28 @@ export function ProviderCard({
        * phone does not leave the card stuck in a raised state.
        */}
       <article
-        className={`card hover-lift flex h-full flex-col p-4${
+        className={`card hover-lift group flex h-full flex-col p-4${
           provider.isSponsored ? " border-dashed" : ""
         }`}
       >
+        {/*
+          A faint accent line along the top edge, revealed on hover. It is the
+          same idea as the .card::before highlight, but per-card: on a grid of
+          twelve cards, a shared collective edge is what tells the reader which
+          one the pointer is on, and it costs one opacity transition.
+
+          Pointer devices only, because the trigger is .group:hover. On a phone
+          this span never becomes visible and the transition is never paid for.
+        */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-brand-400) 70%, transparent), transparent)",
+          }}
+        />
+
         <div className="flex items-start gap-3">
           {/*
             No stock photos and no generated avatars. Either the provider has
@@ -53,16 +71,18 @@ export function ProviderCard({
           */}
           {provider.photoUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={provider.photoUrl}
-              alt=""
-              className="media-zoom h-12 w-12 shrink-0 rounded-lg object-cover"
-              loading="lazy"
-            />
+            <span className="media-zoom relative h-12 w-12 shrink-0 overflow-hidden rounded-[10px]">
+              <img
+                src={provider.photoUrl}
+                alt=""
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </span>
           ) : (
             <span
               aria-hidden
-              className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-ink-100 text-sm font-semibold text-ink-600"
+              className="grid h-12 w-12 shrink-0 place-items-center rounded-[10px] border border-ink-400 bg-ink-300 text-sm font-semibold text-ink-700"
             >
               {initials(name)}
             </span>
@@ -81,6 +101,27 @@ export function ProviderCard({
               </p>
             ) : null}
           </div>
+
+          {/*
+            The rating is pinned opposite the name rather than left in the
+            metadata row below. It is the first thing a reader scans for, and it
+            is the one number on this card that can legitimately be missing — so
+            reserving its column keeps every card in a row the same height and
+            the same alignment, whether or not there is a rating to show.
+          */}
+          {hasRating ? (
+            <span className="flex shrink-0 flex-col items-end">
+              <span className="display text-lg leading-none text-ink-900 tabular-nums">
+                {provider.ratingAvg!.toFixed(1)}
+              </span>
+              <span
+                aria-hidden
+                className="mt-1 text-[10px] leading-none tracking-tight text-amber-400"
+              >
+                {"★".repeat(Math.round(provider.ratingAvg!))}
+              </span>
+            </span>
+          ) : null}
         </div>
 
         {/* Sponsored is visually separate from verification on purpose. */}
@@ -91,25 +132,22 @@ export function ProviderCard({
         ) : null}
 
         <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ink-600">
+          {/*
+            The review count is always printed, beside the rating or in place of
+            it. A bare "4.8" invites the reader to assume a sample size it may
+            not have.
+
+            Below the rating threshold there is no star and no average at all,
+            only the count. The earlier copy here — "New on FixBondhu" sitting
+            next to "290 jobs completed" — was both confusing and vaguer than
+            the truth, which is simply that nobody has reviewed them yet.
+          */}
           {hasRating ? (
-            <span className="inline-flex items-center gap-1">
-              <span aria-hidden className="text-amber-500">
-                {"★".repeat(Math.round(provider.ratingAvg!))}
-              </span>
-              <span className="tabular-nums font-medium text-ink-900">
-                {provider.ratingAvg!.toFixed(1)}
-              </span>
-              {/* The count is always shown. A bare "4.8" invites the reader to
-                  assume a sample size it may not have. */}
-              <span className="text-ink-500">({provider.ratingCount})</span>
+            <span className="tabular-nums text-ink-500">
+              {provider.ratingCount}{" "}
+              {provider.ratingCount === 1 ? "review" : "reviews"}
             </span>
           ) : (
-            /*
-              Below the threshold the review count is still stated plainly, just
-              without a star. Saying "New on FixBondhu" next to "290 jobs
-              completed" was both confusing and vaguer than the truth, which is
-              simply that nobody has reviewed them yet.
-            */
             <span className="text-ink-500">
               {provider.ratingCount === 0
                 ? "No reviews yet"
@@ -142,13 +180,17 @@ export function ProviderCard({
           </p>
         ) : null}
 
-        {/* Pushed to the bottom so cards in a row line their prices up. */}
-        <div className="mt-auto flex items-end justify-between gap-3 pt-4">
+        {/*
+          Pushed to the bottom so cards in a row line their prices up. A border
+          above it gives the price a floor to sit on, which is what stops the
+          card from reading as one long undifferentiated column of text.
+        */}
+        <div className="mt-auto flex items-end justify-between gap-3 border-t border-ink-300/60 pt-4">
           <div>
             {priceFor(provider, highlightService) !== null ? (
               <>
                 <p className="text-xs text-ink-500">From</p>
-                <p className="text-base font-semibold tabular-nums tracking-tight text-ink-900">
+                <p className="display mt-0.5 text-xl text-ink-900 tabular-nums">
                   {formatPoisha(priceFor(provider, highlightService)!)}
                 </p>
               </>

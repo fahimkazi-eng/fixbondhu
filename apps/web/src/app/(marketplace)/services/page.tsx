@@ -146,7 +146,7 @@ export default async function ServicesPage({
               <Link
                 href="/services"
                 aria-current={!categoryFilter ? "true" : undefined}
-                className={`chip ${!categoryFilter ? "border-brand-600 bg-brand-50 text-brand-800" : "hover:border-ink-300"}`}
+                className={`chip ${!categoryFilter ? "tone-accent" : "hover:border-ink-300"}`}
               >
                 All
               </Link>
@@ -158,7 +158,7 @@ export default async function ServicesPage({
                   aria-current={categoryFilter === category.slug ? "true" : undefined}
                   className={`chip inline-flex items-center gap-1.5 ${
                     categoryFilter === category.slug
-                      ? "border-brand-600 bg-brand-50 text-brand-800"
+                      ? "tone-accent"
                       : "hover:border-ink-300"
                   }`}
                 >

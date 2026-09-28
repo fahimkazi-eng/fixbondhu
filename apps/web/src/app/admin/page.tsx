@@ -86,7 +86,7 @@ export default async function AdminDashboard({
       <h1 className="text-lg font-semibold tracking-tight text-ink-900">Operations</h1>
 
       {denied ? (
-        <div className="mt-3 rounded-[10px] border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+        <div className="mt-3 rounded-[10px] tone-warning p-3 text-sm">
           Your role does not have access to that section.
         </div>
       ) : null}
@@ -99,8 +99,8 @@ export default async function AdminDashboard({
                 href={alert.href}
                 className={`flex items-center justify-between gap-3 rounded-[10px] border px-4 py-3 text-sm transition-colors ${
                   alert.urgent
-                    ? "border-amber-300 bg-amber-50 hover:border-amber-400"
-                    : "border-ink-200 bg-white hover:border-ink-300"
+                    ? "tone-warning"
+                    : "border-ink-300 bg-ink-200 hover:border-ink-400"
                 }`}
               >
                 <span className={alert.urgent ? "text-amber-900" : "text-ink-700"}>

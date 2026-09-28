@@ -13,10 +13,10 @@ export const dynamic = "force-dynamic";
 const TONE: Record<string, string> = {
   neutral: "border-ink-200 bg-ink-50 text-ink-700",
   info: "border-blue-200 bg-blue-50 text-blue-800",
-  progress: "border-brand-200 bg-brand-50 text-brand-800",
-  success: "border-green-200 bg-green-50 text-green-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  danger: "border-red-200 bg-red-50 text-red-800",
+  progress: "tone-accent",
+  success: "tone-success",
+  warning: "tone-warning",
+  danger: "tone-danger",
 };
 
 /** Single booking with the full audit trail, for support and disputes. */
@@ -81,7 +81,7 @@ export default async function AdminBookingPage({
           <Row label="Provider">
             <Link
               href={`/providers/${booking.providerProfile.slug}`}
-              className="text-brand-700 underline"
+              className="text-brand-300 underline"
             >
               {booking.providerProfile.displayName}
             </Link>{" "}
@@ -168,7 +168,7 @@ export default async function AdminBookingPage({
               <li key={complaint.id} className="text-sm">
                 <Link
                   href="/admin/complaints"
-                  className="text-brand-700 underline"
+                  className="text-brand-300 underline"
                 >
                   {complaint.subject}
                 </Link>

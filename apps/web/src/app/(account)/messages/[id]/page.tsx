@@ -47,7 +47,7 @@ export default async function MessagePage({
           </h1>
           <Link
             href={`/providers/${conversation.provider.slug}`}
-            className="text-xs text-brand-700 underline"
+            className="text-xs text-brand-300 underline"
           >
             View profile
           </Link>

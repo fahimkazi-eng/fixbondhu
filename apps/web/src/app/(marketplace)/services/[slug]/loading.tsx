@@ -4,7 +4,7 @@ import { ProviderGridSkeleton } from "@/components/skeletons";
 export default function Loading() {
   return (
     <div className="flex min-h-dvh flex-col bg-ink-50">
-      <div className="border-b border-ink-200 bg-white">
+      <div className="border-b border-ink-300/60 bg-ink-100/40">
         <div className="container-page flex h-14 items-center">
           <span className="shimmer h-7 w-28 rounded-md" />
         </div>

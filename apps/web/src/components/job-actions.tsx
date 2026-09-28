@@ -102,7 +102,7 @@ export function JobActions({
       <FormFeedback state={state} />
 
       {confirmCancel ? (
-        <form action={formAction} className="animate-rise space-y-3 rounded-lg border border-red-200 bg-red-50 p-3">
+        <form action={formAction} className="animate-rise tone-danger space-y-3 p-3">
           <input type="hidden" name="bookingId" value={bookingId} />
           <input type="hidden" name="to" value="CANCELLED" />
           <p className="text-sm text-red-800">
@@ -204,8 +204,8 @@ export function ChargeRequestForm({ bookingId }: { bookingId: string }) {
 
   if (state?.ok) {
     return (
-      <div className="card animate-pop border-brand-200 bg-brand-50 p-4">
-        <p className="text-sm text-brand-800">{state.message}</p>
+      <div className="card animate-pop tone-accent p-4">
+        <p className="text-sm text-brand-200">{state.message}</p>
       </div>
     );
   }

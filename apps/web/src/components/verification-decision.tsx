@@ -29,7 +29,7 @@ export function VerificationDecision({
 
   if (state?.ok) {
     return (
-      <p className="animate-pop rounded-md border border-brand-200 bg-brand-50 px-3 py-2 text-sm text-brand-800">
+      <p className="animate-pop tone-accent rounded-md px-3 py-2 text-sm">
         {state.message}
       </p>
     );

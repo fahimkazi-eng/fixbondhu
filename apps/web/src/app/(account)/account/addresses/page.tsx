@@ -44,7 +44,7 @@ export default async function AddressesPage() {
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="text-[15px] font-medium text-ink-900">{address.label}</p>
                     {address.isDefault ? (
-                      <span className="chip border-brand-200 bg-brand-50 text-brand-800">
+                      <span className="chip tone-accent">
                         default
                       </span>
                     ) : null}

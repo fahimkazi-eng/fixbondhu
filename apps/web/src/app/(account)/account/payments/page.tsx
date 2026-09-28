@@ -103,7 +103,7 @@ export default async function CustomerPaymentsPage() {
                   <span
                     className={`mt-1 inline-block rounded-full border px-2 py-0.5 text-xs ${
                       payment.status === "CAPTURED"
-                        ? "border-green-200 bg-green-50 text-green-800"
+                        ? "tone-success"
                         : payment.status === "REFUNDED"
                           ? "border-blue-200 bg-blue-50 text-blue-800"
                           : "border-ink-200 bg-ink-50 text-ink-600"

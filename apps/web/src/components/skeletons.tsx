@@ -126,3 +126,82 @@ export function FilterSkeleton() {
     </div>
   );
 }
+
+/**
+ * The sticky header, mid-load.
+ *
+ * `header-shell` rather than a plain bordered band, and h-14 rather than the
+ * old h-14-inside-a-padded-band. The header compacts its own padding on scroll,
+ * so a skeleton that renders the same box at a different height is what causes
+ * the page to jump the instant real content replaces it — which is the exact
+ * moment the reader is looking.
+ */
+export function HeaderSkeleton() {
+  return (
+    <div className="header-shell sticky top-0 z-30 border-b border-ink-300/50">
+      <div className="container-page flex h-14 items-center gap-3">
+        <span className="shimmer h-7 w-7 rounded-[9px]" />
+        <span className="shimmer h-4 w-24 rounded" />
+        <span className="shimmer ml-auto hidden h-9 w-full max-w-xl md:block" />
+        <span className="shimmer h-9 w-20 rounded-[10px]" />
+      </div>
+    </div>
+  );
+}
+
+/** A page title block: eyebrow, heading, one line of supporting copy. */
+export function PageHeadSkeleton() {
+  return (
+    <div className="space-y-3" aria-hidden>
+      <span className="shimmer block h-3 w-24 rounded" />
+      <span className="shimmer block h-8 w-72 max-w-full rounded" />
+      <span className="shimmer block h-4 w-96 max-w-full rounded" />
+    </div>
+  );
+}
+
+/**
+ * The content-area skeleton for the three signed-in surfaces.
+ *
+ * Deliberately chrome-free, and that is not an oversight. A loading.tsx placed in
+ * a segment replaces that segment's page but NOT its layout, so the customer,
+ * pro and admin shells — headers, navs, tab bars — keep rendering around this.
+ * Including a header here would draw it twice.
+ *
+ * It is also the one skeleton that has to work at three different widths without
+ * knowing which surface it is on, so it mirrors only what all three share: a
+ * title, a toolbar row, and a stack of full-width panels. Anything more specific
+ * would be wrong on at least one of them.
+ */
+export function PanelSkeleton({
+  count = 3,
+  className = "py-6",
+}: {
+  count?: number;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`container-page ${className}`}
+      role="status"
+      aria-label="Loading"
+    >
+      <PageHeadSkeleton />
+      <div className="mt-4 flex flex-wrap gap-2" aria-hidden>
+        {Array.from({ length: 4 }, (_, i) => (
+          <span key={i} className="shimmer h-7 w-24 rounded-full" />
+        ))}
+      </div>
+      <div className="mt-6 space-y-3" aria-hidden>
+        {Array.from({ length: count }, (_, i) => (
+          <div key={i} className="card space-y-2.5 p-4">
+            <Bar w="34%" />
+            <Bar w="72%" h="h-2.5" />
+            <Bar w="48%" h="h-2.5" />
+          </div>
+        ))}
+      </div>
+      <span className="sr-only">Loading…</span>
+    </div>
+  );
+}

@@ -31,7 +31,7 @@ export function ResolveComplaintForm({ complaintId }: { complaintId: string }) {
 
   if (state?.ok) {
     return (
-      <div className="animate-pop rounded-md border border-brand-200 bg-brand-50 px-3 py-2 text-sm text-brand-800">
+      <div className="animate-pop tone-accent rounded-md px-3 py-2 text-sm">
         {state.message}
       </div>
     );

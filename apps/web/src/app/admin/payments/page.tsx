@@ -101,8 +101,8 @@ export default async function AdminPaymentsPage({
               aria-current={active ? "page" : undefined}
               className={`rounded-md border px-2.5 py-1.5 text-xs font-medium transition-colors duration-150 ${
                 active
-                  ? "border-brand-600 bg-brand-50 text-brand-800"
-                  : "border-ink-200 bg-white text-ink-600 hover:border-ink-300"
+                  ? "tone-accent"
+                  : "border-ink-300 bg-ink-100 text-ink-600 hover:border-ink-400"
               }`}
             >
               {key ? key.replaceAll("_", " ").toLowerCase() : "All"}
@@ -156,9 +156,9 @@ export default async function AdminPaymentsPage({
                     <span
                       className={`rounded-full border px-2 py-0.5 text-xs ${
                         payment.status === "CAPTURED"
-                          ? "border-green-200 bg-green-50 text-green-800"
+                          ? "tone-success"
                           : payment.status === "FAILED"
-                            ? "border-red-200 bg-red-50 text-red-700"
+                            ? "tone-danger"
                             : "border-ink-200 bg-ink-50 text-ink-600"
                       }`}
                     >

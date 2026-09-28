@@ -1,6 +1,7 @@
 import Link from "next/link";
 
-import { TabIcon } from "@/components/tab-icon";
+import { BrandMark } from "@/components/brand-mark";
+import { MobileTabBarClient, SiteHeaderClient } from "@/components/site-header-client";
 
 /**
  * The marketplace shell: one header and one tab bar for every public page.
@@ -13,157 +14,23 @@ import { TabIcon } from "@/components/tab-icon";
  * The tab bar is the one piece of the brief that had to earn its place on a
  * phone: a marketplace is browsed one-handed, and the five destinations that
  * matter are Home, Search, Services, Bookings and Account.
+ *
+ * Both interactive pieces live in site-header-client.tsx because they need the
+ * scroll position. This module stays a server module, so pages can import the
+ * header without pulling a client boundary across their own data fetching.
  */
 
-const TABS = [
-  { href: "/", label: "Home", icon: "home" },
-  { href: "/search", label: "Search", icon: "search" },
-  { href: "/services", label: "Services", icon: "grid" },
-  { href: "/bookings", label: "Bookings", icon: "calendar" },
-  { href: "/account", label: "Account", icon: "user" },
-] as const;
-
-function isActive(path: string, href: string): boolean {
-  if (href === "/") return path === "/";
-  return path === href || path.startsWith(`${href}/`);
-}
-
-export function SiteHeader({
-  path,
-  signedInName,
-  areaName,
-}: {
+/** Re-exported rather than reimplemented, so the four call sites are unchanged. */
+export function SiteHeader(props: {
   path: string;
   signedInName: string | null;
-  /** Only set when the customer has a real saved default address. */
   areaName: string | null;
 }) {
-  return (
-    <header className="sticky top-0 z-30 border-b border-ink-200 bg-white">
-      <div className="container-page flex h-14 items-center gap-3">
-        <Link href="/" className="flex shrink-0 items-center gap-2">
-          <span
-            aria-hidden
-            className="grid h-7 w-7 place-items-center rounded-md bg-brand-700 text-sm font-bold text-white"
-          >
-            F
-          </span>
-          <span className="text-[15px] font-semibold tracking-tight">FixBondhu</span>
-        </Link>
-
-        {/*
-          Search is centred and prominent on desktop, the way a
-          marketplace-first site leads. Hidden below md because the tab bar
-          already carries Search and a phone header cannot fit both.
-        */}
-        <form
-          action="/search"
-          method="get"
-          className="hidden flex-1 justify-center md:flex"
-          role="search"
-        >
-          <div className="relative w-full max-w-xl">
-            <label className="sr-only" htmlFor="site-search">
-              Search services
-            </label>
-            <input
-              className="input focus-expand h-9 pl-9 text-sm"
-              id="site-search"
-              name="q"
-              type="search"
-              autoComplete="off"
-              placeholder="AC repair, plumber, গিজার"
-            />
-            <span
-              aria-hidden
-              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-400"
-            >
-              <TabIcon name="search" className="h-4 w-4" />
-            </span>
-          </div>
-        </form>
-
-        <nav className="ml-auto flex shrink-0 items-center gap-1">
-          {areaName ? (
-            // Only shown when it is real: the customer's own default address.
-            // There is no "guessing your location", and no city-wide claim.
-            <Link
-              href="/providers"
-              className="hidden text-sm text-ink-600 hover:text-ink-900 lg:inline"
-              title="Based on your saved default address"
-            >
-              {areaName}
-            </Link>
-          ) : null}
-
-          <Link
-            href="/services"
-            className={`hidden text-sm lg:inline ${
-              isActive(path, "/services") ? "text-brand-700" : "text-ink-600 hover:text-ink-900"
-            }`}
-          >
-            Services
-          </Link>
-          <Link
-            href="/providers"
-            className={`hidden text-sm lg:inline ${
-              isActive(path, "/providers") ? "text-brand-700" : "text-ink-600 hover:text-ink-900"
-            }`}
-          >
-            Professionals
-          </Link>
-          <Link
-            href="/pro"
-            className={`hidden text-sm lg:inline ${
-              isActive(path, "/pro") ? "text-brand-700" : "text-ink-600 hover:text-ink-900"
-            }`}
-          >
-            Become a Pro
-          </Link>
-
-          <Link href="/account" className="btn btn-primary h-9 px-3 text-sm">
-            {signedInName ? signedInName.split(/\s+/)[0]! : "Sign in"}
-          </Link>
-        </nav>
-      </div>
-    </header>
-  );
+  return <SiteHeaderClient {...props} />;
 }
 
-/**
- * Fixed bottom tab bar, phones only.
- *
- * Fixed rather than sticky so it behaves like an app tab bar, with padding
- * reserved on the page so the last row is never hidden behind it.
- */
 export function MobileTabBar({ path }: { path: string }) {
-  return (
-    <nav
-      aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-30 border-t border-ink-200 bg-white md:hidden"
-      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-    >
-      <ul className="grid grid-cols-5">
-        {TABS.map((tab) => {
-          const active = isActive(path, tab.href);
-          return (
-            <li key={tab.href}>
-              <Link
-                href={tab.href}
-                aria-current={active ? "page" : undefined}
-                className={`flex flex-col items-center gap-0.5 py-2 text-[11px] transition-colors ${
-                  active ? "text-brand-700" : "text-ink-500"
-                }`}
-              >
-                <TabIcon name={tab.icon} className="h-5 w-5" />
-                {tab.label}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
-  );
+  return <MobileTabBarClient path={path} />;
 }
 
 /** Reserves room for the fixed tab bar so content is never trapped under it. */
@@ -173,21 +40,77 @@ export function TabBarSpacer() {
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-ink-200 bg-white">
-      <div className="container-page flex flex-col gap-2 py-6 text-xs text-ink-500 sm:flex-row sm:items-center sm:justify-between">
-        <p>FixBondhu — local services, properly verified.</p>
-        <nav className="flex gap-4">
-          <Link href="/services" className="hover:text-ink-800">
-            Services
-          </Link>
-          <Link href="/providers" className="hover:text-ink-800">
-            Professionals
-          </Link>
-          <Link href="/support" className="hover:text-ink-800">
-            Support
-          </Link>
-        </nav>
+    <footer className="relative mt-auto border-t border-ink-300/60 bg-ink-100/30">
+      <div className="container-page grid gap-8 py-12 sm:grid-cols-[1.5fr_1fr_1fr] sm:gap-6">
+        <div className="max-w-xs">
+          <div className="flex items-center gap-2.5">
+            <BrandMark className="h-7 w-7" />
+            <span className="text-[15px] font-semibold tracking-tight">
+              FixBondhu
+            </span>
+          </div>
+          <p className="mt-3 text-sm leading-relaxed text-ink-500">
+            Local services, properly verified. Every professional on FixBondhu
+            has had their identity and trade checked by an administrator before
+            they can take a booking.
+          </p>
+        </div>
+
+        <FooterColumn
+          title="Marketplace"
+          links={[
+            { href: "/services", label: "All services" },
+            { href: "/providers", label: "Find a professional" },
+            { href: "/search", label: "Search" },
+          ]}
+        />
+        <FooterColumn
+          title="Account"
+          links={[
+            { href: "/bookings", label: "Your bookings" },
+            { href: "/account", label: "Sign in" },
+            { href: "/support", label: "Support" },
+          ]}
+        />
+      </div>
+
+      <div className="border-t border-ink-300/40">
+        <div className="container-page flex flex-col gap-2 py-5 text-xs text-ink-500 sm:flex-row sm:items-center sm:justify-between">
+          <p>FixBondhu — local services, properly verified.</p>
+          {/*
+            Deliberately plain. There is no fabricated trust badge row, no
+            invented "10,000+ happy customers" and no partner logos; anything
+            like that would be a number this product cannot substantiate.
+          */}
+          <p>Prices, ratings and counts on this site are read live from the database.</p>
+        </div>
       </div>
     </footer>
+  );
+}
+
+function FooterColumn({
+  title,
+  links,
+}: {
+  title: string;
+  links: { href: string; label: string }[];
+}) {
+  return (
+    <div>
+      <h2 className="eyebrow">{title}</h2>
+      <ul className="mt-4 space-y-2.5">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className="link-underline text-sm text-ink-500 transition-colors duration-200 hover:text-ink-900"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

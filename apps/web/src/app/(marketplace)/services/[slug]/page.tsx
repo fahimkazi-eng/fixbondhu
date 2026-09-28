@@ -142,7 +142,7 @@ export default async function ServicePage({
               </h2>
               <Link
                 href={`/providers?service=${service.slug}`}
-                className="text-sm text-brand-700 hover:underline"
+                className="text-sm text-brand-300 hover:underline"
               >
                 Filter and sort
               </Link>

@@ -58,7 +58,7 @@ export default async function ProviderSettingsPage() {
               <Row label="Public profile">
                 <Link
                   href={`/providers/${profile.slug}`}
-                  className="text-brand-700 underline"
+                  className="text-brand-300 underline"
                 >
                   View
                 </Link>
@@ -82,7 +82,7 @@ export default async function ProviderSettingsPage() {
           method is on file and verified.
         </p>
         {methods.length === 0 ? (
-          <p className="mt-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+          <p className="mt-3 rounded-md tone-warning px-3 py-2 text-sm">
             No payout method on file. Adding one is not built yet, so earnings stay
             on your balance until it is.
           </p>

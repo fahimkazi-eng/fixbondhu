@@ -20,8 +20,8 @@ export function CompleteProfileForm() {
 
   if (state?.ok) {
     return (
-      <div className="card animate-pop border-brand-200 bg-brand-50 p-5">
-        <p className="text-sm text-brand-800">{state.message}</p>
+      <div className="card animate-pop tone-accent p-5">
+        <p className="text-sm text-brand-200">{state.message}</p>
         <Link href="/account" className="btn btn-primary mt-4 w-full">
           Go to my account
         </Link>

@@ -30,10 +30,20 @@ export function Reveal({
   children,
   className,
   as: Tag = "div",
+  size = "sm",
+  delay = 0,
 }: {
   children: ReactNode;
   className?: string;
   as?: ElementType;
+  /**
+   * "sm" is the default 18px rise for cards and lists. "lg" is the heavier
+   * 34px rise for a full section, which reads as arriving rather than
+   * appearing.
+   */
+  size?: "sm" | "lg";
+  /** Stagger for a heading that should land just after its section. */
+  delay?: number;
 }) {
   // "idle" means untouched, so the server markup carries no data-state at all
   // and the stylesheet shows it.
@@ -87,7 +97,11 @@ export function Reveal({
     <Wrapper
       ref={ref}
       data-state={state === "idle" ? undefined : state}
-      className={`reveal ${className ?? ""}`}
+      // The delay is capped at 240ms. Beyond that the section is no longer
+      // arriving with its neighbours, it is arriving on its own, and waiting for
+      // a previous element to finish is just latency.
+      style={delay > 0 ? { transitionDelay: `${Math.min(delay, 240)}ms` } : undefined}
+      className={`reveal ${size === "lg" ? "reveal-lg" : ""} ${className ?? ""}`}
     >
       {children}
     </Wrapper>

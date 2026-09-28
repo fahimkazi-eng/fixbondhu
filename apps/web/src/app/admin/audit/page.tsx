@@ -52,7 +52,7 @@ export default async function AdminAuditPage({
           href="/admin/audit"
           aria-current={!action ? "page" : undefined}
           className={`rounded-md border px-2.5 py-1.5 text-xs font-medium ${
-            !action ? "border-brand-600 bg-brand-50 text-brand-800" : "border-ink-200 bg-white text-ink-600"
+            !action ? "tone-accent" : "border-ink-300 bg-ink-100 text-ink-600"
           }`}
         >
           All
@@ -64,8 +64,8 @@ export default async function AdminAuditPage({
             aria-current={action === key ? "page" : undefined}
             className={`rounded-md border px-2.5 py-1.5 text-xs font-medium ${
               action === key
-                ? "border-brand-600 bg-brand-50 text-brand-800"
-                : "border-ink-200 bg-white text-ink-600"
+                ? "tone-accent"
+                : "border-ink-300 bg-ink-100 text-ink-600"
             }`}
           >
             {key.toLowerCase().replaceAll("_", " ")}

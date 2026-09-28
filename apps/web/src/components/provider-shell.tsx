@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { BrandMark } from "@/components/brand-mark";
 import { SurfaceNav, type NavGroup } from "./surface-nav";
 
 /** Bell with a live unread count. Pure presentational, no client JS needed. */
@@ -24,16 +25,13 @@ export function ProviderShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-dvh bg-ink-50">
-      <header className="sticky top-0 z-20 border-b border-ink-200 bg-white">
+    <div className="flex min-h-dvh flex-col bg-ink-50">
+      {/* Static glass, same reasoning as CustomerShell: no scroll listener, so
+          no compacting, which keeps this a server component. */}
+      <header className="glass sticky top-0 z-20 border-b border-ink-300/50">
         <div className="container-page flex h-14 items-center justify-between">
-          <Link href="/pro" className="flex items-center gap-2">
-            <span
-              aria-hidden
-              className="grid h-7 w-7 place-items-center rounded-md bg-ink-900 text-sm font-bold text-white"
-            >
-              F
-            </span>
+          <Link href="/pro" className="press flex items-center gap-2.5">
+            <BrandMark className="h-7 w-7" />
             <span className="text-[15px] font-semibold tracking-tight">
               FixBondhu <span className="font-normal text-ink-500">Pro</span>
             </span>
@@ -52,8 +50,10 @@ export function ProviderShell({
         </div>
       </header>
 
-      <div className="container-page flex gap-6 py-6">
+      <div className="container-page flex flex-1 gap-6 py-6">
         <aside className="hidden w-56 shrink-0 lg:block">
+          {/* top-20 clears the h-14 header. Not top-14, because a sticky sidebar
+              whose first row sits flush under a blurred header reads as clipped. */}
           <div className="sticky top-20">
             <SurfaceNav groups={groups} current={current} unreadCount={unreadCount} homeHref="/pro" brandLabel="Provider" />
           </div>
@@ -68,9 +68,9 @@ export function ProviderShell({
           unreachable on a small screen. */}
       <nav
         aria-label="Provider sections"
-        className="sticky bottom-0 z-20 border-t border-ink-200 bg-white lg:hidden"
+        className="glass sticky bottom-0 z-20 border-t border-ink-300/50 lg:hidden"
       >
-        <ul className="container-page flex gap-1 overflow-x-auto py-2 text-sm">
+        <ul className="container-page scrollbar-none flex gap-1 overflow-x-auto py-2 text-sm">
           {[{ href: "/pro", label: "Overview" }, ...groups.flatMap((g) => g.items)].map(
             (item) => {
               const active =
@@ -80,13 +80,13 @@ export function ProviderShell({
                   <Link
                     href={item.href}
                     aria-current={active ? "page" : undefined}
-                    className={`rounded-md px-2.5 py-1.5 whitespace-nowrap transition-colors ${
-                      active ? "bg-brand-50 font-medium text-brand-800" : "text-ink-600"
+                    className={`rounded-md px-2.5 py-1.5 whitespace-nowrap transition-colors duration-200 ${
+                      active ? "bg-brand-500/15 font-medium text-brand-200" : "text-ink-600"
                     }`}
                   >
                     {item.short ?? item.label}
                     {item.count ? (
-                      <span className="ml-1 rounded-full bg-brand-600 px-1.5 text-[11px] font-semibold text-white">
+                      <span className="ml-1 rounded-full bg-brand-500 px-1.5 text-[11px] font-semibold text-ink-50 tabular-nums">
                         {item.count}
                       </span>
                     ) : null}

@@ -148,7 +148,7 @@ export default async function ProviderDashboard() {
       </dl>
 
       {pending._count > 0 ? (
-        <div className="mt-4 rounded-[10px] border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+        <div className="mt-4 rounded-[10px] tone-warning p-4 text-sm">
           {pending._count} completed{" "}
           {pending._count === 1 ? "job is" : "jobs are"} awaiting payment
           settlement.
@@ -221,7 +221,7 @@ function Panel({
         {value}
       </p>
       {value === 0 ? <p className="mt-1.5 text-xs leading-relaxed text-ink-500">{empty}</p> : null}
-      <Link href={href} className="mt-3 inline-block text-xs font-medium text-brand-700 underline">
+      <Link href={href} className="mt-3 inline-block text-xs font-medium text-brand-300 underline">
         Manage
       </Link>
     </div>

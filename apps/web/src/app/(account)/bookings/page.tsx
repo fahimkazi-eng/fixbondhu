@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import { STATUS_LABELS, STATUS_TONE } from "@fixbondhu/core";
+import { BrandMark } from "@/components/brand-mark";
+
 
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
@@ -12,10 +14,10 @@ export const dynamic = "force-dynamic";
 const TONE_CLASSES: Record<string, string> = {
   neutral: "border-ink-200 bg-ink-50 text-ink-700",
   info: "border-blue-200 bg-blue-50 text-blue-800",
-  progress: "border-brand-200 bg-brand-50 text-brand-800",
-  success: "border-green-200 bg-green-50 text-green-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  danger: "border-red-200 bg-red-50 text-red-800",
+  progress: "tone-accent",
+  success: "tone-success",
+  warning: "tone-warning",
+  danger: "tone-danger",
 };
 
 export default async function BookingsPage() {
@@ -32,10 +34,10 @@ export default async function BookingsPage() {
 
   return (
     <>
-      <header className="border-b border-ink-200 bg-white">
+      <header className="border-b border-ink-300/60 bg-ink-100/40">
         <div className="container-page flex h-14 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <span aria-hidden className="grid h-7 w-7 place-items-center rounded-md bg-brand-700 text-sm font-bold text-white">F</span>
+            <BrandMark className="h-7 w-7" />
             <span className="text-[15px] font-semibold tracking-tight">FixBondhu</span>
           </Link>
           <nav className="flex gap-1 text-sm">

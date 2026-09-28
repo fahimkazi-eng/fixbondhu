@@ -90,10 +90,10 @@ export function BookingForm({
 
   if (done) {
     return (
-      <div className="card animate-pop border-brand-200 bg-brand-50 p-5">
-        <h2 className="text-[15px] font-medium text-brand-900">Request sent</h2>
-        <p className="mt-1.5 text-sm text-brand-800">{state?.message}</p>
-        <p className="mt-2 text-xs text-brand-700">
+      <div className="card animate-pop tone-accent p-5">
+        <h2 className="text-[15px] font-medium text-brand-100">Request sent</h2>
+        <p className="mt-1.5 text-sm text-brand-200">{state?.message}</p>
+        <p className="mt-2 text-xs text-brand-300">
           The provider has been notified. You will see the status change on your
           bookings page.
         </p>
@@ -184,8 +184,8 @@ export function BookingForm({
                 key={option.value}
                 className={`interactive cursor-pointer rounded-lg border p-3 text-sm ${
                   method === option.value
-                    ? "border-brand-600 bg-brand-50"
-                    : "border-ink-200 bg-white"
+                    ? "tone-accent"
+                    : "border-ink-300 bg-ink-100"
                 }`}
               >
                 <input

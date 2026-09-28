@@ -43,7 +43,7 @@ export default async function NotificationsPage({
         <h1 className="text-lg font-semibold tracking-tight text-ink-900">
           Notifications
           {unread > 0 ? (
-            <span className="ml-2 rounded-full bg-brand-600 px-2 py-0.5 text-xs font-semibold tabular-nums text-white">
+            <span className="ml-2 rounded-full bg-brand-600 px-2 py-0.5 text-xs font-semibold tabular-nums text-ink-50">
               {unread}
             </span>
           ) : null}

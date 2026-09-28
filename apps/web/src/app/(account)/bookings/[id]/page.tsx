@@ -24,10 +24,10 @@ export const dynamic = "force-dynamic";
 const TONE_CLASSES: Record<string, string> = {
   neutral: "border-ink-200 bg-ink-50 text-ink-700",
   info: "border-blue-200 bg-blue-50 text-blue-800",
-  progress: "border-brand-200 bg-brand-50 text-brand-800",
-  success: "border-green-200 bg-green-50 text-green-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  danger: "border-red-200 bg-red-50 text-red-800",
+  progress: "tone-accent",
+  success: "tone-success",
+  warning: "tone-warning",
+  danger: "tone-danger",
 };
 
 const DOT_CLASSES: Record<string, string> = {
@@ -71,7 +71,7 @@ export default async function BookingDetailPage({
 
   return (
     <>
-      <header className="border-b border-ink-200 bg-white">
+      <header className="border-b border-ink-300/60 bg-ink-100/40">
         <div className="container-page flex h-14 items-center justify-between">
           <Link href="/bookings" className="btn btn-secondary">← Bookings</Link>
           <Link href="/account" className="btn btn-secondary">Account</Link>
@@ -138,7 +138,7 @@ export default async function BookingDetailPage({
               </span>
             </Row>
             <Row label="Provider contact">
-              <a href={`tel:${booking.providerPhone}`} className="text-brand-700 underline">
+              <a href={`tel:${booking.providerPhone}`} className="text-brand-300 underline">
                 {booking.providerPhone}
               </a>
             </Row>

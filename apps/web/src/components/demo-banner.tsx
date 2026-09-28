@@ -12,7 +12,7 @@ export function DemoBanner() {
   return (
     <div
       role="status"
-      className="border-b border-amber-300 bg-amber-100 text-amber-950"
+      className="tone-warning border-b"
     >
       <div className="container-page flex flex-wrap items-center justify-between gap-2 py-2 text-xs">
         <p>
@@ -21,7 +21,7 @@ export function DemoBanner() {
           branch. They are not real people and nothing here can be booked for
           real.
         </p>
-        <span className="chip border-amber-400 bg-amber-50 text-amber-900">
+        <span className="chip tone-warning">
           Sample data
         </span>
       </div>

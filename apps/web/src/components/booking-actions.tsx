@@ -30,8 +30,8 @@ export function BookingActions({
 
   if (state?.ok) {
     return (
-      <div className="card animate-pop border-brand-200 bg-brand-50 p-4">
-        <p className="text-sm text-brand-800">{state.message}</p>
+      <div className="card animate-pop tone-accent p-4">
+        <p className="text-sm text-brand-200">{state.message}</p>
       </div>
     );
   }
@@ -49,7 +49,7 @@ export function BookingActions({
   }
 
   return (
-    <form action={formAction} className="card animate-rise border-red-200 p-4">
+    <form action={formAction} className="card animate-rise tone-danger p-4">
       <input type="hidden" name="bookingId" value={bookingId} />
       <p className="text-sm font-medium text-ink-900">Cancel this booking?</p>
       <p className="mt-1 text-xs leading-relaxed text-ink-600">

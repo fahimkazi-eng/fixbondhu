@@ -49,7 +49,7 @@ export default async function ProviderMessagesPage() {
                 </div>
                 <div className="shrink-0 text-right">
                   {conversation.providerUnread > 0 ? (
-                    <span className="animate-pop inline-block rounded-full bg-brand-600 px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-white">
+                    <span className="animate-pop inline-block rounded-full bg-brand-600 px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-ink-50">
                       {conversation.providerUnread}
                     </span>
                   ) : null}

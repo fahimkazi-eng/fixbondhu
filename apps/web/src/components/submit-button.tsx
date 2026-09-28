@@ -21,8 +21,8 @@ export function FormFeedback({ state }: { state: ActionState | null }) {
       role={state.ok ? "status" : "alert"}
       className={`animate-fade-in rounded-md border px-3 py-2 text-sm ${
         state.ok
-          ? "border-brand-200 bg-brand-50 text-brand-800"
-          : "border-red-200 bg-red-50 text-red-700"
+          ? "tone-accent"
+          : "tone-danger"
       }`}
     >
       {state.message}

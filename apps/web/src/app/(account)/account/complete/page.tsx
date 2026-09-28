@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { BrandMark } from "@/components/brand-mark";
+
 
 import { requireUser } from "@/lib/auth";
 import { CompleteProfileForm } from "@/components/complete-profile-form";
@@ -32,12 +34,7 @@ export default async function CompleteProfilePage() {
   return (
     <main id="main" className="container-page flex min-h-dvh flex-col py-8">
       <Link href="/" className="flex items-center gap-2 self-start">
-        <span
-          aria-hidden
-          className="grid h-7 w-7 place-items-center rounded-md bg-brand-700 text-sm font-bold text-white"
-        >
-          F
-        </span>
+        <BrandMark className="h-7 w-7" />
         <span className="text-[15px] font-semibold tracking-tight">FixBondhu</span>
       </Link>
 

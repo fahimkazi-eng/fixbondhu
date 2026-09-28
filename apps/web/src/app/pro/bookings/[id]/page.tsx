@@ -16,10 +16,10 @@ export const dynamic = "force-dynamic";
 const TONE: Record<string, string> = {
   neutral: "border-ink-200 bg-ink-50 text-ink-700",
   info: "border-blue-200 bg-blue-50 text-blue-800",
-  progress: "border-brand-200 bg-brand-50 text-brand-800",
-  success: "border-green-200 bg-green-50 text-green-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  danger: "border-red-200 bg-red-50 text-red-800",
+  progress: "tone-accent",
+  success: "tone-success",
+  warning: "tone-warning",
+  danger: "tone-danger",
 };
 
 /**
@@ -100,7 +100,7 @@ export default async function ProviderBookingPage({
         {canRequestCharge ? (
           <ChargeRequestForm bookingId={booking.id} />
         ) : pendingCharge ? (
-          <div className="card border-amber-300 bg-amber-50 p-4">
+          <div className="card tone-warning p-4">
             <h2 className="text-sm font-semibold text-amber-900">
               Waiting for the customer
             </h2>
@@ -122,7 +122,7 @@ export default async function ProviderBookingPage({
         <dl className="mt-3 space-y-2.5 text-sm">
           <Row label="Name">{booking.customer.name}</Row>
           <Row label="Phone">
-            <a href={`tel:${booking.customer.phone ?? ""}`} className="text-brand-700 underline">
+            <a href={`tel:${booking.customer.phone ?? ""}`} className="text-brand-300 underline">
               {booking.customer.phone ?? "Not provided"}
             </a>
           </Row>

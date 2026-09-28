@@ -67,7 +67,7 @@ export default async function SupportPage({
       {sent ? (
         <p
           role="status"
-          className="animate-pop mt-4 rounded-md border border-brand-200 bg-brand-50 px-3 py-2 text-sm text-brand-800"
+          className="animate-pop tone-accent mt-4 rounded-md px-3 py-2 text-sm"
         >
           {sent}
         </p>

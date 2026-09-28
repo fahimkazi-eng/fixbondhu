@@ -9,11 +9,11 @@ export const metadata: Metadata = { title: "Complaints", robots: { index: false 
 export const dynamic = "force-dynamic";
 
 const TONE: Record<string, string> = {
-  OPEN: "border-red-200 bg-red-50 text-red-800",
-  IN_REVIEW: "border-amber-200 bg-amber-50 text-amber-800",
+  OPEN: "tone-danger",
+  IN_REVIEW: "tone-warning",
   AWAITING_CUSTOMER: "border-ink-200 bg-ink-50 text-ink-700",
   AWAITING_PROVIDER: "border-blue-200 bg-blue-50 text-blue-800",
-  RESOLVED: "border-green-200 bg-green-50 text-green-800",
+  RESOLVED: "tone-success",
   REJECTED: "border-ink-200 bg-ink-50 text-ink-600",
   CLOSED: "border-ink-200 bg-ink-50 text-ink-600",
 };
@@ -66,8 +66,8 @@ export default async function AdminComplaintsPage({
               aria-current={active ? "page" : undefined}
               className={`rounded-md border px-2.5 py-1.5 text-xs font-medium transition-colors duration-150 ${
                 active
-                  ? "border-brand-600 bg-brand-50 text-brand-800"
-                  : "border-ink-200 bg-white text-ink-600 hover:border-ink-300"
+                  ? "tone-accent"
+                  : "border-ink-300 bg-ink-100 text-ink-600 hover:border-ink-400"
               }`}
             >
               {tab.label}
@@ -95,7 +95,7 @@ export default async function AdminComplaintsPage({
                       {complaint.subject}
                     </p>
                     {complaint.priority === "URGENT" || complaint.priority === "HIGH" ? (
-                      <span className="rounded-full border border-red-200 bg-red-50 px-2 py-0.5 text-xs text-red-700">
+                      <span className="rounded-full tone-danger px-2 py-0.5 text-xs">
                         {complaint.priority.toLowerCase()}
                       </span>
                     ) : null}
@@ -156,7 +156,7 @@ export default async function AdminComplaintsPage({
               </dl>
 
               {complaint.resolution ? (
-                <div className="mt-3 rounded-md border border-green-200 bg-green-50 p-3">
+                <div className="mt-3 rounded-md tone-success p-3">
                   <p className="text-xs font-medium text-green-900">Decision recorded</p>
                   <p className="mt-0.5 text-sm text-green-900">{complaint.resolution}</p>
                 </div>

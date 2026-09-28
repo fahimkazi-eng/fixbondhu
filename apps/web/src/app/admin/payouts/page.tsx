@@ -11,11 +11,11 @@ export const metadata: Metadata = { title: "Payouts", robots: { index: false } }
 export const dynamic = "force-dynamic";
 
 const TONE: Record<string, string> = {
-  PENDING: "border-amber-200 bg-amber-50 text-amber-800",
+  PENDING: "tone-warning",
   APPROVED: "border-blue-200 bg-blue-50 text-blue-800",
   PROCESSING: "border-blue-200 bg-blue-50 text-blue-800",
-  PAID: "border-green-200 bg-green-50 text-green-800",
-  FAILED: "border-red-200 bg-red-50 text-red-800",
+  PAID: "tone-success",
+  FAILED: "tone-danger",
   ON_HOLD: "border-ink-200 bg-ink-50 text-ink-600",
 };
 

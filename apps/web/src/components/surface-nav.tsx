@@ -61,13 +61,13 @@ export function SurfaceNav({
                     aria-current={active ? "page" : undefined}
                     className={`flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-sm transition-colors duration-150 ${
                       active
-                        ? "bg-brand-50 font-medium text-brand-800"
+                        ? "bg-brand-500/15 font-medium text-brand-200"
                         : "text-ink-700 hover:bg-ink-100"
                     }`}
                   >
                     <span className="truncate">{item.label}</span>
                     {item.count ? (
-                      <span className="animate-pop shrink-0 rounded-full bg-brand-600 px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-white">
+                      <span className="animate-pop shrink-0 rounded-full bg-brand-600 px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-ink-50">
                         {item.count > 99 ? "99+" : item.count}
                       </span>
                     ) : null}
@@ -89,7 +89,7 @@ export function SurfaceNav({
             Notifications
           </span>
           {unreadCount ? (
-            <span className="rounded-full bg-red-600 px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-white">
+            <span className="rounded-full bg-red-600 px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-ink-50">
               {unreadCount > 99 ? "99+" : unreadCount}
             </span>
           ) : null}

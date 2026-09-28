@@ -102,7 +102,7 @@ export default async function ProviderRequestsPage() {
                       {booking.customerPhone ? (
                         <a
                           href={`tel:${booking.customerPhone}`}
-                          className="text-brand-700 underline"
+                          className="text-brand-300 underline"
                         >
                           {booking.customerPhone}
                         </a>
